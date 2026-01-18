@@ -26,7 +26,6 @@ yarn-error.log
 /.serena/
 /.gemini/
 /.mcp.json
-*.Zone.Identifier
 /.fleet
 /.idea
 /.nova
