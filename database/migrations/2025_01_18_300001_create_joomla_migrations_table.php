@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('joomla_migrations', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->enum('status', ['pending', 'running', 'completed', 'failed', 'rolled_back'])->default('pending');
-            $table->unsignedInteger('total_records')->default(0);
-            $table->unsignedInteger('processed_records')->default(0);
-            $table->unsignedInteger('failed_records')->default(0);
-            $table->json('errors')->nullable();
-            $table->timestamp('started_at')->nullable();
-            $table->timestamp('completed_at')->nullable();
-            $table->json('metadata')->nullable();
+            $table->string('source_table', 100);
+            $table->unsignedInteger('source_id');
+            $table->unsignedInteger('target_id')->nullable();
+            $table->string('data_hash', 64)->nullable();
+            $table->enum('migration_status', ['pending', 'success', 'failed'])->default('pending');
+            $table->text('error_message')->nullable();
+            $table->timestamp('migrated_at')->nullable();
             $table->timestamps();
 
-            $table->index('status');
+            $table->index('source_table');
+            $table->index('migration_status');
+            $table->index('migrated_at');
         });
 
         Schema::create('joomla_migration_items', function (Blueprint $table) {

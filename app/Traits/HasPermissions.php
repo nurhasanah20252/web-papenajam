@@ -239,7 +239,7 @@ trait HasPermissions
     /**
      * Check if user can perform an action on a resource.
      */
-    public function can(string $action, string $resource): bool
+    public function canAction(string $action, string $resource): bool
     {
         $permission = "{$resource}.{$action}";
 
@@ -263,7 +263,7 @@ trait HasPermissions
      */
     public function canEditOwn(mixed $resource, string $foreignKey = 'user_id'): bool
     {
-        return $this->owns($resource, $foreignKey) && $this->can('update', class_basename($resource));
+        return $this->owns($resource, $foreignKey) && $this->canAction('update', class_basename($resource));
     }
 
     /**

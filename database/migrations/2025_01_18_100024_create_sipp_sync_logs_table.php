@@ -15,18 +15,20 @@ return new class extends Migration
     {
         Schema::create('sipp_sync_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 50);
-            $table->string('status', 50);
-            $table->timestamp('started_at')->useCurrent();
-            $table->timestamp('completed_at')->nullable();
-            $table->string('triggered_by', 50)->default('system');
+            $table->enum('sync_type', ['full', 'incremental'])->default('full');
+            $table->timestamp('start_time')->useCurrent();
+            $table->timestamp('end_time')->nullable();
+            $table->unsignedInteger('records_fetched')->default(0);
+            $table->unsignedInteger('records_updated')->default(0);
+            $table->unsignedInteger('records_created')->default(0);
             $table->text('error_message')->nullable();
-            $table->json('stats')->nullable();
+            $table->enum('created_by', ['system', 'user'])->default('system');
+            $table->json('metadata')->nullable();
             $table->timestamps();
 
-            $table->index(['type', 'status']);
-            $table->index('started_at');
-            $table->index(['status', 'started_at']);
+            $table->index('sync_type');
+            $table->index('start_time');
+            $table->index('error_message');
         });
     }
 

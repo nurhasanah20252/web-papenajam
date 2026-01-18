@@ -13,17 +13,23 @@ return new class extends Migration
     {
         Schema::create('case_statistics', function (Blueprint $table) {
             $table->id();
-            $table->year('year');
+            $table->integer('year');
             $table->unsignedTinyInteger('month');
             $table->string('case_type', 100);
-            $table->unsignedInteger('total_cases')->default(0);
-            $table->unsignedInteger('resolved_cases')->default(0);
-            $table->unsignedInteger('pending_cases')->default(0);
+            $table->enum('court_type', ['perdata', 'pidana', 'agama'])->default('perdata');
+            $table->unsignedInteger('total_filed')->default(0);
+            $table->unsignedInteger('total_resolved')->default(0);
+            $table->unsignedInteger('pending_carryover')->default(0);
+            $table->decimal('avg_resolution_days', 8, 2)->nullable();
+            $table->decimal('settlement_rate', 5, 2)->nullable();
+            $table->string('external_data_hash', 64)->nullable();
+            $table->timestamp('last_sync_at')->nullable();
             $table->timestamps();
 
             $table->index(['year', 'month']);
             $table->index('case_type');
-            $table->unique(['year', 'month', 'case_type']);
+            $table->index('court_type');
+            $table->unique(['year', 'month', 'case_type', 'court_type']);
         });
     }
 

@@ -16,15 +16,15 @@ return new class extends Migration
             $table->foreignId('menu_id')->constrained('menus')->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('menu_items')->onDelete('cascade');
             $table->string('title', 255);
-            $table->enum('type', ['route', 'page', 'custom', 'external'])->default('custom');
-            $table->string('url', 500)->nullable();
+            $table->enum('url_type', ['route', 'page', 'custom', 'external'])->default('custom');
+            $table->string('route_name', 255)->nullable();
             $table->foreignId('page_id')->nullable()->constrained('pages')->onDelete('set null');
+            $table->string('custom_url', 500)->nullable();
             $table->unsignedInteger('order')->default(0);
             $table->string('icon', 100)->nullable();
-            $table->string('css_class', 255)->nullable();
             $table->boolean('target_blank')->default(false);
             $table->boolean('is_active')->default(true);
-            $table->json('conditional_rules')->nullable();
+            $table->json('conditions')->nullable();
             $table->timestamps();
 
             $table->index(['menu_id', 'order']);

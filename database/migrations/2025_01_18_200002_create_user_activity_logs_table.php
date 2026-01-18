@@ -15,17 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('action', 100);
-            $table->string('model_type', 255)->nullable();
-            $table->unsignedBigInteger('model_id')->nullable();
-            $table->json('old_values')->nullable();
-            $table->json('new_values')->nullable();
+            $table->text('description')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
+            $table->json('metadata')->nullable();
             $table->timestamps();
 
             $table->index('user_id');
             $table->index('action');
-            $table->index(['model_type', 'model_id']);
             $table->index('created_at');
         });
     }

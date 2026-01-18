@@ -13,29 +13,35 @@ return new class extends Migration
     {
         Schema::create('sipp_cases', function (Blueprint $table) {
             $table->id();
-            $table->string('sipp_case_id', 100)->nullable()->unique();
+            $table->string('external_id', 100)->nullable();
             $table->string('case_number', 100)->nullable();
             $table->string('case_title', 255)->nullable();
             $table->string('case_type', 100)->nullable();
-            $table->date('registration_date')->nullable();
-            $table->date('closing_date')->nullable();
-            $table->string('status', 50)->default('open');
-            $table->string('judge_name', 255)->nullable();
-            $table->string('plaintiff', 255)->nullable();
-            $table->string('defendant', 255)->nullable();
-            $table->decimal('claim_amount', 15, 2)->nullable();
-            $table->text('decision')->nullable();
-            $table->string('sync_status', 50)->default('pending');
-            $table->timestamp('last_synced_at')->nullable();
+            $table->date('register_date')->nullable();
+            $table->string('register_number', 100)->nullable();
+            $table->enum('case_status', ['pending', 'in_progress', 'postponed', 'closed'])->default('pending');
+            $table->enum('priority', ['normal', 'high', 'urgent'])->default('normal');
+            $table->json('plaintiff')->nullable();
+            $table->json('defendant')->nullable();
+            $table->json('attorney')->nullable();
+            $table->text('subject_matter')->nullable();
+            $table->date('last_hearing_date')->nullable();
+            $table->date('next_hearing_date')->nullable();
+            $table->date('final_decision_date')->nullable();
+            $table->text('decision_summary')->nullable();
+            $table->json('document_references')->nullable();
+            $table->timestamp('last_sync_at')->nullable();
+            $table->enum('sync_status', ['pending', 'success', 'error'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('sipp_case_id');
+            $table->index('external_id');
             $table->index('case_number');
             $table->index('case_type');
-            $table->index('status');
-            $table->index('registration_date');
-            $table->index(['status', 'registration_date']);
+            $table->index('case_status');
+            $table->index('register_date');
+            $table->index('sync_status');
+            $table->index(['case_status', 'register_date']);
         });
     }
 

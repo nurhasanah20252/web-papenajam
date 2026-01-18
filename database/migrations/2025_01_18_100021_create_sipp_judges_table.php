@@ -13,15 +13,20 @@ return new class extends Migration
     {
         Schema::create('sipp_judges', function (Blueprint $table) {
             $table->id();
-            $table->string('sipp_id', 100)->nullable()->unique();
-            $table->string('name', 255);
-            $table->string('position', 100)->nullable();
-            $table->string('court_name', 255)->nullable();
+            $table->string('external_id', 100)->nullable();
+            $table->string('judge_code', 50)->nullable();
+            $table->string('full_name', 255);
+            $table->string('title', 100)->nullable();
+            $table->string('specialization', 100)->nullable();
+            $table->string('chamber', 50)->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->timestamp('last_sync_at')->nullable();
             $table->timestamps();
 
-            $table->index('sipp_id');
-            $table->index('name');
-            $table->index('position');
+            $table->index('external_id');
+            $table->index('judge_code');
+            $table->index('full_name');
+            $table->index('is_active');
         });
     }
 

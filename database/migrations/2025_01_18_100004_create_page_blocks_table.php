@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('page_id')->constrained('pages')->onDelete('cascade');
             $table->string('type', 100);
             $table->json('content')->nullable();
+            $table->json('settings')->nullable();
             $table->unsignedInteger('order')->default(0);
             $table->foreignId('parent_id')->nullable()->constrained('page_blocks')->onDelete('cascade');
             $table->timestamps();

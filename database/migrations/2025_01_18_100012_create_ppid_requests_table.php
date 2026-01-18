@@ -26,11 +26,17 @@ return new class extends Migration
             $table->text('response')->nullable();
             $table->timestamp('responded_at')->nullable();
             $table->foreignId('processed_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->json('attachments')->nullable();
+            $table->enum('priority', ['normal', 'high'])->default('normal');
+            $table->json('notes')->nullable();
             $table->timestamps();
 
             $table->index('status');
+            $table->index('priority');
             $table->index('request_number');
+            $table->index('email');
             $table->index('created_at');
+            $table->index(['status', 'priority', 'created_at']);
         });
     }
 

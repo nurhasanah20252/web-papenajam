@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('location', 100)->nullable();
-            $table->unsignedInteger('max_depth')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->string('location', 100);
+            $table->unsignedInteger('max_depth')->default(3);
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table->unique('location');

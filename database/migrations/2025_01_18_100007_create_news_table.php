@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('author_id')->nullable()->constrained('users')->onDelete('set null');
             $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
             $table->timestamp('published_at')->nullable();
+            $table->json('tags')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

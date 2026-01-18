@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('slug', 255)->unique();
             $table->text('description')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('set null');
+            $table->enum('type', ['news', 'document', 'page', 'budget'])->default('news');
+            $table->string('icon', 100)->nullable();
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
         });

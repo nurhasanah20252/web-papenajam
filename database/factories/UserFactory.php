@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -32,6 +33,10 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
+            'role' => UserRole::Author,
+            'permissions' => [],
+            'last_login_at' => null,
+            'profile_completed' => false,
         ];
     }
 
@@ -54,6 +59,76 @@ class UserFactory extends Factory
             'two_factor_secret' => encrypt('secret'),
             'two_factor_recovery_codes' => encrypt(json_encode(['recovery-code-1'])),
             'two_factor_confirmed_at' => now(),
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a super admin.
+     */
+    public function superAdmin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::SuperAdmin,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is an admin.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::Admin,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is an author.
+     */
+    public function author(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::Author,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a designer.
+     */
+    public function designer(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::Designer,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a subscriber.
+     */
+    public function subscriber(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::Subscriber,
+        ]);
+    }
+
+    /**
+     * Indicate that the user has completed their profile.
+     */
+    public function profileCompleted(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'profile_completed' => true,
+        ]);
+    }
+
+    /**
+     * Indicate that the user has logged in.
+     */
+    public function loggedIn(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'last_login_at' => now(),
         ]);
     }
 }
