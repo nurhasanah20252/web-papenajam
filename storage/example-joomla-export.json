@@ -1,0 +1,173 @@
+{
+    "metadata": {
+        "source": "Joomla 3.x",
+        "export_date": "2025-01-18",
+        "version": "1.0"
+    },
+    "categories": [
+        {
+            "id": 1,
+            "title": "Berita Pengadilan",
+            "alias": "berita-pengadilan",
+            "description": "Berita dan pengumuman dari Pengadilan Agama Penajam",
+            "parent_id": 0,
+            "level": 0,
+            "extension": "com_content",
+            "published": 1,
+            "params": {
+                "description": "",
+                "image": ""
+            }
+        },
+        {
+            "id": 2,
+            "title": "Layanan",
+            "alias": "layanan",
+            "description": "Informasi layanan Pengadilan Agama Penajam",
+            "parent_id": 0,
+            "level": 0,
+            "extension": "com_content",
+            "published": 1
+        }
+    ],
+    "articles": [
+        {
+            "id": 1,
+            "title": "Profil Pengadilan Agama Penajam",
+            "alias": "profil-pengadilan-agama-penajam",
+            "introtext": "<p>Pengadilan Agama Penajam merupakan pengadilan tingkat pertama...</p>",
+            "fulltext": "",
+            "state": 1,
+            "catid": 2,
+            "created": "2024-01-15 10:00:00",
+            "modified": "2024-06-20 14:30:00",
+            "publish_up": "2024-01-15 10:00:00",
+            "publish_down": "0000-00-00 00:00:00",
+            "created_by": 62,
+            "modified_by": 62,
+            "hits": 1500,
+            "images": {
+                "image_intro": "/images/headers/court.jpg",
+                "image_fulltext": "",
+                "float_intro": "left",
+                "float_fulltext": "left",
+                "image_intro_alt": "Gedung Pengadilan",
+                "image_intro_caption": "",
+                "image_fulltext_alt": "",
+                "image_fulltext_caption": ""
+            },
+            "metadata": {
+                "robots": "index, follow",
+                "author": "Admin",
+                "rights": ""
+            }
+        }
+    ],
+    "news": [
+        {
+            "id": 101,
+            "title": "Pengumuman Libur Nasional",
+            "alias": "pengumuman-libur-nasional",
+            "introtext": "<p>Dalam rangka memperingati hari libur nasional...</p>",
+            "fulltext": "<p>Detail pengumuman...</p>",
+            "state": 1,
+            "catid": 1,
+            "created": "2024-12-01 08:00:00",
+            "publish_up": "2024-12-01 08:00:00",
+            "created_by": 62,
+            "hits": 500,
+            "featured": 1,
+            "frontpage": 1,
+            "images": {
+                "image_intro": "/images/news/announcement.jpg"
+            }
+        }
+    ],
+    "menus": [
+        {
+            "id": 1,
+            "title": "Main Menu",
+            "menutype": "main",
+            "description": "Menu utama сайта"
+        },
+        {
+            "id": 2,
+            "title": "Footer Menu",
+            "menutype": "footer",
+            "description": "Menu footer"
+        }
+    ],
+    "menu_items": [
+        {
+            "id": 1,
+            "title": "Beranda",
+            "alias": "home",
+            "menutype": "main",
+            "link": "index.php?option=com_content&view=featured",
+            "type": "component",
+            "published": 1,
+            "parent_id": 0,
+            "level": 1,
+            "params": {
+                "menu_image": -1,
+                "menu_item_css_class": "",
+                "target": "",
+                "anchor_css": ""
+            }
+        },
+        {
+            "id": 2,
+            "title": "Profil",
+            "alias": "profile",
+            "menutype": "main",
+            "link": "index.php?option=com_content&view=category&id=2",
+            "type": "component",
+            "published": 1,
+            "parent_id": 0,
+            "level": 1,
+            "params": {
+                "menu_image": -1
+            }
+        },
+        {
+            "id": 3,
+            "title": "Sejarah",
+            "alias": "history",
+            "menutype": "main",
+            "link": "index.php?option=com_content&view=article&id=1",
+            "type": "component",
+            "published": 1,
+            "parent_id": 2,
+            "level": 2,
+            "params": {}
+        }
+    ],
+    "documents": [
+        {
+            "id": 1,
+            "title": "Peraturan Mahkamah Agung",
+            "filename": "documents/perm-ma-1-2024.pdf",
+            "description": "Peraturan Mahkamah Agung Nomor 1 Tahun 2024",
+            "filesize": 1024000,
+            "catid": 3,
+            "state": 1,
+            "access": 1,
+            "created": "2024-01-01 00:00:00",
+            "created_by": 62,
+            "hits": 250
+        },
+        {
+            "id": 2,
+            "title": "Formulir Permohonan",
+            "filename": "documents/form-pdf-01.pdf",
+            "description": "Formulir permohonan perkara",
+            "filesize": 512000,
+            "catid": 4,
+            "state": 1,
+            "access": 1,
+            "created": "2024-02-15 00:00:00",
+            "created_by": 62,
+            "hits": 180
+        }
+    ]
+}

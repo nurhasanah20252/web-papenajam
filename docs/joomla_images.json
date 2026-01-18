@@ -1,0 +1,145 @@
+[
+    {
+        "type": "cis_slider",
+        "id": 1,
+        "name": "Tata Nilai Utama MA",
+        "path": "images/slidetatanilai/tata-nilai-ma-pa-penajam.jpg",
+        "url": "http://creative-solutions.net/images/sliders/face-to-face-with-nature/item1-tmb.jpg"
+    },
+    {
+        "type": "cis_slider",
+        "id": 2,
+        "name": "Kemandirian",
+        "path": "images/slidetatanilai/tata-nilai-ma-pa-penajam-1.jpg",
+        "url": "http://creative-solutions.net/images/sliders/face-to-face-with-nature/item2-tmb.jpg"
+    },
+    {
+        "type": "cis_slider",
+        "id": 3,
+        "name": "Integritas",
+        "path": "images/slidetatanilai/tata-nilai-ma-pa-penajam-2.jpg",
+        "url": "http://creative-solutions.net/images/sliders/face-to-face-with-nature/item3-tmb.jpg"
+    },
+    {
+        "type": "cis_slider",
+        "id": 4,
+        "name": "Kejujuran",
+        "path": "images/slidetatanilai/tata-nilai-ma-pa-penajam-3.jpg",
+        "url": "http://creative-solutions.net/images/sliders/face-to-face-with-nature/item4-tmb.jpg"
+    },
+    {
+        "type": "cis_slider",
+        "id": 5,
+        "name": "Akuntabilitas",
+        "path": "images/slidetatanilai/tata-nilai-ma-pa-penajam-4.jpg",
+        "url": "http://creative-solutions.net/images/sliders/face-to-face-with-nature/item5-tmb.jpg"
+    },
+    {
+        "type": "content_intro",
+        "article_id": 11,
+        "url": "images/sampledata/parks/landscape/250px_cradle_mountain_seen_from_barn_bluff.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 11,
+        "url": "images/sampledata/parks/landscape/800px_cradle_mountain_seen_from_barn_bluff.jpg",
+        "caption": "Source: http://commons.wikimedia.org/wiki/File:Rainforest,bluemountainsNSW.jpg Author: Alan J.W.C. License: GNU Free Documentation License v . 1.2 or later"
+    },
+    {
+        "type": "content_intro",
+        "article_id": 25,
+        "url": "images/sampledata/parks/animals/180px_koala_ag1.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 25,
+        "url": "images/sampledata/parks/animals/800px_koala_ag1.jpg",
+        "caption": "Source: http://commons.wikimedia.org/wiki/File:Koala-ag1.jpg Author: Arnaud Gaillard License: Creative Commons Share Alike Attribution Generic 1.0"
+    },
+    {
+        "type": "content_intro",
+        "article_id": 33,
+        "url": "images/sampledata/parks/animals/200px_phyllopteryx_taeniolatus1.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 33,
+        "url": "images/sampledata/parks/animals/800px_phyllopteryx_taeniolatus1.jpg",
+        "caption": "Source: http://en.wikipedia.org/wiki/File:Phyllopteryx_taeniolatus1.jpg Author: Richard Ling License: GNU Free Documentation License v 1.2 or later"
+    },
+    {
+        "type": "content_intro",
+        "article_id": 34,
+        "url": "images/sampledata/parks/landscape/120px_pinnacles_western_australia.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 34,
+        "url": "images/sampledata/parks/landscape/800px_pinnacles_western_australia.jpg",
+        "caption": "Source: http://commons.wikimedia.org/wiki/File:Pinnacles_Western_Australia.jpg  Author: Martin Gloss  License: GNU Free Documentation license v 1.2 or later."
+    },
+    {
+        "type": "content_intro",
+        "article_id": 43,
+        "url": "images/sampledata/parks/animals/220px_spottedquoll_2005_seanmcclean.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 43,
+        "url": "images/sampledata/parks/animals/789px_spottedquoll_2005_seanmcclean.jpg",
+        "caption": "Source: http://en.wikipedia.org/wiki/File:SpottedQuoll_2005_SeanMcClean.jpg Author: Sean McClean License: GNU Free Documentation License v 1.2 or later"
+    },
+    {
+        "type": "content_intro",
+        "article_id": 57,
+        "url": "images/sampledata/parks/animals/180px_wobbegong.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 57,
+        "url": "images/sampledata/parks/animals/800px_wobbegong.jpg",
+        "caption": "Source: http://en.wikipedia.org/wiki/File:Wobbegong.jpg Author: Richard Ling Rights: GNU Free Documentation License v 1.2 or later"
+    },
+    {
+        "type": "content_intro",
+        "article_id": 64,
+        "url": "images/sampledata/parks/landscape/120px_rainforest_bluemountainsnsw.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 64,
+        "url": "images/sampledata/parks/landscape/727px_rainforest_bluemountainsnsw.jpg",
+        "caption": "Source: http://commons.wikimedia.org/wiki/File:Rainforest,bluemountainsNSW.jpg Author: Adam J.W.C. License: GNU Free Documentation License"
+    },
+    {
+        "type": "content_intro",
+        "article_id": 65,
+        "url": "images/sampledata/parks/landscape/180px_ormiston_pound.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_full",
+        "article_id": 65,
+        "url": "images/sampledata/parks/landscape/800px_ormiston_pound.jpg",
+        "caption": "Source: http://commons.wikimedia.org/wiki/File:Ormiston_Pound.JPG Author: License: GNU Free Public Documentation License"
+    },
+    {
+        "type": "content_full",
+        "article_id": 1201,
+        "url": "images/foto_berita/bimtek_2.jpg",
+        "caption": ""
+    },
+    {
+        "type": "content_intro",
+        "article_id": 1204,
+        "url": "images/foto_berita/monitoring_bcc2.jpg",
+        "caption": ""
+    }
+]

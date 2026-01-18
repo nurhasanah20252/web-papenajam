@@ -1,0 +1,686 @@
+[
+    {
+        "id": 1,
+        "parent_id": 0,
+        "title": "ROOT",
+        "extension": "system"
+    },
+    {
+        "id": 9,
+        "parent_id": 1,
+        "title": "Uncategorised",
+        "extension": "com_content"
+    },
+    {
+        "id": 10,
+        "parent_id": 1,
+        "title": "Uncategorised",
+        "extension": "com_banners"
+    },
+    {
+        "id": 11,
+        "parent_id": 1,
+        "title": "Uncategorised",
+        "extension": "com_contact"
+    },
+    {
+        "id": 12,
+        "parent_id": 1,
+        "title": "Uncategorised",
+        "extension": "com_newsfeeds"
+    },
+    {
+        "id": 14,
+        "parent_id": 1,
+        "title": "Sample Data-Articles",
+        "extension": "com_content"
+    },
+    {
+        "id": 15,
+        "parent_id": 1,
+        "title": "Sample Data-Banners",
+        "extension": "com_banners"
+    },
+    {
+        "id": 16,
+        "parent_id": 1,
+        "title": "Sample Data-Contact",
+        "extension": "com_contact"
+    },
+    {
+        "id": 17,
+        "parent_id": 1,
+        "title": "Sample Data-Newsfeeds",
+        "extension": "com_newsfeeds"
+    },
+    {
+        "id": 19,
+        "parent_id": 14,
+        "title": "Joomla!",
+        "extension": "com_content"
+    },
+    {
+        "id": 20,
+        "parent_id": 19,
+        "title": "Extensions",
+        "extension": "com_content"
+    },
+    {
+        "id": 21,
+        "parent_id": 20,
+        "title": "Components",
+        "extension": "com_content"
+    },
+    {
+        "id": 22,
+        "parent_id": 20,
+        "title": "Modules",
+        "extension": "com_content"
+    },
+    {
+        "id": 23,
+        "parent_id": 20,
+        "title": "Templates",
+        "extension": "com_content"
+    },
+    {
+        "id": 24,
+        "parent_id": 20,
+        "title": "Languages",
+        "extension": "com_content"
+    },
+    {
+        "id": 25,
+        "parent_id": 20,
+        "title": "Plugins",
+        "extension": "com_content"
+    },
+    {
+        "id": 26,
+        "parent_id": 14,
+        "title": "Park Site",
+        "extension": "com_content"
+    },
+    {
+        "id": 27,
+        "parent_id": 26,
+        "title": "Park Blog",
+        "extension": "com_content"
+    },
+    {
+        "id": 28,
+        "parent_id": 26,
+        "title": "Photo Gallery",
+        "extension": "com_content"
+    },
+    {
+        "id": 29,
+        "parent_id": 14,
+        "title": "Fruit Shop Site",
+        "extension": "com_content"
+    },
+    {
+        "id": 30,
+        "parent_id": 29,
+        "title": "Growers",
+        "extension": "com_content"
+    },
+    {
+        "id": 34,
+        "parent_id": 16,
+        "title": "Park Site",
+        "extension": "com_contact"
+    },
+    {
+        "id": 35,
+        "parent_id": 16,
+        "title": "Shop Site",
+        "extension": "com_contact"
+    },
+    {
+        "id": 36,
+        "parent_id": 35,
+        "title": "Staff",
+        "extension": "com_contact"
+    },
+    {
+        "id": 37,
+        "parent_id": 35,
+        "title": "Fruit Encyclopedia",
+        "extension": "com_contact"
+    },
+    {
+        "id": 38,
+        "parent_id": 37,
+        "title": "A",
+        "extension": "com_contact"
+    },
+    {
+        "id": 39,
+        "parent_id": 37,
+        "title": "B",
+        "extension": "com_contact"
+    },
+    {
+        "id": 40,
+        "parent_id": 37,
+        "title": "C",
+        "extension": "com_contact"
+    },
+    {
+        "id": 41,
+        "parent_id": 37,
+        "title": "D",
+        "extension": "com_contact"
+    },
+    {
+        "id": 42,
+        "parent_id": 37,
+        "title": "E",
+        "extension": "com_contact"
+    },
+    {
+        "id": 43,
+        "parent_id": 37,
+        "title": "F",
+        "extension": "com_contact"
+    },
+    {
+        "id": 44,
+        "parent_id": 37,
+        "title": "G",
+        "extension": "com_contact"
+    },
+    {
+        "id": 45,
+        "parent_id": 37,
+        "title": "H",
+        "extension": "com_contact"
+    },
+    {
+        "id": 46,
+        "parent_id": 37,
+        "title": "I",
+        "extension": "com_contact"
+    },
+    {
+        "id": 47,
+        "parent_id": 37,
+        "title": "J",
+        "extension": "com_contact"
+    },
+    {
+        "id": 48,
+        "parent_id": 37,
+        "title": "K",
+        "extension": "com_contact"
+    },
+    {
+        "id": 49,
+        "parent_id": 37,
+        "title": "L",
+        "extension": "com_contact"
+    },
+    {
+        "id": 50,
+        "parent_id": 37,
+        "title": "M",
+        "extension": "com_contact"
+    },
+    {
+        "id": 51,
+        "parent_id": 37,
+        "title": "N",
+        "extension": "com_contact"
+    },
+    {
+        "id": 52,
+        "parent_id": 37,
+        "title": "O",
+        "extension": "com_contact"
+    },
+    {
+        "id": 53,
+        "parent_id": 37,
+        "title": "P",
+        "extension": "com_contact"
+    },
+    {
+        "id": 54,
+        "parent_id": 37,
+        "title": "Q",
+        "extension": "com_contact"
+    },
+    {
+        "id": 55,
+        "parent_id": 37,
+        "title": "R",
+        "extension": "com_contact"
+    },
+    {
+        "id": 56,
+        "parent_id": 37,
+        "title": "S",
+        "extension": "com_contact"
+    },
+    {
+        "id": 57,
+        "parent_id": 37,
+        "title": "T",
+        "extension": "com_contact"
+    },
+    {
+        "id": 58,
+        "parent_id": 37,
+        "title": "U",
+        "extension": "com_contact"
+    },
+    {
+        "id": 59,
+        "parent_id": 37,
+        "title": "V",
+        "extension": "com_contact"
+    },
+    {
+        "id": 60,
+        "parent_id": 37,
+        "title": "W",
+        "extension": "com_contact"
+    },
+    {
+        "id": 61,
+        "parent_id": 37,
+        "title": "X",
+        "extension": "com_contact"
+    },
+    {
+        "id": 62,
+        "parent_id": 37,
+        "title": "Y",
+        "extension": "com_contact"
+    },
+    {
+        "id": 63,
+        "parent_id": 37,
+        "title": "Z",
+        "extension": "com_contact"
+    },
+    {
+        "id": 64,
+        "parent_id": 22,
+        "title": "Content Modules",
+        "extension": "com_content"
+    },
+    {
+        "id": 65,
+        "parent_id": 22,
+        "title": "User Modules",
+        "extension": "com_content"
+    },
+    {
+        "id": 66,
+        "parent_id": 22,
+        "title": "Display Modules",
+        "extension": "com_content"
+    },
+    {
+        "id": 67,
+        "parent_id": 22,
+        "title": "Utility Modules",
+        "extension": "com_content"
+    },
+    {
+        "id": 68,
+        "parent_id": 23,
+        "title": "Atomic",
+        "extension": "com_content"
+    },
+    {
+        "id": 69,
+        "parent_id": 23,
+        "title": "Beez 20",
+        "extension": "com_content"
+    },
+    {
+        "id": 70,
+        "parent_id": 23,
+        "title": "Beez 5",
+        "extension": "com_content"
+    },
+    {
+        "id": 72,
+        "parent_id": 28,
+        "title": "Animals",
+        "extension": "com_content"
+    },
+    {
+        "id": 73,
+        "parent_id": 28,
+        "title": "Scenery",
+        "extension": "com_content"
+    },
+    {
+        "id": 75,
+        "parent_id": 22,
+        "title": "Navigation Modules",
+        "extension": "com_content"
+    },
+    {
+        "id": 76,
+        "parent_id": 29,
+        "title": "Recipes",
+        "extension": "com_content"
+    },
+    {
+        "id": 77,
+        "parent_id": 1,
+        "title": "Uncategorised",
+        "extension": "com_users"
+    },
+    {
+        "id": 78,
+        "parent_id": 1,
+        "title": "Tentang Pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 79,
+        "parent_id": 78,
+        "title": "Pengantar dari ketua pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 80,
+        "parent_id": 78,
+        "title": "Visi Misi Pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 81,
+        "parent_id": 78,
+        "title": "Profil Pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 88,
+        "parent_id": 78,
+        "title": "Kepaniteraan",
+        "extension": "com_content"
+    },
+    {
+        "id": 92,
+        "parent_id": 78,
+        "title": "Sistem Pengelolaan Pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 98,
+        "parent_id": 78,
+        "title": "Survey Kepuasan Publik",
+        "extension": "com_content"
+    },
+    {
+        "id": 99,
+        "parent_id": 1,
+        "title": "Layanan Publik",
+        "extension": "com_content"
+    },
+    {
+        "id": 100,
+        "parent_id": 99,
+        "title": "Informasi layanan Pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 101,
+        "parent_id": 99,
+        "title": "Layanan Informasi Publik",
+        "extension": "com_content"
+    },
+    {
+        "id": 102,
+        "parent_id": 99,
+        "title": "Layanan Informasi Perkara",
+        "extension": "com_content"
+    },
+    {
+        "id": 103,
+        "parent_id": 99,
+        "title": "Laporan",
+        "extension": "com_content"
+    },
+    {
+        "id": 104,
+        "parent_id": 99,
+        "title": "Pengumuman",
+        "extension": "com_content"
+    },
+    {
+        "id": 105,
+        "parent_id": 99,
+        "title": "Pengaduan Layanan Publik",
+        "extension": "com_content"
+    },
+    {
+        "id": 106,
+        "parent_id": 1,
+        "title": "Layanan Hukum",
+        "extension": "com_content"
+    },
+    {
+        "id": 107,
+        "parent_id": 106,
+        "title": "Layanan Hukum Bagi Masyarakat Kurang Mampu",
+        "extension": "com_content"
+    },
+    {
+        "id": 108,
+        "parent_id": 106,
+        "title": "Prosedur Pengajuan dan Biaya Berperkara",
+        "extension": "com_content"
+    },
+    {
+        "id": 109,
+        "parent_id": 1,
+        "title": "Berita",
+        "extension": "com_content"
+    },
+    {
+        "id": 110,
+        "parent_id": 1,
+        "title": "Hubungi Kami",
+        "extension": "com_content"
+    },
+    {
+        "id": 114,
+        "parent_id": 1,
+        "title": "Informasi Pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 115,
+        "parent_id": 1,
+        "title": "Berita Seputar Pengadilan",
+        "extension": "com_content"
+    },
+    {
+        "id": 116,
+        "parent_id": 1,
+        "title": "Tabs",
+        "extension": "com_content"
+    },
+    {
+        "id": 117,
+        "parent_id": 1,
+        "title": "DEFAULT",
+        "extension": "com_jevents"
+    },
+    {
+        "id": 121,
+        "parent_id": 1,
+        "title": "Basic",
+        "extension": "com_rokcandy"
+    },
+    {
+        "id": 122,
+        "parent_id": 1,
+        "title": "Typography",
+        "extension": "com_rokcandy"
+    },
+    {
+        "id": 123,
+        "parent_id": 1,
+        "title": "Uncategorised",
+        "extension": "com_rokcandy"
+    },
+    {
+        "id": 125,
+        "parent_id": 1,
+        "title": "Data Pegawai",
+        "extension": "com_content"
+    },
+    {
+        "id": 127,
+        "parent_id": 125,
+        "title": "Kesekretariatan",
+        "extension": "com_content"
+    },
+    {
+        "id": 130,
+        "parent_id": 1,
+        "title": "Peraturan",
+        "extension": "com_content"
+    },
+    {
+        "id": 141,
+        "parent_id": 127,
+        "title": "Sekretaris",
+        "extension": "com_content"
+    },
+    {
+        "id": 143,
+        "parent_id": 1,
+        "title": "Laporan keuangan dipa",
+        "extension": "com_content"
+    },
+    {
+        "id": 144,
+        "parent_id": 1,
+        "title": "Laporan Keuangan Perkara",
+        "extension": "com_content"
+    },
+    {
+        "id": 145,
+        "parent_id": 1,
+        "title": "laporan perkara",
+        "extension": "com_content"
+    },
+    {
+        "id": 146,
+        "parent_id": 1,
+        "title": "Lhkpn",
+        "extension": "com_content"
+    },
+    {
+        "id": 154,
+        "parent_id": 1,
+        "title": "Radius dan Panjar Biaya Perkara",
+        "extension": "com_content"
+    },
+    {
+        "id": 155,
+        "parent_id": 1,
+        "title": "Mediasi",
+        "extension": "com_content"
+    },
+    {
+        "id": 156,
+        "parent_id": 1,
+        "title": "Profil Pegawai",
+        "extension": "com_content"
+    },
+    {
+        "id": 157,
+        "parent_id": 1,
+        "title": "S O P",
+        "extension": "com_content"
+    },
+    {
+        "id": 158,
+        "parent_id": 1,
+        "title": "Kode Etik",
+        "extension": "com_content"
+    },
+    {
+        "id": 159,
+        "parent_id": 160,
+        "title": "Transparansi Kesekretariatan",
+        "extension": "com_content"
+    },
+    {
+        "id": 160,
+        "parent_id": 1,
+        "title": "Transparansi",
+        "extension": "com_content"
+    },
+    {
+        "id": 161,
+        "parent_id": 160,
+        "title": "Transparansi Kepaniteraan",
+        "extension": "com_content"
+    },
+    {
+        "id": 162,
+        "parent_id": 1,
+        "title": "Statistik Perkara",
+        "extension": "com_content"
+    },
+    {
+        "id": 163,
+        "parent_id": 1,
+        "title": "slide tata",
+        "extension": "com_djimageslider"
+    },
+    {
+        "id": 164,
+        "parent_id": 1,
+        "title": "Berita Badilag",
+        "extension": "com_content"
+    },
+    {
+        "id": 165,
+        "parent_id": 1,
+        "title": "Pengumuman new",
+        "extension": "com_content"
+    },
+    {
+        "id": 166,
+        "parent_id": 1,
+        "title": "Reformasi Birokrasi",
+        "extension": "com_content"
+    },
+    {
+        "id": 169,
+        "parent_id": 1,
+        "title": "Agenda Kegiatan",
+        "extension": "com_content"
+    },
+    {
+        "id": 170,
+        "parent_id": 1,
+        "title": "File Multimedia",
+        "extension": "com_content"
+    },
+    {
+        "id": 171,
+        "parent_id": 1,
+        "title": "admin",
+        "extension": "com_content"
+    },
+    {
+        "id": 172,
+        "parent_id": 159,
+        "title": "laporan tahunan",
+        "extension": "com_content"
+    }
+]

@@ -1,0 +1,3368 @@
+[
+    {
+        "id": 1,
+        "title": "Menu_Item_Root",
+        "menutype": "",
+        "link": "",
+        "parent_id": 0,
+        "level": 0,
+        "published": 1
+    },
+    {
+        "id": 2,
+        "title": "com_banners",
+        "menutype": "main",
+        "link": "index.php?option=com_banners",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 3,
+        "title": "com_banners",
+        "menutype": "main",
+        "link": "index.php?option=com_banners",
+        "parent_id": 2,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 4,
+        "title": "com_banners_categories",
+        "menutype": "main",
+        "link": "index.php?option=com_categories&extension=com_banners",
+        "parent_id": 2,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 5,
+        "title": "com_banners_clients",
+        "menutype": "main",
+        "link": "index.php?option=com_banners&view=clients",
+        "parent_id": 2,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 6,
+        "title": "com_banners_tracks",
+        "menutype": "main",
+        "link": "index.php?option=com_banners&view=tracks",
+        "parent_id": 2,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 7,
+        "title": "com_contact",
+        "menutype": "main",
+        "link": "index.php?option=com_contact",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 8,
+        "title": "com_contact",
+        "menutype": "main",
+        "link": "index.php?option=com_contact",
+        "parent_id": 7,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 9,
+        "title": "com_contact_categories",
+        "menutype": "main",
+        "link": "index.php?option=com_categories&extension=com_contact",
+        "parent_id": 7,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 10,
+        "title": "com_messages",
+        "menutype": "main",
+        "link": "index.php?option=com_messages",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 11,
+        "title": "com_messages_add",
+        "menutype": "main",
+        "link": "index.php?option=com_messages&task=message.add",
+        "parent_id": 10,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 13,
+        "title": "com_newsfeeds",
+        "menutype": "main",
+        "link": "index.php?option=com_newsfeeds",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 14,
+        "title": "com_newsfeeds_feeds",
+        "menutype": "main",
+        "link": "index.php?option=com_newsfeeds",
+        "parent_id": 13,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 15,
+        "title": "com_newsfeeds_categories",
+        "menutype": "main",
+        "link": "index.php?option=com_categories&extension=com_newsfeeds",
+        "parent_id": 13,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 16,
+        "title": "com_redirect",
+        "menutype": "main",
+        "link": "index.php?option=com_redirect",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 17,
+        "title": "com_search",
+        "menutype": "main",
+        "link": "index.php?option=com_search",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 21,
+        "title": "com_finder",
+        "menutype": "main",
+        "link": "index.php?option=com_finder",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 22,
+        "title": "com_joomlaupdate",
+        "menutype": "main",
+        "link": "index.php?option=com_joomlaupdate",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 233,
+        "title": "Profil || PA Penajam",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 238,
+        "title": "Sample Sites",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=38",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 435,
+        "title": "Beranda",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=featured",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 445,
+        "title": "Parks",
+        "menutype": "mainmenu",
+        "link": "index.php?Itemid=",
+        "parent_id": 238,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 446,
+        "title": "Shop",
+        "menutype": "mainmenu",
+        "link": "index.php?Itemid=",
+        "parent_id": 238,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 448,
+        "title": "Site Administrator",
+        "menutype": "mainmenu",
+        "link": "administrator",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 470,
+        "title": "com_tags",
+        "menutype": "main",
+        "link": "index.php?option=com_tags",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 471,
+        "title": "com_postinstall",
+        "menutype": "main",
+        "link": "index.php?option=com_postinstall",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 479,
+        "title": "COM_WIDGETKIT",
+        "menutype": "main",
+        "link": "index.php?option=com_widgetkit",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 480,
+        "title": "COM_JCE",
+        "menutype": "main",
+        "link": "index.php?option=com_jce",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 481,
+        "title": "COM_JCE_MENU_CPANEL",
+        "menutype": "main",
+        "link": "index.php?option=com_jce",
+        "parent_id": 480,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 482,
+        "title": "COM_JCE_MENU_CONFIG",
+        "menutype": "main",
+        "link": "index.php?option=com_jce&view=config",
+        "parent_id": 480,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 483,
+        "title": "COM_JCE_MENU_PROFILES",
+        "menutype": "main",
+        "link": "index.php?option=com_jce&view=profiles",
+        "parent_id": 480,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 484,
+        "title": "RokGallery",
+        "menutype": "main",
+        "link": "index.php?option=com_rokgallery",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 485,
+        "title": "Layanan Publik || Informasi/Pengaduan",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 486,
+        "title": "Layanan Hukum || Prosedur & Bantuan Hukum",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 487,
+        "title": "Berita || Seputar Pengadilan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=category&id=115",
+        "parent_id": 1,
+        "level": 1,
+        "published": 0
+    },
+    {
+        "id": 488,
+        "title": "Hubungi Kami || Kontak Satker",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 0
+    },
+    {
+        "id": 489,
+        "title": "Kata Pengantar",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=73",
+        "parent_id": 233,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 490,
+        "title": "Visi dan Misi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=74",
+        "parent_id": 491,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 491,
+        "title": "Profil Pengadilan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=74",
+        "parent_id": 233,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 492,
+        "title": "Sejarah Pengadilan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=75",
+        "parent_id": 491,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 493,
+        "title": "Struktur Organisasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=77",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 494,
+        "title": "Alamat Pengadilan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=79",
+        "parent_id": 491,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 495,
+        "title": "Statistik Pegawai",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=78",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 496,
+        "title": "Wilayah Yurisdiksi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=80",
+        "parent_id": 491,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 497,
+        "title": "Profil Pegawai",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 233,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 498,
+        "title": "Sistem Pengelolaan Pengadilan",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 233,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 499,
+        "title": "E Learning",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=84",
+        "parent_id": 498,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 500,
+        "title": "Kebijakan dan Peraturan Pengadilan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=85",
+        "parent_id": 498,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 501,
+        "title": "Yurisprudensi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=86",
+        "parent_id": 498,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 502,
+        "title": "Rencana Strategis",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=87",
+        "parent_id": 498,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 503,
+        "title": "Rencana Kerja dan Anggaran",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=88",
+        "parent_id": 498,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 504,
+        "title": "Pengawasan dan Kode Etik Hakim",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=89",
+        "parent_id": 498,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 505,
+        "title": "Survey Pelayanan Publik",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=90",
+        "parent_id": 506,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 506,
+        "title": "Informasi Layanan Pengadilan",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 507,
+        "title": "Jam Kerja Kantor",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=91",
+        "parent_id": 506,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 508,
+        "title": "Tata Tertib Persidangan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=92",
+        "parent_id": 506,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 509,
+        "title": "Informasi Pelayanan SMS",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=93",
+        "parent_id": 506,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 510,
+        "title": "Informasi Publik dan Pengaduan",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 511,
+        "title": "Tata Cara Keberatan Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=94",
+        "parent_id": 510,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 512,
+        "title": "Kategorisasi Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=95",
+        "parent_id": 510,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 513,
+        "title": "Prosedur Permohonan Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=96",
+        "parent_id": 510,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 514,
+        "title": "Layanan dan Pengaduan",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 485,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 515,
+        "title": "Jadwal Sidang",
+        "menutype": "mainmenu",
+        "link": "http://sipp.pa-penajam.go.id/list_jadwal_sidang",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 516,
+        "title": "Penelusuran Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=97",
+        "parent_id": 514,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 517,
+        "title": "Direktori Putusan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=99",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 518,
+        "title": "Delegasi Masuk",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=724",
+        "parent_id": 797,
+        "level": 4,
+        "published": 0
+    },
+    {
+        "id": 519,
+        "title": "Laporan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article",
+        "parent_id": 485,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 520,
+        "title": "Laporan Tahunan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=104",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 521,
+        "title": "LKJiP",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=164",
+        "parent_id": 628,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 522,
+        "title": "LHKPN",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=106",
+        "parent_id": 600,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 523,
+        "title": "Daftar Aset Negara (BMN)",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=103",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 524,
+        "title": "Laporan Pelayanan Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=105",
+        "parent_id": 510,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 525,
+        "title": "Pengumuman",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 485,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 526,
+        "title": "Pengadaan Barang dan Jasa",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=107",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 527,
+        "title": "Kegiatan Pengadilan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=108",
+        "parent_id": 233,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 528,
+        "title": "Pengaduan Layanan Publik",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=109",
+        "parent_id": 514,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 529,
+        "title": "Prosedur Berperkara",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 486,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 530,
+        "title": "Prosedur",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=669",
+        "parent_id": 529,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 531,
+        "title": "Biaya",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=111",
+        "parent_id": 529,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 532,
+        "title": "Pos Bantuan Hukum",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=112",
+        "parent_id": 727,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 533,
+        "title": "Peraturan dan Kebijakan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=113",
+        "parent_id": 529,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 534,
+        "title": "Pengawasan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=114",
+        "parent_id": 529,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 535,
+        "title": "Panjar Biaya Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=176",
+        "parent_id": 486,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 536,
+        "title": "Berita Terkini",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=category&id=115",
+        "parent_id": 487,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 537,
+        "title": "Media Center",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=117",
+        "parent_id": 487,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 538,
+        "title": "Foto Galeri",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=118",
+        "parent_id": 487,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 539,
+        "title": "Arsip Berita",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=119",
+        "parent_id": 487,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 540,
+        "title": "Hubungi Kami",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=146",
+        "parent_id": 488,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 541,
+        "title": "Pertanyaan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_jcomments&view=comments",
+        "parent_id": 488,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 542,
+        "title": "Informasi Pengadilan",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=category&id=114",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 543,
+        "title": "List Jadwal Sidang",
+        "menutype": "menulink",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 544,
+        "title": "Index Berita Pengadilan",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=category&layout=blog&id=115",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 545,
+        "title": "Berita Seputar Peradilan",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=category&id=115",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 546,
+        "title": "tes",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=article&id=129",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 547,
+        "title": "Berita Pengadilan",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=article&id=128",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 548,
+        "title": "Cara Memperoleh Informasi",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=article&id=130",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 549,
+        "title": "Penelusuran Perkara",
+        "menutype": "menulink",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 551,
+        "title": "tes",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 435,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 552,
+        "title": "Beranda || Home",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=116",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 559,
+        "title": "COM_JCOMMENTS",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 560,
+        "title": "COM_JCOMMENTS_COMMENTS",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=comments",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 561,
+        "title": "COM_JCOMMENTS_SETTINGS",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=settings",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 562,
+        "title": "COM_JCOMMENTS_SMILIES",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=smilies",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 563,
+        "title": "COM_JCOMMENTS_SUBSCRIPTIONS",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=subscriptions",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 564,
+        "title": "COM_JCOMMENTS_CUSTOM_BBCODE",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=custombbcodes",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 565,
+        "title": "COM_JCOMMENTS_BLACKLIST",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=blacklists",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 566,
+        "title": "COM_JCOMMENTS_MAILQ",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=mailq",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 567,
+        "title": "COM_JCOMMENTS_IMPORT",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=import",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 568,
+        "title": "COM_JCOMMENTS_ABOUT",
+        "menutype": "main",
+        "link": "index.php?option=com_jcomments&view=about",
+        "parent_id": 559,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 569,
+        "title": "Direktori Putusan MA",
+        "menutype": "vertical-menu",
+        "link": "https://putusan.mahkamahagung.go.id/pengadilan/pa-penajam/",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 570,
+        "title": "Bantuan Hukum",
+        "menutype": "vertical-menu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 571,
+        "title": "Hubungi Kami",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_content&view=article&id=146",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 572,
+        "title": "Statistik Perkara",
+        "menutype": "vertical-menu",
+        "link": "http://sipp.pa-penajam.go.id/statistik_perkara",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 573,
+        "title": "Pengaduan Pelayanan",
+        "menutype": "vertical-menu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 574,
+        "title": "Link Direktori Putusan",
+        "menutype": "vertical-menu",
+        "link": "https://putusan.mahkamahagung.go.id/pengadilan/pa-penajam/",
+        "parent_id": 569,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 575,
+        "title": "Link Bantuan Hukum",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_content&view=article&id=112",
+        "parent_id": 570,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 576,
+        "title": "Link Hubungi Kami",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_content&view=article&id=146",
+        "parent_id": 571,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 577,
+        "title": "Link Statistik Perkara",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 572,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 578,
+        "title": "Link Pengaduan Pelayanan",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_content&view=article&id=146",
+        "parent_id": 573,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 579,
+        "title": "Login",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_users&view=login",
+        "parent_id": 669,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 580,
+        "title": "Perundang-Undangan || Kebijakan & Surat Edaran",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 581,
+        "title": "Peraturan Perundang-undangan",
+        "menutype": "mainmenu",
+        "link": "https://jdih.mahkamahagung.go.id/dokumen-hukum/peraturan-perundang-undangan",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 582,
+        "title": "Peraturan Mahkamah Agung",
+        "menutype": "mainmenu",
+        "link": "https://jdih.mahkamahagung.go.id/category-legal-product/produk-hukum-di-mahkamah-agung/peraturan-mahkamah-agung-perma",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 583,
+        "title": "Peraturan Dirjen Badilag",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=149",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 584,
+        "title": "Yurisprudensi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=150",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 585,
+        "title": "Standar / Maklumat",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=151",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 586,
+        "title": "Surat Keputusan PA",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=152",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 587,
+        "title": "Pengawasan",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 588,
+        "title": "Standar Operasional Prosedur",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=153",
+        "parent_id": 580,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 589,
+        "title": "Pedoman Pengawasan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=154",
+        "parent_id": 587,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 590,
+        "title": "Laporan Pengawasan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=155",
+        "parent_id": 587,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 591,
+        "title": "Data Hukuman Disiplin",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=156",
+        "parent_id": 587,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 592,
+        "title": "Tugas dan Fungsi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=157",
+        "parent_id": 491,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 593,
+        "title": "Transparansi || Keterbukaan Informasi",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 594,
+        "title": "Standar Operasional Prosedur",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=194",
+        "parent_id": 233,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 595,
+        "title": "Renstra",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=158",
+        "parent_id": 628,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 596,
+        "title": "Keuangan DIPA",
+        "menutype": "mainmenu",
+        "link": "#",
+        "parent_id": 593,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 597,
+        "title": "Realisasi Anggaran",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=306",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 598,
+        "title": "Keuangan Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=295",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 599,
+        "title": "Statistik Perkara (SIPP)",
+        "menutype": "mainmenu",
+        "link": "http://sipp.pa-penajam.go.id/statistik_perkara",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 600,
+        "title": "LHKPN dan SPT",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=106",
+        "parent_id": 593,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 601,
+        "title": "RKT",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=162",
+        "parent_id": 628,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 602,
+        "title": "IKU",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=163",
+        "parent_id": 628,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 603,
+        "title": "Perjanjian Kinerja",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=165",
+        "parent_id": 628,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 604,
+        "title": "Petugas PTSP",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=187",
+        "parent_id": 506,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 605,
+        "title": "Pelayanan Publik",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=188",
+        "parent_id": 689,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 606,
+        "title": "Hak Pemohon Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=189",
+        "parent_id": 510,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 607,
+        "title": "Prosedur Permohonan Informasi",
+        "menutype": "mainmenu",
+        "link": "#",
+        "parent_id": 510,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 608,
+        "title": "Formulir Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=190",
+        "parent_id": 510,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 609,
+        "title": "Pedoman Pengaduan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=186",
+        "parent_id": 514,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 610,
+        "title": "Hak Pelapor dan Terlapor",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=191",
+        "parent_id": 514,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 611,
+        "title": "Alur Penyelesaian Pengaduan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=184",
+        "parent_id": 514,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 612,
+        "title": "Formulir Pengaduan",
+        "menutype": "mainmenu",
+        "link": "#",
+        "parent_id": 514,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 613,
+        "title": "Laporan Pengaduan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=192",
+        "parent_id": 593,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 614,
+        "title": "Hak-hak Pencari Keadilan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=166",
+        "parent_id": 486,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 615,
+        "title": "Tingkat Pertama",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=167",
+        "parent_id": 529,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 616,
+        "title": "Tingkat Banding",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=168",
+        "parent_id": 529,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 617,
+        "title": "Tingkat Banding, Kasasi dan PK",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=169",
+        "parent_id": 529,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 618,
+        "title": "Peninjauan Kembali",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=170",
+        "parent_id": 529,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 619,
+        "title": "Penyelesaian Perkara",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 486,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 620,
+        "title": "Prosedur & Tata Tertib Persidangan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=171",
+        "parent_id": 486,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 621,
+        "title": "Tingkat Pertama",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=172",
+        "parent_id": 619,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 622,
+        "title": "Tingkat Banding, Kasasi dan PK",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=173",
+        "parent_id": 619,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 623,
+        "title": "Tingkat Kasasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=174",
+        "parent_id": 619,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 624,
+        "title": "Peninjauan Kembali",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=175",
+        "parent_id": 619,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 625,
+        "title": "Prosedur Pengambilan Produk",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=177",
+        "parent_id": 619,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 626,
+        "title": "Perkara Prodeo",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=178",
+        "parent_id": 727,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 627,
+        "title": "Prosedur Mediasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=267",
+        "parent_id": 727,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 628,
+        "title": "SAKIP",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=261",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 629,
+        "title": "Biaya Salinan Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=181",
+        "parent_id": 510,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 630,
+        "title": "Laporan Penyelesaian Pelanggaran",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=182",
+        "parent_id": 587,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 631,
+        "title": "Putusan Majelis Kehormatan Hakim (MKH)",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=183",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 632,
+        "title": "Prosedur Tata Cara Pengaduan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=185",
+        "parent_id": 514,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 633,
+        "title": "Statistik perkara",
+        "menutype": "menulink",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 634,
+        "title": "Tahun 2019",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=form&layout=edit",
+        "parent_id": 522,
+        "level": 4,
+        "published": 0
+    },
+    {
+        "id": 635,
+        "title": "Survey",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=703",
+        "parent_id": 593,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 636,
+        "title": "Pimpinan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=218",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 637,
+        "title": "Dari Masa ke Masa",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=222",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 638,
+        "title": "Hakim",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=223",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 639,
+        "title": "Panitera Muda",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=225",
+        "parent_id": 497,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 640,
+        "title": "Kepala Sub Bagian",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=224",
+        "parent_id": 497,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 641,
+        "title": "Staf / Pelaksana",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=226",
+        "parent_id": 497,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 642,
+        "title": "PPNPN",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=227",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 643,
+        "title": "Tenaga Bantu",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=228",
+        "parent_id": 497,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 644,
+        "title": "Profil Pegawai",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 497,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 645,
+        "title": "COM_ROKCANDY",
+        "menutype": "main",
+        "link": "index.php?option=com_rokcandy",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 646,
+        "title": "COM_ROKCANDY_SUBMENU_MACROS",
+        "menutype": "main",
+        "link": "index.php?option=com_rokcandy",
+        "parent_id": 645,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 647,
+        "title": "COM_ROKCANDY_SUBMENU_CATEGORIES",
+        "menutype": "main",
+        "link": "index.php?option=com_categories&extension=com_rokcandy",
+        "parent_id": 645,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 648,
+        "title": "Radius",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=231",
+        "parent_id": 486,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 649,
+        "title": "Laporan Harta Kekayaan Pejabat Negara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=category&id=146",
+        "parent_id": 593,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 650,
+        "title": "Radius dan Panjar Biaya Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=category&id=154",
+        "parent_id": 486,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 651,
+        "title": "Verzet",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=243",
+        "parent_id": 529,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 652,
+        "title": "Verzet",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=244",
+        "parent_id": 619,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 653,
+        "title": "Standar Operasional || Prosedur",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 654,
+        "title": "Management",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=245",
+        "parent_id": 689,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 655,
+        "title": "Kepaniteraan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=246",
+        "parent_id": 689,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 656,
+        "title": "Kesekretariatan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=269",
+        "parent_id": 689,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 657,
+        "title": "Petikan DIPA dan POK",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=248",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 658,
+        "title": "Perkara",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 593,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 659,
+        "title": "Iwadl",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=249",
+        "parent_id": 691,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 660,
+        "title": "PNBP",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=250",
+        "parent_id": 691,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 661,
+        "title": "PTSP",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=251",
+        "parent_id": 506,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 662,
+        "title": "Umum dan Keuangan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=247",
+        "parent_id": 656,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 663,
+        "title": "Kepegawaian, Organisasi dan Tata Laksana",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=253",
+        "parent_id": 656,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 664,
+        "title": "Perencanaan Teknologi Informasi dan Pelaporan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=252",
+        "parent_id": 656,
+        "level": 4,
+        "published": -2
+    },
+    {
+        "id": 665,
+        "title": "Kode Etik",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 580,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 666,
+        "title": "Kode Etik Hakim",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=254",
+        "parent_id": 665,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 667,
+        "title": "Kode Etik Panitera dan Jurusita",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=255",
+        "parent_id": 665,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 668,
+        "title": "Kode Etik PNS",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=256",
+        "parent_id": 665,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 669,
+        "title": "Login",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 233,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 670,
+        "title": "Webmail",
+        "menutype": "mainmenu",
+        "link": "https://webmail.pa-penajam.go.id/",
+        "parent_id": 669,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 671,
+        "title": "Panitera Pengganti",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=259",
+        "parent_id": 497,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 672,
+        "title": "Jurusita / Jurusita Pengganti",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=260",
+        "parent_id": 497,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 673,
+        "title": "Jadwal Sidang",
+        "menutype": "vertical-menu",
+        "link": "http://sipp.pa-penajam.go.id/list_jadwal_sidang",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 674,
+        "title": "Link Jadwal Sidang",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 673,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 675,
+        "title": "Uraian Tugas",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=262",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 676,
+        "title": "Tim Pengelola Website",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_content&view=article&id=263",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 677,
+        "title": "Tim Pengelola Website",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_content&view=article&id=263",
+        "parent_id": 676,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 678,
+        "title": "googlemaps",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 571,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 679,
+        "title": "Pimpinan",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 680,
+        "title": "Alumni PA-Penajam",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 681,
+        "title": "Hakim",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 682,
+        "title": "Panitera Muda",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 0
+    },
+    {
+        "id": 683,
+        "title": "Kepala Sub Bagian",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 0
+    },
+    {
+        "id": 684,
+        "title": "Panitera Pengganti",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 0
+    },
+    {
+        "id": 685,
+        "title": "Jurusita / Jurusita Pengganti",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 0
+    },
+    {
+        "id": 686,
+        "title": "Staf / Pelaksana",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 0
+    },
+    {
+        "id": 687,
+        "title": "PPNPN",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 688,
+        "title": "Syarat Mengajukan Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=268",
+        "parent_id": 486,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 689,
+        "title": "S O P",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 690,
+        "title": "KESEKRETARIATAN",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 593,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 691,
+        "title": "KEPANITERAAN",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 593,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 692,
+        "title": "Publikasi Putusan",
+        "menutype": "mainmenu",
+        "link": "https://putusan.mahkamahagung.go.id/pengadilan/pa-penajam/",
+        "parent_id": 691,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 693,
+        "title": "Daftar Perkara",
+        "menutype": "mainmenu",
+        "link": "http://sipp.pa-penajam.go.id/list_perkara",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 694,
+        "title": "Neraca Keuangan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=275",
+        "parent_id": 690,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 695,
+        "title": "Petunjuk Operasional Kegiatan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=276",
+        "parent_id": 690,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 696,
+        "title": "Kuisioner Pelayanan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 593,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 697,
+        "title": "Grafik Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=292",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 698,
+        "title": "Neraca Simak BMN",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=280",
+        "parent_id": 690,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 699,
+        "title": "Sisa Panjar Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=281",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 700,
+        "title": "E-Monev Bappenas",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=305",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 701,
+        "title": "Kepaniteraan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=309",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 702,
+        "title": "Kesekretariatan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=308",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 703,
+        "title": "Kepaniteraan",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 704,
+        "title": "Kesekretariatan",
+        "menutype": "profil-pegawai",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 705,
+        "title": "Validasi Akta Cerai",
+        "menutype": "mainmenu",
+        "link": "http://103.179.73.91/vac/",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 706,
+        "title": "Panggilan / Pemberitahuan Sidang",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 707,
+        "title": "Dasar Hukum",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=315",
+        "parent_id": 706,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 708,
+        "title": "Panggilan Sidang Ghaib",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=314",
+        "parent_id": 706,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 709,
+        "title": "Pengumuman Itsbat Nikah",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=316",
+        "parent_id": 706,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 710,
+        "title": "Data Layanan Informasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=320",
+        "parent_id": 593,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 711,
+        "title": "Layanan Informasi Publik",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=321",
+        "parent_id": 510,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 712,
+        "title": "Layanan Pengaduan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=322",
+        "parent_id": 510,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 713,
+        "title": "Radius Dan Panjar Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=330",
+        "parent_id": 529,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 714,
+        "title": "Prosedur Gugatan Sederhana",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=333",
+        "parent_id": 727,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 715,
+        "title": "Standar Pelayanan Publik",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=346",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 716,
+        "title": "COM_DJIMAGESLIDER",
+        "menutype": "main",
+        "link": "index.php?option=com_djimageslider",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 717,
+        "title": "COM_CREATIVEIMAGESLIDER_MENU",
+        "menutype": "main",
+        "link": "index.php?option=com_creativeimageslider",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 718,
+        "title": "COM_CREATIVEIMAGESLIDER_SUBMENU_SLIDERS",
+        "menutype": "main",
+        "link": "index.php?option=com_creativeimageslider&view=creativesliders",
+        "parent_id": 717,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 719,
+        "title": "COM_CREATIVEIMAGESLIDER_SUBMENU_IMAGES",
+        "menutype": "main",
+        "link": "index.php?option=com_creativeimageslider&view=creativeimages",
+        "parent_id": 717,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 720,
+        "title": "Berita Badilag",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=category&id=164",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 721,
+        "title": "Pengumuman new",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=category&id=165",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 722,
+        "title": "Program Kerja Tahunan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=434",
+        "parent_id": 690,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 723,
+        "title": "Biaya Hak-Hak Kepaniteraan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=435",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 724,
+        "title": "Daftar Nama Pejabat Pengawas",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=436",
+        "parent_id": 587,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 725,
+        "title": "Pedoman Pengelolaan Kepaniteraan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=437",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 726,
+        "title": "Pedoman Pengelolaan Kesekretariatan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=438",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 727,
+        "title": "Prosedur Khusus",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 486,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 728,
+        "title": "Arsip",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 729,
+        "title": "Arsip File-File Multimedia",
+        "menutype": "mainmenu",
+        "link": "index.php?Itemid=",
+        "parent_id": 728,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 730,
+        "title": "Arsip Hasil Penelitian",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=440",
+        "parent_id": 728,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 731,
+        "title": "Rincian Biaya Prodeo Yang Dibebankan Ke Negara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=441",
+        "parent_id": 727,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 732,
+        "title": "Fasilitas Publik",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=442",
+        "parent_id": 506,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 733,
+        "title": "Prosedur Evakuasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=443",
+        "parent_id": 506,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 734,
+        "title": "Social Media",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 233,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 735,
+        "title": "Facebook",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=449",
+        "parent_id": 734,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 736,
+        "title": "Youtube",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=700",
+        "parent_id": 734,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 737,
+        "title": "Instagram",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=447",
+        "parent_id": 734,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 738,
+        "title": "Facebook-Sosial Media",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=449",
+        "parent_id": 734,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 739,
+        "title": "Pelaksana Teknis Kesekretariatan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=453",
+        "parent_id": 497,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 740,
+        "title": "Access CCTV Onine",
+        "menutype": "mainmenu",
+        "link": "https://cctv.badilag.net/display/satker/a56a8d743ecbdeb1543be31727165a55",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 741,
+        "title": "E-Court",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 742,
+        "title": "Definisi/Informasi Tentang E-Court Mahkamah Agung RI",
+        "menutype": "mainmenu",
+        "link": "https://ecourt.mahkamahagung.go.id/faq",
+        "parent_id": 741,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 743,
+        "title": "Aplikasi E-Court Mahkamah Agung RI",
+        "menutype": "mainmenu",
+        "link": "https://ecourt.mahkamahagung.go.id",
+        "parent_id": 741,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 744,
+        "title": "Selayang Pandang Aplikasi E-Court",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=479",
+        "parent_id": 741,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 745,
+        "title": "SIPP Web",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=481",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 746,
+        "title": "Prosedur Pengambilan Produk",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=112",
+        "parent_id": 727,
+        "level": 3,
+        "published": -2
+    },
+    {
+        "id": 747,
+        "title": "Publikasi || Informasi",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 748,
+        "title": "SIWAS Mahkamah Agung RI",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=482",
+        "parent_id": 587,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 749,
+        "title": "Ucapan Selamat/Duka Cita",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=494",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 750,
+        "title": "Tautan ke Sosial Media",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=499",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 751,
+        "title": "Tautan Link Terkait",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=500",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 752,
+        "title": "Statistik Kunjungan Website",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=501",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 753,
+        "title": "Reformasi Birokrasi",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 770,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 754,
+        "title": "Reformasi Birokrasi MARI",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=641",
+        "parent_id": 753,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 755,
+        "title": "Zona Integritas",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 770,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 756,
+        "title": "Area I Manajemen Perubahan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=642",
+        "parent_id": 755,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 757,
+        "title": "Area IV Penguatan Akuntabilitas",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=645",
+        "parent_id": 755,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 758,
+        "title": "Area II Penataan Tatalaksana",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=643",
+        "parent_id": 755,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 759,
+        "title": "Area VI Peningkatan Kualitas Pelayanan Publik",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=647",
+        "parent_id": 755,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 760,
+        "title": "Area V Penguatan Pengawasan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=646",
+        "parent_id": 755,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 761,
+        "title": "Area III Penataan Sistem Manajemen SDM",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=644",
+        "parent_id": 755,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 762,
+        "title": "Buku Saku ZI",
+        "menutype": "mainmenu",
+        "link": "https://drive.google.com/file/d/1NxnvRepgNNUXc2oDzjmTDpI2apJ8-EPq/view?usp=sharing",
+        "parent_id": 755,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 763,
+        "title": "Akreditasi Penjaminan Mutu",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 770,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 764,
+        "title": "Leadership",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=648",
+        "parent_id": 763,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 765,
+        "title": "Customer Focus",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=649",
+        "parent_id": 763,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 766,
+        "title": "Proses Management",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=650",
+        "parent_id": 763,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 767,
+        "title": "Strategic Planning",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=651",
+        "parent_id": 763,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 768,
+        "title": "Resources Management",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=652",
+        "parent_id": 763,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 769,
+        "title": "Performance Result",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=654",
+        "parent_id": 763,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 770,
+        "title": "Reformasi Birokrasi || ZI & APM",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 771,
+        "title": "MOU PA Penajam",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=655",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 772,
+        "title": "Manajemen Perubahan",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 773,
+        "title": "Zona Integritas",
+        "menutype": "reformasi-birokrasi",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 774,
+        "title": "Akreditasi Penjaminan Mutu",
+        "menutype": "reformasi-birokrasi",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 775,
+        "title": "Penataan Tata Laksana",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 776,
+        "title": "Sistem Manajemen SDM",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 777,
+        "title": "Penguatan Akuntabilitas",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 778,
+        "title": "Kualitas Pelayanan Publik",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 779,
+        "title": "Penguatan Pengawasan",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 780,
+        "title": "Leadership",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 781,
+        "title": "Customer Focus",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 782,
+        "title": "Proses Management",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 783,
+        "title": "Strategic Planning",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 784,
+        "title": "Resources Management",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 785,
+        "title": "Performance Result",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 786,
+        "title": "Document System",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=653",
+        "parent_id": 763,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 787,
+        "title": "Document System",
+        "menutype": "reformasi-birokrasi",
+        "link": "index.php?Itemid=",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 788,
+        "title": "Access CCTV Online",
+        "menutype": "vertical-menu",
+        "link": "https://cctv.badilag.net/display/satker/a56a8d743ecbdeb1543be31727165a55",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 789,
+        "title": "Agenda Kegiatan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=671",
+        "parent_id": 747,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 790,
+        "title": "8 Nilai Utama MARI",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=673",
+        "parent_id": 753,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 791,
+        "title": "Layanan Dimasa Pandemi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=676",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 792,
+        "title": "Agenda Kegiatan",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=category&id=169",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 793,
+        "title": "File Multimedia",
+        "menutype": "menulink",
+        "link": "index.php?option=com_content&view=category&id=170",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 794,
+        "title": "Tiktok",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=687",
+        "parent_id": 734,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 795,
+        "title": "Google",
+        "menutype": "mainmenu",
+        "link": "https://pa-penajam.business.site/",
+        "parent_id": 734,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 796,
+        "title": "Inovasi",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=704",
+        "parent_id": 485,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 797,
+        "title": "Delegasi Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=724",
+        "parent_id": 706,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 798,
+        "title": "Delegasi Keluar",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=728",
+        "parent_id": 797,
+        "level": 4,
+        "published": 0
+    },
+    {
+        "id": 799,
+        "title": "Biaya Proses Berperkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=729",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 800,
+        "title": "Laporkan !!!",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 770,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 801,
+        "title": "Lihat Lawan Laporkan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=730",
+        "parent_id": 800,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 802,
+        "title": "Kegiatan Pengadilan (2)",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=754",
+        "parent_id": 233,
+        "level": 2,
+        "published": 0
+    },
+    {
+        "id": 803,
+        "title": "Admin || Menu",
+        "menutype": "mainmenu",
+        "link": "",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 804,
+        "title": "Dipa dan POK",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=758",
+        "parent_id": 803,
+        "level": 2,
+        "published": -2
+    },
+    {
+        "id": 805,
+        "title": "Petikan DIPA dan POK (2)",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_wrapper&view=wrapper",
+        "parent_id": 690,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 806,
+        "title": "Agen Perubahan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=760",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 815,
+        "title": "COM_EASYGCALENDAR",
+        "menutype": "main",
+        "link": "index.php?option=com_easygcalendar",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 816,
+        "title": "COM_EASYGCALENDAR_SUBMENU_CPANEL",
+        "menutype": "main",
+        "link": "index.php?option=com_easygcalendar&view=cpanel",
+        "parent_id": 815,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 817,
+        "title": "COM_EASYGCALENDAR_SUBMENU_CALENDARS",
+        "menutype": "main",
+        "link": "index.php?option=com_easygcalendar&view=calendars",
+        "parent_id": 815,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 818,
+        "title": "COM_EASYGCALENDAR_SUBMENU_SUPPORT",
+        "menutype": "main",
+        "link": "index.php?option=com_easygcalendar&view=support",
+        "parent_id": 815,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 819,
+        "title": "Petugas PTSP",
+        "menutype": "mainmenu",
+        "link": "index.php?Itemid=",
+        "parent_id": 497,
+        "level": 3,
+        "published": 0
+    },
+    {
+        "id": 820,
+        "title": "Pengumuman",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1071",
+        "parent_id": 747,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 821,
+        "title": "PPID PA Penajam",
+        "menutype": "vertical-menu",
+        "link": "https://ppid.pa-penajam.go.id/",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 822,
+        "title": "Laporan Keuangan",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1176",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 847,
+        "title": "Panggilan Ecourt",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1207",
+        "parent_id": 741,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 848,
+        "title": "Laporan Tahunan 2024",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1212",
+        "parent_id": 1,
+        "level": 1,
+        "published": -2
+    },
+    {
+        "id": 849,
+        "title": "Laporan Tahunan 2024",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1212",
+        "parent_id": 520,
+        "level": 4,
+        "published": 0
+    },
+    {
+        "id": 850,
+        "title": "Laporan Perkara",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1219",
+        "parent_id": 691,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 851,
+        "title": "COM_JEVENTS_MENU",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    },
+    {
+        "id": 852,
+        "title": "JEVENTS_DASHBOARD",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&view=cpanel",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 853,
+        "title": "JEV_INSTAL_MANAGE",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=icalevent.list",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 854,
+        "title": "JEV_ADD_EVENT",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=icalevent.edit",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 855,
+        "title": "JEV_INSTAL_CATS",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=redirect.com_categories",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 856,
+        "title": "JEV_ADMIN_ICAL_SUBSCRIPTIONS",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=icals.list",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 857,
+        "title": "JEV_LAYOUT_DEFAULTS",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=defaults.list",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 858,
+        "title": "COM_JEVENTS_CONFIGURATION",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=params.edit",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 859,
+        "title": "COM_JEVENTS_LOCATIONS",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=redirect.com_jevlocations",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 860,
+        "title": "COM_JEVENTS_PEOPLE",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=redirect.com_jevpeople",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 861,
+        "title": "COM_JEVENTS_RSVPPRO",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=redirect.com_rsvppro",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 862,
+        "title": "COM_JEVENTS_TAGS",
+        "menutype": "main",
+        "link": "index.php?option=com_jevents&task=redirect.com_jeventstags",
+        "parent_id": 851,
+        "level": 2,
+        "published": 1
+    },
+    {
+        "id": 863,
+        "title": "Neraca",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1237",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 864,
+        "title": "Laporan Realisasi Anggaran",
+        "menutype": "mainmenu",
+        "link": "index.php?option=com_content&view=article&id=1238",
+        "parent_id": 690,
+        "level": 3,
+        "published": 1
+    },
+    {
+        "id": 865,
+        "title": "Informasi dan Kebijakan yang Disampaikan",
+        "menutype": "vertical-menu",
+        "link": "index.php?option=com_content&view=article&id=1444",
+        "parent_id": 1,
+        "level": 1,
+        "published": 1
+    }
+]

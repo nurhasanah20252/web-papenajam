@@ -1,0 +1,106 @@
+[
+    {
+        "id": 842,
+        "name": "Super User",
+        "username": "admin",
+        "email": "pa-penajam@pta-samarinda.net",
+        "status": "active",
+        "registered_at": "2017-04-03 00:23:02"
+    },
+    {
+        "id": 846,
+        "name": "iqbal kh",
+        "username": "iqbal kh",
+        "email": "iqbalkh2009@gmail.com",
+        "status": "active",
+        "registered_at": "2019-09-07 15:00:11"
+    },
+    {
+        "id": 853,
+        "name": "H. Achmad Fausi. S.H.I.",
+        "username": "fausi",
+        "email": "suhuf_esoterika@yahoo.com",
+        "status": "blocked",
+        "registered_at": "2020-08-18 07:20:43"
+    },
+    {
+        "id": 854,
+        "name": "Nur Triyono",
+        "username": "n3yono",
+        "email": "ibn.3ula@gmail.com",
+        "status": "blocked",
+        "registered_at": "2020-08-24 07:27:17"
+    },
+    {
+        "id": 856,
+        "name": "Daru Halleila",
+        "username": "daruhalleila",
+        "email": "daruhalleila@gmail.com",
+        "status": "active",
+        "registered_at": "2020-09-01 03:44:45"
+    },
+    {
+        "id": 858,
+        "name": "Firdaus Muhammad",
+        "username": "d4us25",
+        "email": "d4us25@gmail.com",
+        "status": "blocked",
+        "registered_at": "2020-09-25 09:28:00"
+    },
+    {
+        "id": 861,
+        "name": "muhardiansyah",
+        "username": "muhar",
+        "email": "moohard@gmail.com",
+        "status": "active",
+        "registered_at": "2021-02-10 01:35:42"
+    },
+    {
+        "id": 862,
+        "name": "zaim",
+        "username": "zaim88",
+        "email": "zaim1988@gmail.com",
+        "status": "active",
+        "registered_at": "2023-06-23 09:06:21"
+    },
+    {
+        "id": 863,
+        "name": "Najwa Hijriana",
+        "username": "najwa",
+        "email": "najwa@pa-penajam.go.id",
+        "status": "active",
+        "registered_at": "2023-08-21 06:03:01"
+    },
+    {
+        "id": 864,
+        "name": "Yulinda",
+        "username": "yulin",
+        "email": "ppu2014a@gmail.com",
+        "status": "active",
+        "registered_at": "2024-11-18 06:54:31"
+    },
+    {
+        "id": 865,
+        "name": "Intan Nur Vadiah",
+        "username": "intan",
+        "email": "intan@gmail.com",
+        "status": "active",
+        "registered_at": "2025-02-10 07:00:35"
+    },
+    {
+        "id": 866,
+        "name": "Sugeng",
+        "username": "sugeng",
+        "email": "sugeng@gmail.com",
+        "status": "active",
+        "registered_at": "2025-02-13 06:37:00"
+    },
+    {
+        "id": 867,
+        "name": "Awaluddin Nur",
+        "username": "awal",
+        "email": "awal@pa-penajam.go.id",
+        "status": "active",
+        "registered_at": "2025-10-23 01:09:59"
+    }
+]
