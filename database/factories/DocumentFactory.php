@@ -33,6 +33,8 @@ class DocumentFactory extends Factory
             'published_at' => fake()->dateTimeBetween('-1 year', '+1 year'),
             'version' => '1.0.'.fake()->numberBetween(0, 9),
             'checksum' => fake()->md5(),
+            'tags' => fake()->words(3),
+            'allowed_roles' => null,
         ];
     }
 

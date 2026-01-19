@@ -6,9 +6,11 @@ use App\Models\DocumentVersion;
 use Illuminate\Support\Facades\Storage;
 
 use function Pest\Laravel\get;
+use function Pest\Laravel\withoutVite;
 
 beforeEach(function () {
     Storage::fake('public');
+    withoutVite();
 });
 
 test('documents index page loads', function () {
@@ -232,4 +234,52 @@ test('document checksum validation works', function () {
     ]);
 
     expect($document->validateChecksum(Storage::disk('public')->path('documents/test.pdf')))->toBeTrue();
+});
+
+test('document can be filtered by tag', function () {
+    Document::factory()->public()->create([
+        'title' => 'Tagged Document',
+        'tags' => ['important', 'legal'],
+    ]);
+    Document::factory()->public()->create([
+        'title' => 'Other Document',
+        'tags' => ['news'],
+    ]);
+
+    expect(Document::withTag('important')->count())->toBe(1);
+    expect(Document::withTag('legal')->count())->toBe(1);
+    expect(Document::withTag('important')->first()->title)->toBe('Tagged Document');
+});
+
+test('document access is restricted by roles', function () {
+    $admin = \App\Models\User::factory()->create([
+        'role' => \App\Enums\UserRole::Admin,
+    ]);
+
+    $subscriber = \App\Models\User::factory()->create([
+        'role' => \App\Enums\UserRole::Subscriber,
+    ]);
+
+    Document::factory()->public()->create([
+        'title' => 'Public Doc',
+        'allowed_roles' => null,
+    ]);
+
+    Document::factory()->private()->create([
+        'title' => 'Admin Doc',
+        'allowed_roles' => ['admin'],
+    ]);
+
+    Document::factory()->private()->create([
+        'title' => 'Subscriber Doc',
+        'allowed_roles' => ['subscriber'],
+    ]);
+
+    expect(Document::allowedForUser($admin)->count())->toBe(2); // Public Doc and Admin Doc
+    expect(Document::allowedForUser($subscriber)->count())->toBe(2); // Public Doc and Subscriber Doc
+
+    $designer = \App\Models\User::factory()->create([
+        'role' => \App\Enums\UserRole::Designer,
+    ]);
+    expect(Document::allowedForUser($designer)->count())->toBe(1); // Only Public Doc
 });

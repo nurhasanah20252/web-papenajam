@@ -10,23 +10,24 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 
 class MenuItemResource extends Resource
 {
     protected static ?string $model = MenuItem::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-list-bullet';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-list-bullet';
 
     protected static ?int $navigationSort = 3;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Structure';
+    protected static string|\UnitEnum|null $navigationGroup = 'Structure';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -168,6 +169,20 @@ class MenuItemResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    BulkAction::make('activate')
+                        ->label('Activate Selected')
+                        ->icon('heroicon-o-check-circle')
+                        ->action(fn (Collection $records) => $records->each(fn (MenuItem $record): bool => $record->update(['is_active' => true])))
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('Menu items activated')
+                        ->color('success'),
+                    BulkAction::make('deactivate')
+                        ->label('Deactivate Selected')
+                        ->icon('heroicon-o-x-circle')
+                        ->action(fn (Collection $records) => $records->each(fn (MenuItem $record): bool => $record->update(['is_active' => false])))
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('Menu items deactivated')
+                        ->color('warning'),
                 ]),
             ]);
     }

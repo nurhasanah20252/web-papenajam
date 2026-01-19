@@ -10,8 +10,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -23,11 +23,11 @@ class BudgetTransparencyResource extends Resource
 {
     protected static ?string $model = BudgetTransparency::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
 
     protected static ?int $navigationSort = 5;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Transparency';
+    protected static string|\UnitEnum|null $navigationGroup = 'Transparency';
 
     public static function form(Schema $schema): Schema
     {
@@ -203,13 +203,15 @@ class BudgetTransparencyResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make('publish')
-                        ->label('Publish')
+                        ->label('Publish Selected')
+                        ->icon('heroicon-o-check-circle')
                         ->action(fn ($records) => $records->each->update(['published_at' => now()]))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('Budget entries published')
                         ->color('success'),
                     Tables\Actions\BulkAction::make('unpublish')
-                        ->label('Unpublish')
+                        ->label('Unpublish Selected')
+                        ->icon('heroicon-o-x-circle')
                         ->action(fn ($records) => $records->each->update(['published_at' => null]))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('Budget entries unpublished')

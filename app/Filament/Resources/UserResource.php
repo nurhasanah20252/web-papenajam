@@ -6,20 +6,24 @@ use App\Enums\UserRole;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\ActivitiesRelationManager;
 use App\Models\User;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
 use Filament\Pages\Page;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,11 +31,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
     protected static ?int $navigationSort = 1;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'System';
+    protected static string|\UnitEnum|null $navigationGroup = 'System';
 
     public static function form(Schema $schema): Schema
     {
@@ -107,19 +111,26 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Filter::make('active')
-                    ->query(fn ($query) => $query->where('is_active', true))
-                    ->label('Active Users'),
-                Filter::make('inactive')
-                    ->query(fn ($query) => $query->where('is_active', false))
-                    ->label('Inactive Users'),
-                Filter::make('role')
+                TernaryFilter::make('is_active')
+                    ->label('Active Status'),
+                SelectFilter::make('role')
+                    ->options(UserRole::class),
+                Filter::make('created_at')
                     ->form([
-                        Select::make('role')
-                            ->options(UserRole::class)
-                            ->enum(UserRole::class),
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
                     ])
-                    ->query(fn ($query, $data) => filled($data['role']) ? $query->where('role', $data['role']) : $query),
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -129,12 +140,15 @@ class UserResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     BulkAction::make('activate')
-                        ->label('Activate')
+                        ->label('Activate Selected')
+                        ->icon('heroicon-o-check-circle')
                         ->action(fn (Collection $records) => $records->each(fn (User $user): bool => $user->update(['is_active' => true])))
                         ->deselectRecordsAfterCompletion()
-                        ->successNotificationTitle('Users activated'),
+                        ->successNotificationTitle('Users activated')
+                        ->color('success'),
                     BulkAction::make('deactivate')
-                        ->label('Deactivate')
+                        ->label('Deactivate Selected')
+                        ->icon('heroicon-o-x-circle')
                         ->action(fn (Collection $records) => $records->each(fn (User $user): bool => $user->update(['is_active' => false])))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('Users deactivated')

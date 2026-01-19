@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\BlockType;
 use App\Filament\Resources\PageTemplateResource\Pages;
 use App\Models\PageTemplate;
 use Filament\Forms;
@@ -9,8 +10,8 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -21,11 +22,11 @@ class PageTemplateResource extends Resource
 {
     protected static ?string $model = PageTemplate::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
 
     protected static ?int $navigationSort = 1;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Structure';
+    protected static string|\UnitEnum|null $navigationGroup = 'Structure';
 
     public static function form(Schema $schema): Schema
     {
@@ -36,21 +37,44 @@ class PageTemplateResource extends Resource
                         TextInput::make('name')
                             ->required()
                             ->maxLength(100),
+                        Toggle::make('is_system')
+                            ->label('System Template')
+                            ->helperText('System templates are protected and used for core functionality.')
+                            ->default(false),
+                        Forms\Components\FileUpload::make('thumbnail')
+                            ->image()
+                            ->directory('templates/thumbnails')
+                            ->nullable(),
                         Textarea::make('description')
                             ->maxLength(500)
-                            ->nullable(),
-                        Toggle::make('is_default')
-                            ->label('Set as default template')
-                            ->default(false),
+                            ->nullable()
+                            ->columnSpanFull(),
                     ])->columns(2),
 
                 Section::make('Template Structure')
                     ->schema([
-                        Forms\Components\KeyValue::make('structure')
-                            ->label('Block Structure')
-                            ->keyLabel('Block Name')
-                            ->valueLabel('Block Configuration')
-                            ->nullable(),
+                        Forms\Components\Repeater::make('content')
+                            ->label('Default Blocks')
+                            ->schema([
+                                Forms\Components\Select::make('type')
+                                    ->options(BlockType::class)
+                                    ->required()
+                                    ->reactive(),
+                                Forms\Components\KeyValue::make('content')
+                                    ->label('Default Content')
+                                    ->keyLabel('Field Name')
+                                    ->valueLabel('Value')
+                                    ->nullable(),
+                                Forms\Components\KeyValue::make('settings')
+                                    ->label('Default Settings')
+                                    ->keyLabel('Setting Name')
+                                    ->valueLabel('Value')
+                                    ->nullable(),
+                            ])
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => isset($state['type']) ? (BlockType::tryFrom($state['type'])?->label() ?? $state['type']) : 'New Block'
+                            )
+                            ->columnSpanFull(),
                     ]),
             ]);
     }
@@ -65,9 +89,9 @@ class PageTemplateResource extends Resource
                 TextColumn::make('description')
                     ->limit(50)
                     ->toggleable(isToggledHiddenByDefault: true),
-                IconColumn::make('is_default')
+                IconColumn::make('is_system')
                     ->boolean()
-                    ->label('Default')
+                    ->label('System')
                     ->sortable(),
                 TextColumn::make('pages_count')
                     ->counts('pages')
@@ -78,9 +102,12 @@ class PageTemplateResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Filter::make('default')
-                    ->query(fn ($query) => $query->where('is_default', true))
-                    ->label('Default Template'),
+                Filter::make('system')
+                    ->query(fn ($query) => $query->where('is_system', true))
+                    ->label('System Templates'),
+                Filter::make('custom')
+                    ->query(fn ($query) => $query->where('is_system', false))
+                    ->label('Custom Templates'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

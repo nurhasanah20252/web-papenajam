@@ -12,25 +12,26 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 
 class CourtScheduleResource extends Resource
 {
     protected static ?string $model = CourtSchedule::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
 
     protected static ?int $navigationSort = 3;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'SIPP Integration';
+    protected static string|\UnitEnum|null $navigationGroup = 'SIPP Integration';
 
     public static function form(Schema $schema): Schema
     {
@@ -244,6 +245,21 @@ class CourtScheduleResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('mark_completed')
+                        ->label('Mark Completed Selected')
+                        ->icon('heroicon-o-check-circle')
+                        ->action(fn (Collection $records) => $records->each(fn (CourtSchedule $record): bool => $record->update(['schedule_status' => ScheduleStatus::Completed])))
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('Court schedules marked as completed')
+                        ->color('success'),
+                    Tables\Actions\BulkAction::make('cancel_selected')
+                        ->label('Cancel Selected')
+                        ->icon('heroicon-o-x-circle')
+                        ->action(fn (Collection $records) => $records->each(fn (CourtSchedule $record): bool => $record->update(['schedule_status' => ScheduleStatus::Cancelled])))
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('Court schedules cancelled')
+                        ->color('danger')
+                        ->requiresConfirmation(),
                 ]),
             ])
             ->headerActions([

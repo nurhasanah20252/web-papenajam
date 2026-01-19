@@ -6,14 +6,15 @@ use App\Enums\NewsStatus;
 use App\Filament\Resources\NewsResource\Pages;
 use App\Models\News;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\IconColumn;
@@ -21,7 +22,9 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
@@ -29,11 +32,11 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-newspaper';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
 
     protected static ?int $navigationSort = 2;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Content';
+    protected static string|\UnitEnum|null $navigationGroup = 'Content';
 
     public static function form(Schema $schema): Schema
     {
@@ -156,15 +159,31 @@ class NewsResource extends Resource
                     ->options(NewsStatus::class),
                 SelectFilter::make('category')
                     ->relationship('category', 'name'),
-                Filter::make('featured')
-                    ->query(fn ($query) => $query->where('is_featured', true))
-                    ->label('Featured Only'),
-                Filter::make('published')
-                    ->query(fn ($query) => $query->whereNotNull('published_at'))
-                    ->label('Published'),
-                Filter::make('unpublished')
-                    ->query(fn ($query) => $query->whereNull('published_at'))
-                    ->label('Unpublished'),
+                TernaryFilter::make('is_featured')
+                    ->label('Featured'),
+                TernaryFilter::make('is_published')
+                    ->label('Published Status')
+                    ->queries(
+                        true: fn (Builder $query) => $query->whereNotNull('published_at'),
+                        false: fn (Builder $query) => $query->whereNull('published_at'),
+                        blank: fn (Builder $query) => $query,
+                    ),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -174,25 +193,33 @@ class NewsResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     BulkAction::make('publish')
-                        ->label('Publish')
+                        ->label('Publish Selected')
+                        ->icon('heroicon-o-check-circle')
                         ->action(fn (Collection $records) => $records->each(fn (News $news): bool => $news->update([
                             'status' => NewsStatus::Published,
                             'published_at' => now(),
                         ])))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('News published'),
-                    BulkAction::make('feature')
-                        ->label('Mark as Featured')
-                        ->action(fn (Collection $records) => $records->each(fn (News $news): bool => $news->update(['is_featured' => true])))
-                        ->deselectRecordsAfterCompletion()
-                        ->successNotificationTitle('News marked as featured')
-                        ->color('success'),
                     BulkAction::make('unpublish')
-                        ->label('Unpublish')
-                        ->action(fn (Collection $records) => $records->each(fn (News $news): bool => $news->update(['status' => NewsStatus::Draft])))
+                        ->label('Unpublish Selected')
+                        ->icon('heroicon-o-x-circle')
+                        ->action(fn (Collection $records) => $records->each(fn (News $news): bool => $news->update([
+                            'status' => NewsStatus::Draft,
+                            'published_at' => null,
+                        ])))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('News unpublished')
                         ->color('warning'),
+                    BulkAction::make('archive')
+                        ->label('Archive Selected')
+                        ->icon('heroicon-o-archive-box')
+                        ->action(fn (Collection $records) => $records->each(fn (News $news): bool => $news->update([
+                            'status' => NewsStatus::Archived,
+                        ])))
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('News archived')
+                        ->color('gray'),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

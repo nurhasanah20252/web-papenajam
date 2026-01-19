@@ -6,19 +6,20 @@ use App\Enums\PPIDStatus;
 use App\Filament\Resources\PpidRequestResource\Pages;
 use App\Models\PpidRequest;
 use Filament\Forms;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class PpidRequestResource extends Resource
 {
     protected static ?string $model = PpidRequest::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'PPID Management';
+    protected static string|\UnitEnum|null $navigationGroup = 'PPID Management';
 
     protected static ?int $navigationSort = 1;
 
@@ -225,12 +226,14 @@ class PpidRequestResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('mark_reviewed')
-                        ->label('Mark as Reviewed')
-                        ->icon('heroicon-o-eye')
-                        ->requiresConfirmation()
-                        ->action(fn ($records) => $records->each->update(['status' => PPIDStatus::Reviewed])),
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('mark_reviewed')
+                        ->label('Mark Reviewed Selected')
+                        ->icon('heroicon-o-eye')
+                        ->action(fn (Collection $records) => $records->each->update(['status' => PPIDStatus::Reviewed]))
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('Requests marked as reviewed')
+                        ->color('info'),
                 ]),
             ])
             ->defaultSort('created_at', 'desc')

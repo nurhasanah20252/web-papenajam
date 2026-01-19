@@ -34,6 +34,8 @@ class Document extends Model
         'published_at',
         'version',
         'checksum',
+        'tags',
+        'allowed_roles',
     ];
 
     /**
@@ -48,6 +50,8 @@ class Document extends Model
             'download_count' => 'integer',
             'is_public' => 'boolean',
             'published_at' => 'datetime',
+            'tags' => 'array',
+            'allowed_roles' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
             'deleted_at' => 'datetime',
@@ -134,6 +138,26 @@ class Document extends Model
     public function scopePublic($query)
     {
         return $query->where('is_public', true);
+    }
+
+    /**
+     * Scope query for documents allowed for a specific user.
+     */
+    public function scopeAllowedForUser($query, User $user)
+    {
+        return $query->where(function ($query) use ($user) {
+            $query->where('is_public', true)
+                ->orWhereNull('allowed_roles')
+                ->orWhereJsonContains('allowed_roles', $user->role);
+        });
+    }
+
+    /**
+     * Scope query by tag.
+     */
+    public function scopeWithTag($query, string $tag)
+    {
+        return $query->whereJsonContains('tags', $tag);
     }
 
     /**

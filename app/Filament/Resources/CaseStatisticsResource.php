@@ -8,24 +8,25 @@ use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class CaseStatisticsResource extends Resource
 {
     protected static ?string $model = CaseStatistics::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
 
     protected static ?int $navigationSort = 6;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Transparency';
+    protected static string|\UnitEnum|null $navigationGroup = 'Transparency';
 
     public static function form(Schema $schema): Schema
     {
@@ -254,6 +255,24 @@ class CaseStatisticsResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('calculate_metrics')
+                        ->label('Calculate Metrics Selected')
+                        ->icon('heroicon-o-calculator')
+                        ->color('info')
+                        ->requiresConfirmation()
+                        ->action(function (Collection $records) {
+                            $records->each(function (CaseStatistics $record) {
+                                $resolutionRate = $record->total_filed > 0
+                                    ? round(($record->total_resolved / $record->total_filed) * 100, 2)
+                                    : 0;
+
+                                $record->update([
+                                    'settlement_rate' => $resolutionRate,
+                                ]);
+                            });
+                        })
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('Metrics recalculated for selected records'),
                 ]),
             ])
             ->defaultSort('year', 'desc')

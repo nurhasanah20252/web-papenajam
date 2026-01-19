@@ -11,8 +11,9 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
@@ -29,11 +30,11 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?int $navigationSort = 1;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Content';
+    protected static string|\UnitEnum|null $navigationGroup = 'Content';
 
     public static function form(Schema $schema): Schema
     {
@@ -67,7 +68,8 @@ class PageResource extends Resource
                             ->nullable(),
                         RichEditor::make('content')
                             ->nullable()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->hidden(fn (Forms\Get $get) => $get('is_builder_enabled')),
                         FileUpload::make('featured_image')
                             ->image()
                             ->maxSize(2048)
@@ -89,6 +91,11 @@ class PageResource extends Resource
 
                 Section::make('Status')
                     ->schema([
+                        Toggle::make('is_builder_enabled')
+                            ->label('Enable Page Builder')
+                            ->helperText('Use the drag-and-drop builder for this page.')
+                            ->reactive()
+                            ->columnSpanFull(),
                         Select::make('status')
                             ->options([
                                 'draft' => 'Draft',
@@ -211,29 +218,32 @@ class PageResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                     BulkAction::make('publish')
-                        ->label('Publish')
+                        ->label('Publish Selected')
+                        ->icon('heroicon-o-check-circle')
                         ->action(fn (Collection $records) => $records->each(fn (Page $page) => $page->update([
                             'status' => 'published',
                             'published_at' => now(),
                         ])))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('Pages published')
-                        ->color('success')
-                        ->icon('heroicon-o-check-circle'),
+                        ->color('success'),
                     BulkAction::make('unpublish')
-                        ->label('Unpublish')
-                        ->action(fn (Collection $records) => $records->each(fn (Page $page) => $page->update(['status' => 'draft'])))
+                        ->label('Unpublish Selected')
+                        ->icon('heroicon-o-x-circle')
+                        ->action(fn (Collection $records) => $records->each(fn (Page $page) => $page->update([
+                            'status' => 'draft',
+                            'published_at' => null,
+                        ])))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('Pages unpublished')
-                        ->color('warning')
-                        ->icon('heroicon-o-x-circle'),
+                        ->color('warning'),
                     BulkAction::make('archive')
-                        ->label('Archive')
+                        ->label('Archive Selected')
+                        ->icon('heroicon-o-archive-box')
                         ->action(fn (Collection $records) => $records->each(fn (Page $page) => $page->update(['status' => 'archived'])))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('Pages archived')
                         ->color('gray')
-                        ->icon('heroicon-o-archive-box')
                         ->requiresConfirmation(),
                 ]),
             ])
