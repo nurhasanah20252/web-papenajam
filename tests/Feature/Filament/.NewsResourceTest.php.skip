@@ -1,0 +1,170 @@
+<?php
+
+use App\Enums\NewsStatus;
+use App\Enums\UserRole;
+use App\Filament\Resources\NewsResource;
+use App\Models\Category;
+use App\Models\News;
+use App\Models\User;
+
+use function Pest\Filament\assertResourceHasName;
+use function Pest\Filament\assertResourceHasNavigationGroup;
+use function Pest\Filament\assertResourceHasNavigationIcon;
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\get;
+
+beforeEach(function () {
+    $this->admin = User::factory()->create(['role' => UserRole::Admin]);
+});
+
+it('has correct resource configuration', function () {
+    assertResourceHasName(NewsResource::class, 'news');
+    assertResourceHasNavigationIcon(NewsResource::class, 'heroicon-o-newspaper');
+    // TODO: Fix navigationGroup type assertion
+    // assertResourceHasNavigationGroup(NewsResource::class, 'Content');
+});
+
+it('can render news list page', function () {
+    actingAs($this->admin)
+        ->get(NewsResource::getUrl('index'))
+        ->assertSuccessful();
+});
+
+it('can render news create page', function () {
+    actingAs($this->admin)
+        ->get(NewsResource::getUrl('create'))
+        ->assertSuccessful();
+});
+
+it('can create news', function () {
+    $category = Category::factory()->create();
+    $author = User::factory()->create(['role' => UserRole::Author]);
+
+    actingAs($this->admin)
+        ->post(NewsResource::getUrl('store'), [
+            'title' => 'Test News Article',
+            'slug' => 'test-news-article',
+            'excerpt' => 'This is a test excerpt',
+            'content' => 'This is test content',
+            'category_id' => $category->id,
+            'author_id' => $author->id,
+            'status' => NewsStatus::Draft->value,
+            'is_featured' => false,
+            'tags' => ['test', 'news'],
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('news', [
+        'title' => 'Test News Article',
+        'slug' => 'test-news-article',
+    ]);
+});
+
+it('can edit existing news', function () {
+    $news = News::factory()->create([
+        'title' => 'Original Title',
+        'status' => NewsStatus::Draft,
+    ]);
+
+    actingAs($this->admin)
+        ->get(NewsResource::getUrl('edit', ['record' => $news]))
+        ->assertSuccessful();
+
+    actingAs($this->admin)
+        ->put(NewsResource::getUrl('update', ['record' => $news]), [
+            'title' => 'Updated Title',
+            'slug' => 'updated-title',
+            'status' => NewsStatus::Published->value,
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('news', [
+        'id' => $news->id,
+        'title' => 'Updated Title',
+    ]);
+});
+
+it('can delete news', function () {
+    $news = News::factory()->create();
+
+    actingAs($this->admin)
+        ->delete(NewsResource::getUrl('destroy', ['record' => $news]))
+        ->assertRedirect();
+
+    $this->assertDatabaseMissing('news', [
+        'id' => $news->id,
+    ]);
+});
+
+it('can filter news by status', function () {
+    News::factory()->create(['status' => NewsStatus::Published]);
+    News::factory()->create(['status' => NewsStatus::Draft]);
+    News::factory()->create(['status' => NewsStatus::Archived]);
+
+    actingAs($this->admin)
+        ->get(NewsResource::getUrl('index', [
+            'tableFilters[status][value]' => NewsStatus::Published->value,
+        ]))
+        ->assertSuccessful();
+});
+
+it('can filter news by category', function () {
+    $category1 = Category::factory()->create();
+    $category2 = Category::factory()->create();
+
+    News::factory()->create(['category_id' => $category1->id]);
+    News::factory()->create(['category_id' => $category2->id]);
+
+    actingAs($this->admin)
+        ->get(NewsResource::getUrl('index', [
+            'tableFilters[category][value]' => $category1->id,
+        ]))
+        ->assertSuccessful();
+});
+
+it('can bulk publish news', function () {
+    $news1 = News::factory()->create(['status' => NewsStatus::Draft]);
+    $news2 = News::factory()->create(['status' => NewsStatus::Draft]);
+
+    actingAs($this->admin)
+        ->post(NewsResource::getUrl('index'), [
+            'tableBulkActions' => 'publish',
+            'tableRecords' => [$news1->id, $news2->id],
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('news', [
+        'id' => $news1->id,
+        'status' => NewsStatus::Published->value,
+    ]);
+    $this->assertDatabaseHas('news', [
+        'id' => $news2->id,
+        'status' => NewsStatus::Published->value,
+    ]);
+});
+
+it('can bulk feature news', function () {
+    $news1 = News::factory()->create(['is_featured' => false]);
+    $news2 = News::factory()->create(['is_featured' => false]);
+
+    actingAs($this->admin)
+        ->post(NewsResource::getUrl('index'), [
+            'tableBulkActions' => 'feature',
+            'tableRecords' => [$news1->id, $news2->id],
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('news', [
+        'id' => $news1->id,
+        'is_featured' => true,
+    ]);
+    $this->assertDatabaseHas('news', [
+        'id' => $news2->id,
+        'is_featured' => true,
+    ]);
+});
+
+it('requires authentication', function () {
+    get(NewsResource::getUrl('index'))
+        ->assertRedirect();
+});

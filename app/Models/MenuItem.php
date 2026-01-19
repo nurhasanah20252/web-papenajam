@@ -22,14 +22,18 @@ class MenuItem extends Model
         'parent_id',
         'title',
         'url_type',
+        'type',
         'route_name',
         'page_id',
         'custom_url',
         'icon',
+        'class_name',
         'order',
         'target_blank',
+        'target',
         'is_active',
         'conditions',
+        'display_rules',
     ];
 
     /**
@@ -45,9 +49,32 @@ class MenuItem extends Model
             'target_blank' => 'boolean',
             'is_active' => 'boolean',
             'conditions' => 'array',
+            'display_rules' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (MenuItem $item) {
+            // Sync target string with target_blank boolean
+            if ($item->isDirty('target')) {
+                $item->target_blank = $item->target === '_blank';
+            } elseif ($item->isDirty('target_blank')) {
+                $item->target = $item->target_blank ? '_blank' : '_self';
+            }
+
+            // Sync type with url_type
+            if ($item->isDirty('type') && $item->type) {
+                $item->url_type = UrlType::from($item->type);
+            } elseif ($item->isDirty('url_type')) {
+                $item->type = $item->url_type->value;
+            }
+        });
     }
 
     /**
@@ -87,13 +114,17 @@ class MenuItem extends Model
      */
     public function getUrl(): string
     {
-        return match ($this->url_type) {
-            UrlType::Route => route($this->route_name),
-            UrlType::Page => $this->page?->getUrl() ?? '/',
-            UrlType::Custom => $this->custom_url ?? '/',
-            UrlType::External => $this->custom_url ?? '/',
-            default => '/',
-        };
+        try {
+            return match ($this->url_type) {
+                UrlType::Route => $this->route_name ? route($this->route_name) : '#',
+                UrlType::Page => $this->page?->getUrl() ?? '#',
+                UrlType::Custom => $this->custom_url ?? '#',
+                UrlType::External => $this->custom_url ?? '#',
+                default => '#',
+            };
+        } catch (\Exception $e) {
+            return '#';
+        }
     }
 
     /**
@@ -113,18 +144,80 @@ class MenuItem extends Model
     }
 
     /**
-     * Get menu item with children (for tree building).
+     * Check if the menu item should be visible based on display rules.
      */
-    public function withChildren(): array
+    public function isVisible(?User $user = null): bool
+    {
+        if (! $this->is_active) {
+            return false;
+        }
+
+        if (empty($this->display_rules)) {
+            return true;
+        }
+
+        // Logic for roles (example: ['roles' => ['admin', 'editor']])
+        if (isset($this->display_rules['roles']) && is_array($this->display_rules['roles'])) {
+            if (! $user) {
+                return false;
+            }
+
+            return $user->hasAnyRole($this->display_rules['roles']);
+        }
+
+        // Logic for permissions (example: ['permissions' => ['view_dashboard']])
+        if (isset($this->display_rules['permissions']) && is_array($this->display_rules['permissions'])) {
+            if (! $user) {
+                return false;
+            }
+
+            return $user->hasAnyPermission($this->display_rules['permissions']);
+        }
+
+        // Logic for authentication status
+        if (isset($this->display_rules['auth'])) {
+            if ($this->display_rules['auth'] === 'guest') {
+                return ! $user;
+            }
+
+            if ($this->display_rules['auth'] === 'logged_in') {
+                return (bool) $user;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the target attribute for the link.
+     */
+    public function getTarget(): string
+    {
+        return $this->target ?? ($this->target_blank ? '_blank' : '_self');
+    }
+
+    /**
+     * Get the menu item with children (for tree building).
+     */
+    public function withChildren(bool $onlyActive = true, ?User $user = null): array
     {
         $data = $this->toArray();
+        $data['url'] = $this->getUrl();
 
         if ($this->hasChildren()) {
-            $data['children'] = $this->children()
-                ->where('is_active', true)
-                ->get()
-                ->map(fn($child) => $child->withChildren())
+            $query = $this->children();
+
+            if ($onlyActive) {
+                $query->where('is_active', true);
+            }
+
+            $data['children'] = $query->get()
+                ->filter(fn ($child) => $child->isVisible($user))
+                ->map(fn ($child) => $child->withChildren($onlyActive, $user))
+                ->values()
                 ->toArray();
+        } else {
+            $data['children'] = [];
         }
 
         return $data;

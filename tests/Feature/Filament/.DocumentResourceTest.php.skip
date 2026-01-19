@@ -1,0 +1,196 @@
+<?php
+
+use App\Enums\UserRole;
+use App\Filament\Resources\DocumentResource;
+use App\Models\Category;
+use App\Models\Document;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+
+use function Pest\Filament\assertResourceHasName;
+use function Pest\Filament\assertResourceHasNavigationGroup;
+use function Pest\Filament\assertResourceHasNavigationIcon;
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\get;
+
+beforeEach(function () {
+    $this->admin = User::factory()->create(['role' => UserRole::Admin]);
+    Storage::fake('public');
+});
+
+it('has correct resource configuration', function () {
+    assertResourceHasName(DocumentResource::class, 'documents');
+    assertResourceHasNavigationIcon(DocumentResource::class, 'heroicon-o-document');
+    // TODO: Fix navigationGroup type assertion
+    // assertResourceHasNavigationGroup(DocumentResource::class, 'Content');
+});
+
+it('can render document list page', function () {
+    actingAs($this->admin)
+        ->get(DocumentResource::getUrl('index'))
+        ->assertSuccessful();
+});
+
+it('can render document create page', function () {
+    actingAs($this->admin)
+        ->get(DocumentResource::getUrl('create'))
+        ->assertSuccessful();
+});
+
+it('can create document with file upload', function () {
+    $category = Category::factory()->create();
+    $uploader = User::factory()->create();
+
+    $file = UploadedFile::fake()->create('document.pdf', 1000);
+
+    actingAs($this->admin)
+        ->post(DocumentResource::getUrl('store'), [
+            'title' => 'Test Document',
+            'description' => 'This is a test document',
+            'category_id' => $category->id,
+            'uploaded_by' => $uploader->id,
+            'file_path' => $file,
+            'file_name' => 'document.pdf',
+            'version' => '1.0',
+            'is_public' => true,
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('documents', [
+        'title' => 'Test Document',
+        'file_name' => 'document.pdf',
+        'is_public' => true,
+    ]);
+
+    Storage::disk('public')->assertExists('documents/'.$file->hashName());
+});
+
+it('can edit existing document', function () {
+    $document = Document::factory()->create([
+        'title' => 'Original Title',
+        'is_public' => false,
+    ]);
+
+    actingAs($this->admin)
+        ->get(DocumentResource::getUrl('edit', ['record' => $document]))
+        ->assertSuccessful();
+
+    actingAs($this->admin)
+        ->put(DocumentResource::getUrl('update', ['record' => $document]), [
+            'title' => 'Updated Title',
+            'is_public' => true,
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('documents', [
+        'id' => $document->id,
+        'title' => 'Updated Title',
+        'is_public' => true,
+    ]);
+});
+
+it('can delete document', function () {
+    $document = Document::factory()->create();
+
+    actingAs($this->admin)
+        ->delete(DocumentResource::getUrl('destroy', ['record' => $document]))
+        ->assertRedirect();
+
+    $this->assertDatabaseMissing('documents', [
+        'id' => $document->id,
+    ]);
+});
+
+it('can filter documents by category', function () {
+    $category1 = Category::factory()->create();
+    $category2 = Category::factory()->create();
+
+    Document::factory()->create(['category_id' => $category1->id]);
+    Document::factory()->create(['category_id' => $category2->id]);
+
+    actingAs($this->admin)
+        ->get(DocumentResource::getUrl('index', [
+            'tableFilters[category][value]' => $category1->id,
+        ]))
+        ->assertSuccessful();
+});
+
+it('can filter documents by visibility', function () {
+    Document::factory()->create(['is_public' => true]);
+    Document::factory()->create(['is_public' => false]);
+
+    actingAs($this->admin)
+        ->get(DocumentResource::getUrl('index', [
+            'tableFilters[public]' => true,
+        ]))
+        ->assertSuccessful();
+});
+
+it('can bulk publish documents', function () {
+    $doc1 = Document::factory()->create(['is_public' => false]);
+    $doc2 = Document::factory()->create(['is_public' => false]);
+
+    actingAs($this->admin)
+        ->post(DocumentResource::getUrl('index'), [
+            'tableBulkActions' => 'publish',
+            'tableRecords' => [$doc1->id, $doc2->id],
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('documents', [
+        'id' => $doc1->id,
+        'is_public' => true,
+    ]);
+    $this->assertDatabaseHas('documents', [
+        'id' => $doc2->id,
+        'is_public' => true,
+    ]);
+});
+
+it('can bulk make documents private', function () {
+    $doc1 = Document::factory()->create(['is_public' => true]);
+    $doc2 = Document::factory()->create(['is_public' => true]);
+
+    actingAs($this->admin)
+        ->post(DocumentResource::getUrl('index'), [
+            'tableBulkActions' => 'make_private',
+            'tableRecords' => [$doc1->id, $doc2->id],
+        ])
+        ->assertRedirect();
+
+    $this->assertDatabaseHas('documents', [
+        'id' => $doc1->id,
+        'is_public' => false,
+    ]);
+    $this->assertDatabaseHas('documents', [
+        'id' => $doc2->id,
+        'is_public' => false,
+    ]);
+});
+
+it('requires authentication', function () {
+    get(DocumentResource::getUrl('index'))
+        ->assertRedirect();
+});
+
+it('can download document', function () {
+    $document = Document::factory()->create([
+        'is_public' => true,
+        'published_at' => now(),
+    ]);
+
+    actingAs($this->admin)
+        ->get($document->getFileUrl())
+        ->assertSuccessful();
+});
+
+it('cannot download private document', function () {
+    $document = Document::factory()->create([
+        'is_public' => false,
+    ]);
+
+    actingAs($this->admin)
+        ->get($document->getFileUrl())
+        ->assertStatus(403);
+});

@@ -43,6 +43,7 @@ class CourtSchedule extends Model
     protected function casts(): array
     {
         return [
+            'external_id' => 'integer',
             'parties' => 'array',
             'schedule_date' => 'date',
             'schedule_time' => 'string',
@@ -124,7 +125,7 @@ class CourtSchedule extends Model
      */
     public function getFormattedTime(): ?string
     {
-        if (!$this->schedule_time) {
+        if (! $this->schedule_time) {
             return null;
         }
 
@@ -137,7 +138,7 @@ class CourtSchedule extends Model
      */
     public function getFormattedDate(): ?string
     {
-        if (!$this->schedule_date) {
+        if (! $this->schedule_date) {
             return null;
         }
 
@@ -149,7 +150,7 @@ class CourtSchedule extends Model
      */
     public function isUpcoming(): bool
     {
-        if (!$this->schedule_date) {
+        if (! $this->schedule_date) {
             return false;
         }
 
@@ -162,7 +163,7 @@ class CourtSchedule extends Model
      */
     public function isToday(): bool
     {
-        if (!$this->schedule_date) {
+        if (! $this->schedule_date) {
             return false;
         }
 

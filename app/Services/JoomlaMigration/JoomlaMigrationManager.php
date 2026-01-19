@@ -28,32 +28,30 @@ class JoomlaMigrationManager
     }
 
     /**
-     * Run complete migration from JSON data.
+     * Run complete migration.
      */
-    public function runMigration(array $joomlaData, string $migrationName = 'Joomla Migration'): JoomlaMigration
+    public function runMigration(string $migrationName = 'Joomla Migration'): JoomlaMigration
     {
         $migration = JoomlaMigration::create([
             'name' => $migrationName,
             'status' => JoomlaMigration::STATUS_RUNNING,
             'started_at' => now(),
+            'total_records' => 0,
+            'processed_records' => 0,
+            'failed_records' => 0,
         ]);
 
         try {
             // Migrate in order: categories -> pages -> news -> menus -> documents
-            $this->migrateCategories($migration, $joomlaData['categories'] ?? []);
-            $this->migratePages($migration, $joomlaData['articles'] ?? [], $joomlaData['categories'] ?? []);
-            $this->migrateNews($migration, $joomlaData['news'] ?? [], $joomlaData['categories'] ?? []);
-            $this->migrateMenus($migration, $joomlaData['menus'] ?? [], $joomlaData['menu_items'] ?? []);
-            $this->migrateDocuments($migration, $joomlaData['documents'] ?? [], $joomlaData['categories'] ?? []);
+            $this->categoryService->setMigration($migration)->migrate('joomla_categories.json');
+            $this->contentService->setMigration($migration)->migrate('joomla_content.json');
+            $this->newsService->setMigration($migration)->migrate('joomla_content.json'); // News also from content
+            $this->menuService->setMigration($migration)->migrate('joomla_menu.json');
+            $this->documentService->setMigration($migration)->migrate('joomla_images.json'); // Or documents if exists
 
-            $migration->update(['status' => JoomlaMigration::STATUS_COMPLETED, 'completed_at' => now()]);
+            $migration->markAsCompleted();
         } catch (\Throwable $e) {
-            $migration->update([
-                'status' => JoomlaMigration::STATUS_FAILED,
-                'completed_at' => now(),
-                'errors' => array_merge($migration->errors ?? [], [['message' => $e->getMessage()]]),
-            ]);
-
+            $migration->markAsFailed([['message' => $e->getMessage()]]);
             throw $e;
         }
 
@@ -61,9 +59,21 @@ class JoomlaMigrationManager
     }
 
     /**
+     * Set the migration context.
+     */
+    public function setMigration(JoomlaMigration $migration): self
+    {
+        foreach ($this->services as $service) {
+            $service->setMigration($migration);
+        }
+
+        return $this;
+    }
+
+    /**
      * Migrate categories.
      */
-    protected function migrateCategories(JoomlaMigration $migration, array $categories): void
+    public function migrateCategories(JoomlaMigration $migration, array $categories): void
     {
         if (empty($categories)) {
             return;
@@ -77,7 +87,7 @@ class JoomlaMigrationManager
     /**
      * Migrate pages (articles not in news category).
      */
-    protected function migratePages(JoomlaMigration $migration, array $articles, array $categories): void
+    public function migratePages(JoomlaMigration $migration, array $articles, array $categories = []): void
     {
         if (empty($articles)) {
             return;
@@ -91,7 +101,7 @@ class JoomlaMigrationManager
     /**
      * Migrate news.
      */
-    protected function migrateNews(JoomlaMigration $migration, array $news, array $categories): void
+    public function migrateNews(JoomlaMigration $migration, array $news, array $categories = []): void
     {
         if (empty($news)) {
             return;
@@ -105,7 +115,7 @@ class JoomlaMigrationManager
     /**
      * Migrate menus.
      */
-    protected function migrateMenus(JoomlaMigration $migration, array $menus, array $menuItems): void
+    public function migrateMenus(JoomlaMigration $migration, array $menus, array $menuItems = []): void
     {
         if (empty($menus)) {
             return;
@@ -119,7 +129,7 @@ class JoomlaMigrationManager
     /**
      * Migrate documents.
      */
-    protected function migrateDocuments(JoomlaMigration $migration, array $documents, array $categories): void
+    public function migrateDocuments(JoomlaMigration $migration, array $documents, array $categories = []): void
     {
         if (empty($documents)) {
             return;
@@ -135,7 +145,7 @@ class JoomlaMigrationManager
      */
     public function rollback(JoomlaMigration $migration): bool
     {
-        if (!$migration->isComplete()) {
+        if (! $migration->isComplete()) {
             return false;
         }
 

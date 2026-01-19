@@ -74,7 +74,7 @@ class News extends Model
     public function scopePublished($query)
     {
         return $query->where('status', NewsStatus::Published)
-                     ->where('published_at', '<=', now());
+            ->where('published_at', '<=', now());
     }
 
     /**
@@ -124,7 +124,7 @@ class News extends Model
      */
     public function getUrl(): string
     {
-        return '/news/' . $this->slug;
+        return '/news/'.$this->slug;
     }
 
     /**

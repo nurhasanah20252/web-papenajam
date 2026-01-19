@@ -59,34 +59,55 @@ abstract class BaseMigrationService
         $this->migration->markAsRunning();
 
         $total = $data->count();
-        $processed = 0;
-        $failed = 0;
-        $errors = [];
 
-        $this->migration->update(['total_records' => $total]);
+        // Update total records
+        $this->migration->increment('total_records', $total);
 
         foreach ($data as $item) {
+            $errorOccurred = false;
             try {
                 $this->processItem($item);
-                $processed++;
             } catch (\Throwable $e) {
-                $failed++;
-                $errors[] = [
-                    'joomla_id' => $item['id'] ?? null,
-                    'message' => $e->getMessage(),
-                ];
+                $errorOccurred = true;
             }
 
-            $this->migration->updateProgress($processed, $failed);
-        }
-
-        if ($failed > 0) {
-            $this->migration->markAsFailed($errors);
-        } else {
-            $this->migration->markAsCompleted();
+            $this->migration->updateProgress(
+                $this->migration->processed_records + 1,
+                $this->migration->failed_records + ($errorOccurred ? 1 : 0)
+            );
         }
 
         return $this->migration;
+    }
+
+    /**
+     * Load data from a JSON file.
+     */
+    public function loadData(string $filename): Collection
+    {
+        $path = base_path('docs/'.$filename);
+
+        if (! file_exists($path)) {
+            throw new \Exception("File not found: {$path}");
+        }
+
+        $content = file_get_contents($path);
+        $data = json_decode($content, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \Exception("Invalid JSON in file: {$filename}");
+        }
+
+        return collect($data);
+    }
+
+    /**
+     * Main migrate method to be called by the manager.
+     */
+    public function migrate(string $filename): void
+    {
+        $data = $this->loadData($filename);
+        $this->run($data);
     }
 
     /**
@@ -103,7 +124,7 @@ abstract class BaseMigrationService
         ]);
 
         try {
-            if (!$this->validateData($item)) {
+            if (! $this->validateData($item)) {
                 $migrationItem->markAsSkipped('Data validation failed');
 
                 return null;

@@ -11,10 +11,10 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Pages\CreateRecord;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
@@ -29,15 +29,15 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static string | \UnitEnum | null $navigationGroup = 'Content';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('Basic Information')
                     ->schema([
@@ -45,7 +45,7 @@ class PageResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->reactive()
-                            ->afterStateUpdated(fn($state, $set) => $set('slug', Str::slug($state))),
+                            ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
                         TextInput::make('slug')
                             ->required()
                             ->maxLength(255)
@@ -123,7 +123,7 @@ class PageResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'published' => 'success',
                         'draft' => 'warning',
                         'archived' => 'gray',
@@ -155,15 +155,56 @@ class PageResource extends Resource
                     ]),
                 SelectFilter::make('template')
                     ->relationship('template', 'name'),
+                SelectFilter::make('author')
+                    ->relationship('author', 'name'),
                 Filter::make('published')
-                    ->query(fn($query): $query->whereNotNull('published_at'))
+                    ->query(fn ($query) => $query->whereNotNull('published_at'))
                     ->label('Published Pages'),
                 Filter::make('unpublished')
-                    ->query(fn($query): $query->whereNull('published_at'))
+                    ->query(fn ($query) => $query->whereNull('published_at'))
                     ->label('Unpublished Pages'),
+                Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')
+                            ->label('Created from'),
+                        Forms\Components\DatePicker::make('created_until')
+                            ->label('Created until'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn ($query) => $query->whereDate('created_at', '>=', $data['created_from'])
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn ($query) => $query->whereDate('created_at', '<=', $data['created_until'])
+                            );
+                    })
+                    ->indicateUsing(function (array $data) {
+                        $indicators = [];
+                        if ($data['created_from'] ?? null) {
+                            $indicators['created_from'] = 'Created from '.$data['created_from'];
+                        }
+                        if ($data['created_until'] ?? null) {
+                            $indicators['created_until'] = 'Created until '.$data['created_until'];
+                        }
+
+                        return $indicators;
+                    }),
             ])
             ->actions([
+                Tables\Actions\Action::make('view')
+                    ->label('View')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn (Page $record): string => route('page.show', $record->slug))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
+                Action::make('page-builder')
+                    ->label('Page Builder')
+                    ->icon('heroicon-o-cube')
+                    ->url(fn (Page $record): string => route('builder.edit', $record))
+                    ->openUrlInNewTab(false),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -171,18 +212,29 @@ class PageResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     BulkAction::make('publish')
                         ->label('Publish')
-                        ->action(fn(Collection $records): void => $records->each(fn(Page $page): bool => $page->update([
+                        ->action(fn (Collection $records) => $records->each(fn (Page $page) => $page->update([
                             'status' => 'published',
                             'published_at' => now(),
                         ])))
                         ->deselectRecordsAfterCompletion()
-                        ->successNotificationTitle('Pages published'),
+                        ->successNotificationTitle('Pages published')
+                        ->color('success')
+                        ->icon('heroicon-o-check-circle'),
                     BulkAction::make('unpublish')
                         ->label('Unpublish')
-                        ->action(fn(Collection $records): void => $records->each(fn(Page $page): bool => $page->update(['status' => 'draft'])))
+                        ->action(fn (Collection $records) => $records->each(fn (Page $page) => $page->update(['status' => 'draft'])))
                         ->deselectRecordsAfterCompletion()
                         ->successNotificationTitle('Pages unpublished')
-                        ->color('warning'),
+                        ->color('warning')
+                        ->icon('heroicon-o-x-circle'),
+                    BulkAction::make('archive')
+                        ->label('Archive')
+                        ->action(fn (Collection $records) => $records->each(fn (Page $page) => $page->update(['status' => 'archived'])))
+                        ->deselectRecordsAfterCompletion()
+                        ->successNotificationTitle('Pages archived')
+                        ->color('gray')
+                        ->icon('heroicon-o-archive-box')
+                        ->requiresConfirmation(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

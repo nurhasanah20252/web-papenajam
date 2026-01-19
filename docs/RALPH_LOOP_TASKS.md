@@ -21,236 +21,236 @@ Each task includes:
 
 ## Phase 1: Foundation (Weeks 1-3)
 
-### PH1.1 Database Schema & Migrations
+### [x] PH1.1 Database Schema & Migrations
 **Priority:** Critical
 **Dependencies:** None
 **Estimated Effort:** 8 points
 
-#### PH1.1.1: Design Core Database Schema
+#### [x] PH1.1.1: Design Core Database Schema
 - **Description:** Create database schema based on PRD section 3 (Database Schema Inti)
 - **Tasks:**
-  1. Design `pages` table with JSON content for page builder
-  2. Design `page_templates` table for template system
-  3. Design `page_blocks` table for page builder components
-  4. Design `menus` and `menu_items` for dynamic navigation
-  5. Design `news`, `categories`, `documents` tables
-  6. Design `court_schedules` table (basic structure)
-  7. Design `budget_transparency` and `case_statistics` tables
-  8. Design `ppid_requests` table
+  1. [x] Design `pages` table with JSON content for page builder
+  2. [x] Design `page_templates` table for template system
+  3. [x] Design `page_blocks` table for page builder components
+  4. [x] Design `menus` and `menu_items` for dynamic navigation
+  5. [x] Design `news`, `categories`, `documents` tables
+  6. [x] Design `court_schedules` table (basic structure)
+  7. [x] Design `budget_transparency` and `case_statistics` tables
+  8. [x] Design `ppid_requests` table
 - **Acceptance Criteria:** ERD diagram completed, migrations ready
 
-#### PH1.1.2: Create Laravel Migrations
+#### [x] PH1.1.2: Create Laravel Migrations
 - **Description:** Convert schema design to Laravel migrations
 - **Dependencies:** PH1.1.1
 - **Tasks:**
-  1. Create migration files for all core tables
-  2. Add proper indexes and foreign keys
-  3. Implement proper column types and constraints
-  4. Add JSON columns with proper casting
+  1. [x] Create migration files for all core tables
+  2. [x] Add proper indexes and foreign keys
+  3. [x] Implement proper column types and constraints
+  4. [x] Add JSON columns with proper casting
 - **Acceptance Criteria:** All migrations run successfully
 
-#### PH1.1.3: Create Eloquent Models
+#### [x] PH1.1.3: Create Eloquent Models
 - **Description:** Create models with relationships and casts
 - **Dependencies:** PH1.1.2
 - **Tasks:**
-  1. Create all core models (Page, Menu, News, Document, etc.)
-  2. Implement proper relationships (hasMany, belongsTo, etc.)
-  3. Add JSON casts for JSON columns
-  4. Implement model factories for testing
+  1. [x] Create all core models (Page, Menu, News, Document, etc.)
+  2. [x] Implement proper relationships (hasMany, belongsTo, etc.)
+  3. [x] Add JSON casts for JSON columns
+  4. [x] Implement model factories for testing
 - **Acceptance Criteria:** Models can be instantiated with relationships
 
-### PH1.2 User Management & Authentication
+### [x] PH1.2 User Management & Authentication
 **Priority:** Critical
 **Dependencies:** PH1.1.2
 **Estimated Effort:** 6 points
 
-#### PH1.2.1: Extend User Model with Roles
+#### [x] PH1.2.1: Extend User Model with Roles
 - **Description:** Add role system to Laravel User model
 - **Tasks:**
-  1. Add `role` column with enum (super_admin, admin, author, designer, subscriber)
-  2. Add `permissions` JSON column for custom permissions
-  3. Add `last_login_at` and `profile_completed` columns
-  4. Create User model traits for role checking
+  1. [x] Add `role` column with enum (super_admin, admin, author, designer, subscriber)
+  2. [x] Add `permissions` JSON column for custom permissions
+  3. [x] Add `last_login_at` and `profile_completed` columns
+  4. [x] Create User model traits for role checking
 - **Acceptance Criteria:** Users can be assigned roles and permissions
 
-#### PH1.2.2: Implement Laravel Fortify Authentication
+#### [x] PH1.2.2: Implement Laravel Fortify Authentication
 - **Description:** Set up authentication with 5 role levels
 - **Dependencies:** PH1.2.1
 - **Tasks:**
-  1. Configure Fortify with required features
-  2. Implement role-based middleware
-  3. Create authentication views (login, register, password reset)
-  4. Add 2FA support configuration
+  1. [x] Configure Fortify with required features
+  2. [x] Implement role-based middleware
+  3. [x] Create authentication views (login, register, password reset)
+  4. [x] Add 2FA support configuration
 - **Acceptance Criteria:** Users can register/login with role-based access
 
-#### PH1.2.3: Create Authorization Policies
+#### [x] PH1.2.3: Create Authorization Policies
 - **Description:** Implement fine-grained permission system
 - **Tasks:**
-  1. Create policies for all major resources (Page, News, Document, etc.)
-  2. Implement permission matrix based on 5 roles
-  3. Add policy checks to controllers
-  4. Create admin authorization middleware
+  1. [x] Create policies for all major resources (Page, News, Document, etc.)
+  2. [x] Implement permission matrix based on 5 roles
+  3. [x] Add policy checks to controllers
+  4. [x] Create admin authorization middleware
 - **Acceptance Criteria:** Role-based access control works correctly
 
-### PH1.3 Filament Admin Panel Setup
+### [x] PH1.3 Filament Admin Panel Setup
 **Priority:** High
 **Dependencies:** PH1.1.3, PH1.2.2
 **Estimated Effort:** 7 points
 
-#### PH1.3.1: Install and Configure Filament v5
+#### [x] PH1.3.1: Install and Configure Filament v5
 - **Description:** Set up Filament admin panel
 - **Tasks:**
-  1. Install Filament v5 with required plugins
-  2. Configure Filament theme and branding
-  3. Set up admin dashboard
-  4. Configure navigation and sidebar
+  1. [x] Install Filament v5 with required plugins
+  2. [x] Configure Filament theme and branding
+  3. [x] Set up admin dashboard
+  4. [x] Configure navigation and sidebar
 - **Acceptance Criteria:** Admin panel accessible at `/admin`
 
-#### PH1.3.2: Create User Management Resource
+#### [x] PH1.3.2: Create User Management Resource
 - **Description:** Build Filament resource for user management
 - **Dependencies:** PH1.3.1
 - **Tasks:**
-  1. Create UserResource with CRUD operations
-  2. Implement role assignment in forms
-  3. Add user activity logging
-  4. Implement bulk actions
+  1. [x] Create UserResource with CRUD operations
+  2. [x] Implement role assignment in forms
+  3. [x] Add user activity logging
+  4. [x] Implement bulk actions
 - **Acceptance Criteria:** Admins can manage users via Filament
 
-#### PH1.3.3: Create Basic Content Resources
+#### [x] PH1.3.3: Create Basic Content Resources
 - **Description:** Build Filament resources for core content
 - **Dependencies:** PH1.3.1
 - **Tasks:**
-  1. Create PageResource (basic CRUD without page builder)
-  2. Create MenuResource (basic CRUD without visual editor)
-  3. Create CategoryResource
-  4. Create basic dashboard widgets
+  1. [x] Create PageResource (basic CRUD without page builder)
+  2. [x] Create MenuResource (basic CRUD without visual editor)
+  3. [x] Create CategoryResource
+  4. [x] Create basic dashboard widgets
 - **Acceptance Criteria:** Basic content management via Filament
 
-### PH1.4 Basic Frontend Setup
+### [x] PH1.4 Basic Frontend Setup
 **Priority:** Medium
 **Dependencies:** PH1.1.3
 **Estimated Effort:** 5 points
 
-#### PH1.4.1: Configure Inertia.js v2 + React 19
+#### [x] PH1.4.1: Configure Inertia.js v2 + React 19
 - **Description:** Set up frontend architecture
 - **Tasks:**
-  1. Configure Inertia.js v2 with React 19
-  2. Set up TypeScript configuration
-  3. Configure Vite build system
-  4. Set up Tailwind CSS v4
+  1. [x] Configure Inertia.js v2 with React 19
+  2. [x] Set up TypeScript configuration
+  3. [x] Configure Vite build system
+  4. [x] Set up Tailwind CSS v4
 - **Acceptance Criteria:** Frontend builds successfully
 
-#### PH1.4.2: Create Basic Layout Components
+#### [x] PH1.4.2: Create Basic Layout Components
 - **Description:** Build core layout components
 - **Dependencies:** PH1.4.1
 - **Tasks:**
-  1. Create main layout with header/footer
-  2. Implement responsive navigation
-  3. Create basic page container
-  4. Set up dark/light theme support
+  1. [x] Create main layout with header/footer
+  2. [x] Implement responsive navigation
+  3. [x] Create basic page container
+  4. [x] Set up dark/light theme support
 - **Acceptance Criteria:** Basic website layout works
 
-#### PH1.4.3: Install shadcn/ui Components
+#### [x] PH1.4.3: Install shadcn/ui Components
 - **Description:** Set up component library
 - **Dependencies:** PH1.4.1
 - **Tasks:**
-  1. Install and configure shadcn/ui
-  2. Add core components (Button, Card, Input, etc.)
-  3. Configure theme customization
-  4. Create component examples
+  1. [x] Install and configure shadcn/ui
+  2. [x] Add core components (Button, Card, Input, etc.)
+  3. [x] Configure theme customization
+  4. [x] Create component examples
 - **Acceptance Criteria:** shadcn/ui components available
 
 ## Phase 2: Core Features (Weeks 4-7)
 
-### PH2.1 Page Builder System
+### [x] PH2.1 Page Builder System
 **Priority:** Critical
 **Dependencies:** PH1.1.3, PH1.3.3, PH1.4.3
 **Estimated Effort:** 12 points
 
-#### PH2.1.1: Design Page Builder Database Schema
+#### [x] PH2.1.1: Design Page Builder Database Schema
 - **Description:** Enhance page system for drag-and-drop builder
 - **Tasks:**
-  1. Extend `pages` table with page builder fields
-  2. Design `page_blocks` table structure
-  3. Create `page_block_types` for component library
-  4. Design versioning system for pages
+  1. [x] Extend `pages` table with page builder fields
+  2. [x] Design `page_blocks` table structure
+  3. [x] Create `page_block_types` for component library
+  4. [x] Design versioning system for pages
 - **Acceptance Criteria:** Database supports page builder features
 
-#### PH2.1.2: Build Page Builder Backend API
+#### [x] PH2.1.2: Build Page Builder Backend API
 - **Description:** Create APIs for page builder operations
 - **Dependencies:** PH2.1.1
 - **Tasks:**
-  1. Create PageController with builder endpoints
-  2. Implement block CRUD operations
-  3. Create template management API
-  4. Implement page versioning API
+  1. [x] Create PageController with builder endpoints
+  2. [x] Implement block CRUD operations
+  3. [x] Create template management API
+  4. [x] Implement page versioning API
 - **Acceptance Criteria:** API endpoints for all builder operations
 
-#### PH2.1.3: Build Page Builder Frontend (Drag & Drop)
+#### [x] PH2.1.3: Build Page Builder Frontend (Drag & Drop)
 - **Description:** Create visual page builder interface
 - **Dependencies:** PH2.1.2, PH1.4.3
 - **Tasks:**
-  1. Implement drag-and-drop interface with React DnD
-  2. Create component palette sidebar
-  3. Build WYSIWYG editor for text blocks
-  4. Implement real-time preview
-  5. Create template save/load system
+  1. [x] Implement drag-and-drop interface with React DnD
+  2. [x] Create component palette sidebar
+  3. [x] Build WYSIWYG editor for text blocks
+  4. [x] Implement real-time preview
+  5. [x] Create template save/load system
 - **Acceptance Criteria:** Users can create pages visually
 
 #### PH2.1.4: Create Component Library
 - **Description:** Build reusable components for page builder
 - **Dependencies:** PH1.4.3
 - **Tasks:**
-  1. Create text block component with WYSIWYG
-  2. Create image/gallery block
-  3. Create form block component
-  4. Create layout blocks (columns, sections)
+  1. [x] Create text block component with WYSIWYG
+  2. [x] Create image/gallery block
+  3. [x] Create form block component
+  4. [x] Create layout blocks (columns, sections)
   5. Create custom components for court features
 - **Acceptance Criteria:** 10+ components available in builder
 
-### PH2.2 Dynamic Menu Management
+### [x] PH2.2 Dynamic Menu Management
 **Priority:** High
 **Dependencies:** PH1.1.3, PH1.3.3
 **Estimated Effort:** 8 points
 
-#### PH2.2.1: Enhance Menu Database Structure
+#### [x] PH2.2.1: Enhance Menu Database Structure
 - **Description:** Extend menu system for hierarchical management
 - **Tasks:**
-  1. Add `max_depth` to menus table
-  2. Enhance `menu_items` with conditional display rules
-  3. Add location-based menu configurations
-  4. Design URL type system (route, page, custom, external)
+  1. [x] Add `max_depth` to menus table
+  2. [x] Enhance `menu_items` with conditional display rules
+  3. [x] Add location-based menu configurations
+  4. [x] Design URL type system (route, page, custom, external)
 - **Acceptance Criteria:** Database supports advanced menu features
 
-#### PH2.2.2: Build Visual Menu Editor Backend
+#### [x] PH2.2.2: Build Visual Menu Editor Backend
 - **Description:** Create APIs for menu management
 - **Dependencies:** PH2.2.1
 - **Tasks:**
-  1. Create MenuController with hierarchical operations
-  2. Implement drag-drop reordering API
-  3. Create menu location management
-  4. Implement conditional display rules engine
+  1. [x] Create MenuController with hierarchical operations
+  2. [x] Implement drag-drop reordering API
+  3. [x] Create menu location management
+  4. [x] Implement conditional display rules engine
 - **Acceptance Criteria:** API supports all menu operations
 
-#### PH2.2.3: Build Visual Menu Editor Frontend
+#### [x] PH2.2.3: Build Visual Menu Editor Frontend
 - **Description:** Create drag-and-drop menu builder
 - **Dependencies:** PH2.2.2, PH1.4.3
 - **Tasks:**
-  1. Create tree-based menu structure editor
-  2. Implement drag-drop for reordering
-  3. Build menu item configuration forms
-  4. Create location selector
-  5. Implement conditional rules UI
+  1. [x] Create tree-based menu structure editor
+  2. [x] Implement drag-drop for reordering
+  3. [x] Build menu item configuration forms
+  4. [x] Create location selector
+  5. [x] Implement conditional rules UI
 - **Acceptance Criteria:** Visual menu editor works
 
-#### PH2.2.4: Implement Frontend Menu Rendering
+#### [x] PH2.2.4: Implement Frontend Menu Rendering
 - **Description:** Render dynamic menus on frontend
 - **Dependencies:** PH2.2.1
 - **Tasks:**
-  1. Create Menu React component
-  2. Implement hierarchical menu rendering
-  3. Add mobile-responsive menu
-  4. Implement conditional display logic
+  1. [x] Create Menu React component
+  2. [x] Implement hierarchical menu rendering
+  3. [x] Add mobile-responsive menu
+  4. [x] Implement conditional display logic
 - **Acceptance Criteria:** Menus render correctly on website
 
 ### PH2.3 Joomla Data Migration
@@ -258,45 +258,45 @@ Each task includes:
 **Dependencies:** PH1.1.3
 **Estimated Effort:** 10 points
 
-#### PH2.3.1: Analyze Joomla Export Data
+#### [x] PH2.3.1: Analyze Joomla Export Data
 - **Description:** Understand Joomla data structure
 - **Tasks:**
-  1. Analyze `joomla_content.json` structure
-  2. Analyze `joomla_categories.json` structure
-  3. Analyze `joomla_menu.json` structure
-  4. Analyze `joomla_images.json` structure
-  5. Map Joomla fields to new schema
+  1. [x] Analyze `joomla_content.json` structure
+  2. [x] Analyze `joomla_categories.json` structure
+  3. [x] Analyze `joomla_menu.json` structure
+  4. [x] Analyze `joomla_images.json` structure
+  5. [x] Map Joomla fields to new schema
 - **Acceptance Criteria:** Data mapping document completed
 
-#### PH2.3.2: Create Data Migration Scripts
+#### [x] PH2.3.2: Create Data Migration Scripts
 - **Description:** Build migration scripts for each data type
 - **Dependencies:** PH2.3.1
 - **Tasks:**
-  1. Create content migration script (pages/news)
-  2. Create categories migration script
-  3. Create menu migration script
-  4. Create media migration script
-  5. Implement data cleaning (HTML cleanup)
+  1. [x] Create content migration script (pages/news)
+  2. [x] Create categories migration script
+  3. [x] Create menu migration script
+  4. [x] Create media migration script
+  5. [x] Implement data cleaning (HTML cleanup)
 - **Acceptance Criteria:** Migration scripts for all data types
 
-#### PH2.3.3: Implement Batch Import System
+#### [x] PH2.3.3: Implement Batch Import System
 - **Description:** Create web-based migration tool
 - **Dependencies:** PH2.3.2
 - **Tasks:**
-  1. Build migration UI in Filament
-  2. Implement progress tracking
-  3. Add validation and error reporting
-  4. Create rollback capability
+  1. [x] Build migration UI in Filament
+  2. [x] Implement progress tracking
+  3. [x] Add validation and error reporting
+  4. [x] Create rollback capability
 - **Acceptance Criteria:** Migration can be run via admin panel
 
-#### PH2.3.4: Validate Migration Results
+#### [x] PH2.3.4: Validate Migration Results
 - **Description:** Verify data integrity after migration
 - **Dependencies:** PH2.3.3
 - **Tasks:**
-  1. Create data validation scripts
-  2. Compare record counts
-  3. Check content quality
-  4. Fix migration issues
+  1. [x] Create data validation scripts
+  2. [x] Compare record counts
+  3. [x] Check content quality
+  4. [x] Fix migration issues
 - **Acceptance Criteria:** 95%+ data integrity achieved
 
 ### PH2.4 Admin Panel Refinement
@@ -740,4 +740,4 @@ Each task includes:
 **Total Estimated Effort:** 132 story points (approx. 132 days)
 **Critical Path:** PH1.1 → PH1.2 → PH1.3 → PH2.1 → PH2.3 → PH3.3 → PH4.3 → PH4.4
 
-**Next Action for Ralph:** Begin with PH1.1.1 - Design Core Database Schema
+**Next Action for Ralph:** PH2.1.1: Design Page Builder Database Schema

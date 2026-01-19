@@ -17,9 +17,12 @@ class MenuFactory extends Factory
      */
     public function definition(): array
     {
+        $location = fake()->randomElement([MenuLocation::Header, MenuLocation::Footer, MenuLocation::Sidebar, MenuLocation::Mobile]);
+
         return [
             'name' => fake()->words(2, true),
-            'location' => fake()->randomElement([MenuLocation::Header, MenuLocation::Footer]),
+            'location' => $location,
+            'locations' => [$location->value],
             'max_depth' => fake()->numberBetween(2, 4),
             'description' => fake()->sentence(),
         ];

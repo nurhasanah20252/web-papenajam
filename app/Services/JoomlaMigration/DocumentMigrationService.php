@@ -3,7 +3,6 @@
 namespace App\Services\JoomlaMigration;
 
 use App\Models\Document;
-use Illuminate\Support\Str;
 
 class DocumentMigrationService extends BaseMigrationService
 {
@@ -19,24 +18,28 @@ class DocumentMigrationService extends BaseMigrationService
 
     public function validateData(array $data): bool
     {
-        return !empty($data['title'] ?? $data['filename'] ?? null);
+        return ! empty($data['title'] ?? $data['filename'] ?? null);
     }
 
     public function transformData(array $data): array
     {
-        $title = $data['title'] ?? $data['filename'] ?? '';
-        $filename = $data['filename'] ?? $data['file'] ?? '';
+        $title = $data['title'] ?? $data['name'] ?? $data['filename'] ?? '';
+        $path = $data['path'] ?? $data['filename'] ?? $data['file'] ?? '';
+        $filename = basename($path);
 
         return [
             'title' => $title,
             'description' => $data['description'] ?? $data['introtext'] ?? null,
-            'file_path' => $this->processFilePath($filename),
+            'file_path' => $this->processFilePath($path),
+            'file_name' => $filename,
+            'file_type' => strtolower(pathinfo($filename, PATHINFO_EXTENSION)),
             'file_size' => $data['filesize'] ?? $data['file_size'] ?? 0,
             'mime_type' => $this->getMimeType($filename),
-            'category_id' => $this->mapCategory($data['catid'] ?? null),
+            'category_id' => $this->mapCategory($data['catid'] ?? $data['category_id'] ?? null),
             'is_public' => $this->isPublic($data),
             'download_count' => $data['hits'] ?? 0,
             'uploaded_by' => $this->mapAuthor($data['created_by'] ?? null),
+            'published_at' => now(),
         ];
     }
 
@@ -56,11 +59,7 @@ class DocumentMigrationService extends BaseMigrationService
             return '';
         }
 
-        // Remove leading slash and images directory prefix
-        $path = ltrim($path, '/');
-        $path = preg_replace('#^images/#', 'storage/', $path);
-
-        return $path;
+        return app(JoomlaDataCleaner::class)->processImagePath($path);
     }
 
     /**

@@ -1,0 +1,176 @@
+# Nginx Configuration for PA Penajam Website
+# Laravel 12 + PHP 8.5 + Inertia.js + React
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name pa-penajam.go.id www.pa-penajam.go.id;
+
+    # Redirect all HTTP to HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name pa-penajam.go.id www.pa-penajam.go.id;
+
+    # SSL Configuration
+    ssl_certificate /etc/letsencrypt/live/pa-penajam.go.id/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/pa-penajam.go.id/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    # Security Headers
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    # Content Security Policy (adjust based on your needs)
+    add_header Content-Security-Policy "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'" always;
+
+    # Remove Nginx version
+    server_tokens off;
+
+    # Root directory
+    root /var/www/pa-penajam/current/public;
+
+    # Add index file
+    index index.php;
+
+    # Charset
+    charset utf-8;
+
+    # Client upload size
+    client_max_body_size 50M;
+    client_body_buffer_size 128k;
+
+    # Logging
+    access_log /var/log/nginx/pa-penajam-access.log;
+    error_log /var/log/nginx/pa-penajam-error.log;
+
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css text/xml text/javascript application/json application/javascript application/xml+rss application/rss+xml font/truetype font/opentype application/vnd.ms-fontobject image/svg+xml;
+
+    # Brotli compression (if available)
+    # brotli on;
+    # brotli_comp_level 6;
+    # brotli_types text/plain text/css text/xml text/javascript application/json application/javascript application/xml+rss application/rss+xml font/truetype font/opentype application/vnd.ms-fontobject image/svg+xml;
+
+    # Handle Laravel requests
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Health check endpoint
+    location /health {
+        access_log off;
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Deny access to hidden files
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Deny access to sensitive files
+    location ~ /(?:\.env|\.git|composer\.json|composer\.lock|package\.json|package-lock\.json|phpunit\.xml|phpunit\.xml\.dist) {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # PHP-FPM configuration
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.5-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+
+        # FastCGI timeout settings
+        fastcgi_read_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_connect_timeout 300;
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 256 16k;
+        fastcgi_busy_buffers_size 256k;
+        fastcgi_temp_file_write_size 256k;
+        fastcgi_intercept_errors on;
+    }
+
+    # Static files caching
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg|woff|woff2|ttf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    # Filament admin panel
+    location /admin {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Storage files (symlinked)
+    location /storage {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Favicon
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }
+
+    # Robots.txt
+    location = /robots.txt {
+        access_log off;
+        log_not_found off;
+    }
+
+    # Disable access to .htaccess and other hidden files
+    location ~ /\.ht {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    # Rate limiting for API endpoints (optional)
+    # limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
+    # location /api {
+    #     limit_req zone=api_limit burst=20 nodelay;
+    #     try_files $uri $uri/ /index.php?$query_string;
+    # }
+
+    # Block access to sensitive directories
+    location ~ ^/(vendor|node_modules|tests|database|bootstrap)/ {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+}
+
+# Additional configuration for HTTP/3 (if supported)
+# server {
+#     listen 443 quic reuseport;
+#     listen [::]:443 quic reuseport;
+#     server_name pa-penajam.go.id www.pa-penajam.go.id;
+#
+#     # SSL configuration
+#     ssl_certificate /etc/letsencrypt/live/pa-penajam.go.id/fullchain.pem;
+#     ssl_certificate_key /etc/letsencrypt/live/pa-penajam.go.id/privkey.pem;
+#
+#     # HTTP/3 specific settings
+#     add_header Alt-Svc 'h3=":443"; ma=86400';
+#
+#     # Other configurations...
+# }

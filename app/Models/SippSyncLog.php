@@ -81,7 +81,7 @@ class SippSyncLog extends Model
      */
     public function getDuration(): ?float
     {
-        if (!$this->start_time || !$this->end_time) {
+        if (! $this->start_time || ! $this->end_time) {
             return null;
         }
 
@@ -100,14 +100,14 @@ class SippSyncLog extends Model
         }
 
         if ($duration < 60) {
-            return $duration . 's';
+            return $duration.'s';
         }
 
         if ($duration < 3600) {
-            return round($duration / 60, 2) . 'm';
+            return round($duration / 60, 2).'m';
         }
 
-        return round($duration / 3600, 2) . 'h';
+        return round($duration / 3600, 2).'h';
     }
 
     /**

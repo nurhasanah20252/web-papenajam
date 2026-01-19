@@ -130,7 +130,7 @@ trait HasPermissions
             ['resource' => 'users', 'action' => 'delete'],
             ['resource' => 'users', 'action' => 'restore'],
             ['resource' => 'users', 'action' => 'forceDelete'],
-        ])->map(fn($p) => ['key' => "{$p['resource']}.{$p['action']}", ...$p]);
+        ])->map(fn ($p) => ['key' => "{$p['resource']}.{$p['action']}", ...$p]);
     }
 
     /**
@@ -220,7 +220,7 @@ trait HasPermissions
             return collect([]);
         }
 
-        return collect($permissions)->map(fn($p) => ['key' => $p, ...json_decode($p, true) ?: []]);
+        return collect($permissions)->map(fn ($p) => ['key' => $p, ...json_decode($p, true) ?: []]);
     }
 
     /**
@@ -251,7 +251,7 @@ trait HasPermissions
      */
     public function owns(mixed $resource, string $foreignKey = 'user_id'): bool
     {
-        if (!$resource) {
+        if (! $resource) {
             return false;
         }
 
@@ -263,7 +263,25 @@ trait HasPermissions
      */
     public function canEditOwn(mixed $resource, string $foreignKey = 'user_id'): bool
     {
-        return $this->owns($resource, $foreignKey) && $this->canAction('update', class_basename($resource));
+        $basename = strtolower(class_basename($resource));
+
+        // Map singular model names to plural permission names
+        $pluralMap = [
+            'page' => 'pages',
+            'news' => 'news', // Already plural/uncountable
+            'document' => 'documents',
+            'category' => 'categories',
+            'menu' => 'menus',
+            'menuitem' => 'menuitems',
+            'courtschedule' => 'courtschedules',
+            'ppidrequest' => 'ppidrequests',
+            'budgettransparency' => 'budgettransparency',
+            'casestatistic' => 'casestatistics',
+        ];
+
+        $resourceName = $pluralMap[$basename] ?? $basename;
+
+        return $this->owns($resource, $foreignKey) && $this->hasPermission($resourceName.'.update');
     }
 
     /**
@@ -283,7 +301,7 @@ trait HasPermissions
     {
         $permissions = $this->permissions ?? [];
 
-        if (!in_array($permission, $permissions)) {
+        if (! in_array($permission, $permissions)) {
             $permissions[] = $permission;
             $this->update(['permissions' => $permissions]);
         }

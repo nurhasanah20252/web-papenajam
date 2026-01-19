@@ -9,8 +9,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Resources\Pages\CreateRecord;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
@@ -22,15 +21,15 @@ class PageTemplateResource extends Resource
 {
     protected static ?string $model = PageTemplate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
 
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationGroup = 'Structure';
+    protected static string | \UnitEnum | null $navigationGroup = 'Structure';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('Template Information')
                     ->schema([
@@ -80,7 +79,7 @@ class PageTemplateResource extends Resource
             ])
             ->filters([
                 Filter::make('default')
-                    ->query(fn($query): $query->where('is_default', true))
+                    ->query(fn ($query) => $query->where('is_default', true))
                     ->label('Default Template'),
             ])
             ->actions([

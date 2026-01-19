@@ -6,6 +6,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { initializeTheme } from './hooks/use-appearance';
+import PageTransition from './components/page-transition';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -21,12 +22,15 @@ createInertiaApp({
 
         root.render(
             <StrictMode>
-                <App {...props} />
+                <PageTransition>
+                    <App {...props} />
+                </PageTransition>
             </StrictMode>,
         );
     },
     progress: {
         color: '#4B5563',
+        delay: 250,
     },
 });
 

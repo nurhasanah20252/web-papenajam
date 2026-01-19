@@ -11,7 +11,7 @@ trait HasRoles
      */
     public function getRole(): UserRole
     {
-        return UserRole::from($this->role);
+        return $this->role instanceof UserRole ? $this->role : UserRole::from($this->role);
     }
 
     /**
@@ -19,9 +19,10 @@ trait HasRoles
      */
     public function hasRole(string|UserRole $role): bool
     {
-        $roleValue = $role instanceof UserRole ? $role->value : $role;
+        $currentRole = $this->role instanceof UserRole ? $this->role : UserRole::from($this->role);
+        $checkRole = $role instanceof UserRole ? $role : UserRole::from($role);
 
-        return $this->role === $roleValue;
+        return $currentRole === $checkRole;
     }
 
     /**
@@ -29,12 +30,13 @@ trait HasRoles
      */
     public function hasAnyRole(array|string $roles): bool
     {
-        $roleValues = array_map(
-            fn($r) => $r instanceof UserRole ? $r->value : $r,
+        $currentRole = $this->role instanceof UserRole ? $this->role : UserRole::from($this->role);
+        $roleEnums = array_map(
+            fn ($r) => $r instanceof UserRole ? $r : UserRole::from($r),
             is_array($roles) ? $roles : [$roles]
         );
 
-        return in_array($this->role, $roleValues, true);
+        return in_array($currentRole, $roleEnums, true);
     }
 
     /**
@@ -42,7 +44,9 @@ trait HasRoles
      */
     public function isSuperAdmin(): bool
     {
-        return $this->role === UserRole::SuperAdmin;
+        $currentRole = $this->role instanceof UserRole ? $this->role : UserRole::from($this->role);
+
+        return $currentRole === UserRole::SuperAdmin;
     }
 
     /**

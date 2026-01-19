@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import {
     Phone,
     Mail,
@@ -10,32 +10,16 @@ import {
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { type SharedData } from '@/types';
 
 import CourtLogo from './court-logo';
-
-const footerLinks = {
-    layanan: [
-        { title: 'Pendaftaran Perkara', href: '/services/registration' },
-        { title: 'Pemeriksaan Perkara', href: '/services/hearing' },
-        { title: 'Putusan', href: '/services/decision' },
-        { title: 'Kasasi', href: '/services/appeal' },
-    ],
-    informasi: [
-        { title: 'Berita Pengadilan', href: '/news' },
-        { title: 'Pengumuman', href: '/announcements' },
-        { title: 'Jadwal Sidang', href: '/court-schedule' },
-        { title: 'Zona Integritas', href: '/integrity-zone' },
-    ],
-    link_terkait: [
-        { title: 'MA-RI', href: 'https://mahkamahagung.go.id' },
-        { title: 'PTA Balikpapan', href: 'https://pta-balikpapan.go.id' },
-        { title: 'JDIH', href: 'https://jdih.mahkamahagung.go.id' },
-        { title: 'SIPP', href: 'https://sipp.pn.penajam.net' },
-    ],
-};
+import FooterMenu from './menu/FooterMenu';
 
 export default function Footer() {
+    const { props } = usePage<SharedData>();
     const currentYear = new Date().getFullYear();
+
+    const footerMenu = props.menus?.footer || [];
 
     return (
         <footer className="border-t bg-muted/50">
@@ -75,64 +59,45 @@ export default function Footer() {
                         </div>
                     </div>
 
-                    {/* Service links */}
-                    <div>
-                        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-                            Layanan
-                        </h3>
-                        <ul className="space-y-3 text-sm">
-                            {footerLinks.layanan.map((link) => (
-                                <li key={link.href}>
-                                    <Link
-                                        href={link.href}
-                                        className="text-muted-foreground transition-colors hover:text-primary"
-                                    >
-                                        {link.title}
-                                    </Link>
-                                </li>
+                    {/* Dynamic Footer Menus */}
+                    {footerMenu.length > 0 ? (
+                        <>
+                            {footerMenu.slice(0, 3).map((item) => (
+                                <FooterMenu
+                                    key={item.id}
+                                    title={item.title}
+                                    items={item.children || []}
+                                />
                             ))}
-                        </ul>
-                    </div>
-
-                    {/* Information links */}
-                    <div>
-                        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-                            Informasi
-                        </h3>
-                        <ul className="space-y-3 text-sm">
-                            {footerLinks.informasi.map((link) => (
-                                <li key={link.href}>
-                                    <Link
-                                        href={link.href}
-                                        className="text-muted-foreground transition-colors hover:text-primary"
-                                    >
-                                        {link.title}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Related links */}
-                    <div>
-                        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-                            Link Terkait
-                        </h3>
-                        <ul className="space-y-3 text-sm">
-                            {footerLinks.link_terkait.map((link) => (
-                                <li key={link.href}>
-                                    <a
-                                        href={link.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-muted-foreground transition-colors hover:text-primary"
-                                    >
-                                        {link.title}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                        </>
+                    ) : (
+                        <div className="lg:col-span-3 grid gap-8 md:grid-cols-3">
+                            <div className="animate-pulse space-y-4">
+                                <div className="h-4 w-24 bg-muted rounded" />
+                                <div className="space-y-2">
+                                    <div className="h-3 w-32 bg-muted rounded" />
+                                    <div className="h-3 w-28 bg-muted rounded" />
+                                    <div className="h-3 w-36 bg-muted rounded" />
+                                </div>
+                            </div>
+                            <div className="animate-pulse space-y-4">
+                                <div className="h-4 w-24 bg-muted rounded" />
+                                <div className="space-y-2">
+                                    <div className="h-3 w-32 bg-muted rounded" />
+                                    <div className="h-3 w-28 bg-muted rounded" />
+                                    <div className="h-3 w-36 bg-muted rounded" />
+                                </div>
+                            </div>
+                            <div className="animate-pulse space-y-4">
+                                <div className="h-4 w-24 bg-muted rounded" />
+                                <div className="space-y-2">
+                                    <div className="h-3 w-32 bg-muted rounded" />
+                                    <div className="h-3 w-28 bg-muted rounded" />
+                                    <div className="h-3 w-36 bg-muted rounded" />
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Bottom section */}

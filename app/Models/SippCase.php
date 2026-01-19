@@ -98,7 +98,7 @@ class SippCase extends Model
      */
     public function getPlaintiffNames(): string
     {
-        if (!$this->plaintiff) {
+        if (! $this->plaintiff) {
             return '-';
         }
 
@@ -110,7 +110,7 @@ class SippCase extends Model
      */
     public function getDefendantNames(): string
     {
-        if (!$this->defendant) {
+        if (! $this->defendant) {
             return '-';
         }
 
@@ -131,7 +131,7 @@ class SippCase extends Model
      */
     public function getCaseAge(): ?int
     {
-        if (!$this->register_date) {
+        if (! $this->register_date) {
             return null;
         }
 

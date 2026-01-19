@@ -21,6 +21,9 @@ class PageBlock extends Model
         'type',
         'content',
         'settings',
+        'meta',
+        'css_class',
+        'anchor_id',
         'order',
     ];
 
@@ -35,6 +38,7 @@ class PageBlock extends Model
             'type' => BlockType::class,
             'content' => 'array',
             'settings' => 'array',
+            'meta' => 'array',
             'order' => 'integer',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

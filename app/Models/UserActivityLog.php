@@ -81,7 +81,7 @@ class UserActivityLog extends Model
      */
     public function getFormattedMetadata(): string
     {
-        if (!$this->metadata) {
+        if (! $this->metadata) {
             return '-';
         }
 

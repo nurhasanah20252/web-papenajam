@@ -2,8 +2,6 @@
 
 namespace App\Services\JoomlaMigration;
 
-use Illuminate\Support\Str;
-
 class JoomlaDataCleaner
 {
     /**
@@ -27,7 +25,7 @@ class JoomlaDataCleaner
     /**
      * Clean HTML content from Joomla.
      */
-    public function cleanContent(string $content): array
+    public function cleanHtml(string $content): string
     {
         // Remove Joomla-specific tags
         $content = preg_replace('/<jdoc:[^>]+>/', '', $content);
@@ -39,21 +37,31 @@ class JoomlaDataCleaner
         // Remove comments
         $content = preg_replace('/<!--[^>]*-->/', '', $content);
 
-        // Fix relative URLs in images and links
-        $content = $this->fixRelativeUrls($content);
+        // Fix image paths
+        $content = $this->fixImagePaths($content);
 
         // Clean up excessive whitespace
         $content = preg_replace('/\s+/', ' ', $content);
         $content = preg_replace('/> </', '><', $content);
         $content = trim($content);
 
-        // Extract metadata
-        $meta = $this->extractMetadata($content);
+        return $content;
+    }
 
-        return [
-            'content' => $content,
-            'meta' => $meta,
-        ];
+    /**
+     * Fix image paths in content.
+     */
+    public function fixImagePaths(string $content): string
+    {
+        // Replace src="images/..." with src="/storage/images/..."
+        $content = preg_replace('/src=["\']images\/([^"\']+)["\']/', 'src="/storage/$1"', $content);
+        $content = preg_replace('/src=["\']\/images\/([^"\']+)["\']/', 'src="/storage/$1"', $content);
+
+        // Also handle href for images if any
+        $content = preg_replace('/href=["\']images\/([^"\']+)["\']/', 'href="/storage/$1"', $content);
+        $content = preg_replace('/href=["\']\/images\/([^"\']+)["\']/', 'href="/storage/$1"', $content);
+
+        return $content;
     }
 
     /**

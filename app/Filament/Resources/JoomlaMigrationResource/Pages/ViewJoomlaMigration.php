@@ -27,8 +27,8 @@ class ViewJoomlaMigration extends ViewRecord
                 ->icon('heroicon-o-arrow-uturn-left')
                 ->color('danger')
                 ->requiresConfirmation()
-                ->visible(fn(JoomlaMigration $record): bool => $record->isComplete())
-                ->action(fn(JoomlaMigration $record) => $this->rollbackMigration($record)),
+                ->visible(fn (JoomlaMigration $record): bool => $record->isComplete())
+                ->action(fn (JoomlaMigration $record) => $this->rollbackMigration($record)),
             DeleteAction::make(),
             RestoreAction::make(),
         ];
@@ -53,10 +53,10 @@ class ViewJoomlaMigration extends ViewRecord
                     ->sortable(),
                 TextColumn::make('type')
                     ->label('Type')
-                    ->formatStateUsing(fn(string $state): string => ucfirst($state)),
+                    ->formatStateUsing(fn (string $state): string => ucfirst($state)),
                 TextColumn::make('local_model')
                     ->label('Local Model')
-                    ->formatStateUsing(fn(?string $state): string => $state ? class_basename($state) : '-'),
+                    ->formatStateUsing(fn (?string $state): string => $state ? class_basename($state) : '-'),
                 TextColumn::make('local_id')
                     ->label('Local ID')
                     ->numeric(),
@@ -72,7 +72,7 @@ class ViewJoomlaMigration extends ViewRecord
                 TextColumn::make('error_message')
                     ->label('Error')
                     ->limit(50)
-                    ->tooltip(fn(?string $state): ?string => $state),
+                    ->tooltip(fn (?string $state): ?string => $state),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')

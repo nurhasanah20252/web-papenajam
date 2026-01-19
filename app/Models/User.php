@@ -6,16 +6,26 @@ namespace App\Models;
 use App\Enums\UserRole;
 use App\Traits\HasPermissions;
 use App\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, HasPermissions;
+    use HasFactory, HasPermissions, HasRoles, Notifiable, TwoFactorAuthenticatable;
+
+    /**
+     * Check if user can access the panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->canManageSettings() || $this->getRole()->isAdmin() || $this->getRole()->isSuperAdmin();
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -103,6 +113,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all activity logs for the user.
+     */
+    public function activityLogs()
+    {
+        return $this->hasMany(UserActivityLog::class, 'user_id');
+    }
+
+    /**
      * Get all users with a specific role.
      */
     public static function withRole(UserRole $role): Collection
@@ -116,5 +134,29 @@ class User extends Authenticatable
     public static function admins(): Collection
     {
         return static::whereIn('role', [UserRole::SuperAdmin->value, UserRole::Admin->value])->get();
+    }
+
+    /**
+     * Check if user can manage users.
+     */
+    public function canManageUsers(): bool
+    {
+        return $this->getRole()->canManageUsers();
+    }
+
+    /**
+     * Check if user can manage settings.
+     */
+    public function canManageSettings(): bool
+    {
+        return $this->getRole()->canManageSettings();
+    }
+
+    /**
+     * Check if user can read settings.
+     */
+    public function canReadSettings(): bool
+    {
+        return $this->getRole()->canReadSettings();
     }
 }

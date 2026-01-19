@@ -2,67 +2,71 @@
 
 namespace App\Filament\Pages;
 
+use App\Jobs\ProcessJoomlaMigration;
 use App\Models\JoomlaMigration;
-use App\Services\JoomlaMigration\JoomlaMigrationManager;
-use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
 class JoomlaMigrationPage extends Page implements HasForms, HasTable
 {
     use InteractsWithForms, InteractsWithTable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-up-tray';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-arrow-up-tray';
 
-    protected static ?string $navigationGroup = 'System';
+    protected static string | \UnitEnum | null $navigationGroup = 'System';
 
     protected static ?int $navigationSort = 100;
 
-    protected static string $view = 'filament.pages.joomla-migration';
+    protected string $view = 'filament.pages.joomla-migration';
 
-    public ?string $migrationName = null;
+    protected static ?string $title = 'Joomla Migration';
 
-    public $uploadedFile = null;
+    public bool $forceMigration = false;
 
-    public bool $isMigrating = false;
+    public ?array $migrationStats = null;
 
-    public int $currentProgress = 0;
+    public bool $isRunning = false;
 
-    public int $totalRecords = 0;
+    public $categoryFile;
 
-    protected JoomlaMigration $currentMigration;
+    public $contentFile;
+
+    public $newsFile;
+
+    public $menuFile;
+
+    public $documentFile;
 
     public function mount(): void
     {
-        $this->migrationName = 'Joomla Migration '.now()->format('Y-m-d H:i:s');
+        $this->loadStats();
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(JoomlaMigration::query()->latest())
+            ->query(
+                JoomlaMigration::query()
+                    ->latest()
+            )
             ->columns([
                 TextColumn::make('name')
-                    ->label('Name')
-                    ->searchable(),
+                    ->label('Migration Name')
+                    ->searchable()
+                    ->sortable(),
                 BadgeColumn::make('status')
-                    ->label('Status')
                     ->colors([
                         'gray' => JoomlaMigration::STATUS_PENDING,
                         'info' => JoomlaMigration::STATUS_RUNNING,
@@ -70,186 +74,164 @@ class JoomlaMigrationPage extends Page implements HasForms, HasTable
                         'danger' => JoomlaMigration::STATUS_FAILED,
                         'warning' => JoomlaMigration::STATUS_ROLLED_BACK,
                     ]),
-                TextColumn::make('total_records')
-                    ->label('Total')
-                    ->numeric(),
+                TextColumn::make('progress')
+                    ->formatStateUsing(fn ($state) => $state.'%')
+                    ->label('Progress'),
                 TextColumn::make('processed_records')
-                    ->label('Processed')
-                    ->numeric(),
+                    ->label('Processed'),
                 TextColumn::make('failed_records')
                     ->label('Failed')
-                    ->numeric()
                     ->color('danger'),
-                TextColumn::make('progress')
-                    ->label('Progress')
-                    ->formatStateUsing(fn(JoomlaMigration $record): string => $record->progress.'%'),
-                TextColumn::make('started_at')
+                TextColumn::make('created_at')
                     ->label('Started')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('completed_at')
-                    ->label('Completed')
-                    ->dateTime()
-                    ->sortable(),
-            ])
-            ->actions([
-                Action::make('view')
-                    ->label('View Details')
-                    ->icon('heroicon-o-eye')
-                    ->modalContent(function (JoomlaMigration $record) {
-                        return view('filament.pages.joomla-migration-details', ['migration' => $record]);
-                    }),
-                Action::make('rollback')
-                    ->label('Rollback')
-                    ->icon('heroicon-o-arrow-uturn-left')
-                    ->color('danger')
-                    ->requiresConfirmation()
-                    ->visible(fn(JoomlaMigration $record): bool => $record->isComplete())
-                    ->action(fn(JoomlaMigration $record) => $this->rollbackMigration($record)),
-                DeleteAction::make(),
-                RestoreAction::make(),
-            ])
-            ->bulkActions([
-                BulkAction::make('rollback_selected')
-                    ->label('Rollback Selected')
-                    ->icon('heroicon-o-arrow-uturn-left')
-                    ->color('danger')
-                    ->requiresConfirmation()
-                    ->action(function (Collection $records): void {
-                        foreach ($records as $record) {
-                            if ($record->isComplete()) {
-                                $this->rollbackMigration($record);
-                            }
-                        }
-                    }),
-            ])
-            ->defaultSort('created_at', 'desc');
+            ]);
     }
 
     protected function getFormSchema(): array
     {
         return [
-            Section::make('Upload Joomla Export')
-                ->description('Upload a JSON file exported from Joomla 3.x')
+            Section::make('Upload Joomla Export Files')
+                ->description('Upload JSON files exported from Joomla')
                 ->schema([
-                    TextInput::make('migrationName')
-                        ->label('Migration Name')
-                        ->default($this->migrationName)
-                        ->required(),
-                    FileUpload::make('uploadedFile')
-                        ->label('Joomla Export File')
-                        ->acceptedFileTypes(['application/json'])
-                        ->maxSize(51200) // 50MB
-                        ->required(),
-                ]),
+                    FileUpload::make('categoryFile')
+                        ->label('Categories JSON')
+                        ->directory('joomla-migrations')
+                        ->acceptedFileTypes(['application/json']),
+                    FileUpload::make('contentFile')
+                        ->label('Content (Pages) JSON')
+                        ->directory('joomla-migrations')
+                        ->acceptedFileTypes(['application/json']),
+                    FileUpload::make('newsFile')
+                        ->label('News JSON')
+                        ->directory('joomla-migrations')
+                        ->acceptedFileTypes(['application/json']),
+                    FileUpload::make('menuFile')
+                        ->label('Menus JSON')
+                        ->directory('joomla-migrations')
+                        ->acceptedFileTypes(['application/json']),
+                    FileUpload::make('documentFile')
+                        ->label('Documents JSON')
+                        ->directory('joomla-migrations')
+                        ->acceptedFileTypes(['application/json']),
+                    Toggle::make('forceMigration')
+                        ->label('Force Re-migration')
+                        ->helperText('Re-migrate records that have already been migrated')
+                        ->inline(false),
+                ])->columns(2),
         ];
     }
 
-    public function startMigration(): void
+    public function startMigration(string $type): void
     {
-        $this->validate([
-            'migrationName' => 'required|string|max:255',
-            'uploadedFile' => 'required|file|mimes:json',
+        $fileProperty = $type.'File';
+        $filePath = $this->$fileProperty;
+
+        if (! $filePath) {
+            Notification::make()
+                ->title('File Required')
+                ->body('Please upload a JSON file for '.ucfirst($type))
+                ->warning()
+                ->send();
+
+            return;
+        }
+
+        $fullPath = Storage::disk('public')->path($filePath);
+
+        $migration = JoomlaMigration::create([
+            'name' => 'Manual '.ucfirst($type).' Migration '.now()->format('Y-m-d H:i'),
+            'status' => JoomlaMigration::STATUS_PENDING,
+            'metadata' => ['type' => $type, 'file' => $filePath],
         ]);
 
-        $this->isMigrating = true;
-        $this->currentProgress = 0;
+        ProcessJoomlaMigration::dispatch($migration->id, $fullPath, $this->getMigrationType($type));
+
+        Notification::make()
+            ->title('Migration Started')
+            ->body(ucfirst($type).' migration has been queued.')
+            ->success()
+            ->send();
+
+        $this->isRunning = true;
+    }
+
+    protected function getMigrationType(string $type): string
+    {
+        return match ($type) {
+            'category' => JoomlaMigration::TYPE_CATEGORIES,
+            'content' => JoomlaMigration::TYPE_PAGES,
+            'news' => JoomlaMigration::TYPE_NEWS,
+            'menu' => JoomlaMigration::TYPE_MENUS,
+            'document' => JoomlaMigration::TYPE_DOCUMENTS,
+            default => $type,
+        };
+    }
+
+    public function validateMigration(): void
+    {
+        $this->isRunning = true;
 
         try {
-            $jsonContent = file_get_contents($this->uploadedFile->getRealPath());
-            $joomlaData = json_decode($jsonContent, true);
+            // Find latest completed migration to validate
+            $migration = JoomlaMigration::where('status', JoomlaMigration::STATUS_COMPLETED)->latest()->first();
 
-            if (json_last_error() !== JSON_ERROR_NONE) {
+            if (! $migration) {
                 Notification::make()
-                    ->title('Invalid JSON')
-                    ->body('The uploaded file is not valid JSON: '.json_last_error_msg())
-                    ->danger()
+                    ->title('No Migration Found')
+                    ->body('Please run and complete a migration first.')
+                    ->warning()
                     ->send();
-
-                $this->isMigrating = false;
 
                 return;
             }
 
-            // Validate basic structure
-            $this->validateJoomlaData($joomlaData);
+            Artisan::call('joomla:validate', [
+                '--id' => $migration->id,
+            ]);
 
-            // Run migration
-            $manager = app(JoomlaMigrationManager::class);
-            $migration = $manager->runMigration($joomlaData, $this->migrationName);
+            $output = Artisan::output();
 
-            $this->currentMigration = $migration;
+            $this->migrationStats['validation'] = [
+                'output' => $output,
+                'migration_id' => $migration->id,
+                'timestamp' => now()->toDateTimeString(),
+            ];
 
             Notification::make()
-                ->title('Migration Complete')
-                ->body("Migration '{$migration->name}' has been completed successfully.")
+                ->title('Validation Complete')
+                ->body('Check the output below for details.')
                 ->success()
                 ->send();
 
-            $this->isMigrating = false;
-            $this->uploadedFile = null;
-
-            $this->redirectRoute('filament.admin.pages.joomla-migration');
         } catch (\Exception $e) {
             Notification::make()
-                ->title('Migration Failed')
+                ->title('Validation Failed')
                 ->body($e->getMessage())
                 ->danger()
                 ->send();
-
-            $this->isMigrating = false;
-
-            throw $e;
+        } finally {
+            $this->isRunning = false;
         }
     }
 
-    protected function validateJoomlaData(array $data): void
+    protected function loadStats(): void
     {
-        // Check for expected keys
-        $expectedKeys = ['categories', 'articles', 'news', 'menus', 'menu_items', 'documents'];
-        $hasData = false;
+        // For the summary section
+        $summary = JoomlaMigration::query()
+            ->whereIn('status', [JoomlaMigration::STATUS_COMPLETED, JoomlaMigration::STATUS_RUNNING])
+            ->latest()
+            ->get()
+            ->take(5);
 
-        foreach ($expectedKeys as $key) {
-            if (isset($data[$key]) && is_array($data[$key]) && !empty($data[$key])) {
-                $hasData = true;
-            }
-        }
-
-        if (!$hasData && empty($data)) {
-            throw new \Exception('The uploaded file does not contain any valid Joomla data.');
-        }
-    }
-
-    public function rollbackMigration(JoomlaMigration $migration): bool
-    {
-        try {
-            $manager = app(JoomlaMigrationManager::class);
-            $result = $manager->rollback($migration);
-
-            if ($result) {
-                Notification::make()
-                    ->title('Rollback Complete')
-                    ->body("Migration '{$migration->name}' has been rolled back.")
-                    ->success()
-                    ->send();
-            }
-
-            return $result;
-        } catch (\Exception $e) {
-            Notification::make()
-                ->title('Rollback Failed')
-                ->body($e->getMessage())
-                ->danger()
-                ->send();
-
-            return false;
-        }
-    }
-
-    protected function getViewData(): array
-    {
-        return [
-            'migrations' => JoomlaMigration::query()->latest()->take(10)->get(),
+        $this->migrationStats = [
+            'recent' => $summary->toArray(),
         ];
+    }
+
+    public function getRecentMigrations(): array
+    {
+        return $this->migrationStats['recent'] ?? [];
     }
 }

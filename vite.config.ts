@@ -17,11 +17,35 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-        wayfinder({
-            formVariants: true,
-        }),
+        // wayfinder({
+        //     formVariants: true,
+        // }),
     ],
     esbuild: {
         jsx: 'automatic',
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    // Vendor chunks for better caching
+                    'react-vendor': ['react', 'react-dom', '@inertiajs/react'],
+                    'framer-vendor': ['framer-motion'],
+                    'ui-vendor': [
+                        '@radix-ui/react-dialog',
+                        '@radix-ui/react-dropdown-menu',
+                        '@radix-ui/react-select',
+                        '@radix-ui/react-separator',
+                        '@radix-ui/react-slot',
+                        '@radix-ui/react-tooltip',
+                    ],
+                },
+            },
+        },
+        chunkSizeWarningLimit: 1000,
+        cssCodeSplit: true,
+    },
+    optimizeDeps: {
+        include: ['framer-motion', 'react', 'react-dom'],
     },
 });

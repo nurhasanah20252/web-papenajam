@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JoomlaMigration extends Model
 {
@@ -22,13 +23,16 @@ class JoomlaMigration extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'source_table',
-        'source_id',
-        'target_id',
-        'data_hash',
-        'migration_status',
-        'error_message',
-        'migrated_at',
+        'name',
+        'status',
+        'metadata',
+        'total_records',
+        'processed_records',
+        'failed_records',
+        'progress',
+        'errors',
+        'started_at',
+        'completed_at',
     ];
 
     /**
@@ -39,53 +43,135 @@ class JoomlaMigration extends Model
     protected function casts(): array
     {
         return [
-            'source_id' => 'integer',
-            'target_id' => 'integer',
-            'migration_status' => 'string',
-            'migrated_at' => 'datetime',
+            'metadata' => 'array',
+            'errors' => 'array',
+            'progress' => 'integer',
+            'total_records' => 'integer',
+            'processed_records' => 'integer',
+            'failed_records' => 'integer',
+            'started_at' => 'datetime',
+            'completed_at' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
     }
 
+    public const TYPE_CATEGORIES = 'categories';
+
+    public const TYPE_PAGES = 'pages';
+
+    public const TYPE_NEWS = 'news';
+
+    public const TYPE_MENUS = 'menus';
+
+    public const TYPE_MENU_ITEMS = 'menu_items';
+
+    public const TYPE_DOCUMENTS = 'documents';
+
+    public const TYPE_USERS = 'users';
+
+    public const STATUS_PENDING = 'pending';
+
+    public const STATUS_RUNNING = 'running';
+
+    public const STATUS_COMPLETED = 'completed';
+
+    public const STATUS_FAILED = 'failed';
+
+    public const STATUS_ROLLED_BACK = 'rolled_back';
+
     /**
-     * Scope query by source table.
+     * Get the items for this migration.
      */
-    public function scopeBySourceTable($query, string $table)
+    public function items(): HasMany
     {
-        return $query->where('source_table', $table);
+        return $this->hasMany(JoomlaMigrationItem::class);
     }
 
     /**
-     * Scope query by status.
+     * Mark migration as running.
      */
-    public function scopeByStatus($query, string $status)
+    public function markAsRunning(): void
     {
-        return $query->where('migration_status', $status);
+        $this->update([
+            'status' => self::STATUS_RUNNING,
+            'started_at' => now(),
+        ]);
     }
 
     /**
-     * Scope query for successful migrations.
+     * Mark migration as completed.
      */
-    public function scopeSuccessful($query)
+    public function markAsCompleted(): void
     {
-        return $query->where('migration_status', 'success');
+        $this->update([
+            'status' => self::STATUS_COMPLETED,
+            'completed_at' => now(),
+            'progress' => 100,
+        ]);
     }
 
     /**
-     * Scope query for failed migrations.
+     * Mark migration as failed.
      */
-    public function scopeFailed($query)
+    public function markAsFailed(array $errors = []): void
     {
-        return $query->where('migration_status', 'failed');
+        $this->update([
+            'status' => self::STATUS_FAILED,
+            'completed_at' => now(),
+            'errors' => array_merge($this->errors ?? [], $errors),
+        ]);
     }
 
     /**
-     * Check if migration was successful.
+     * Mark migration as rolled back.
      */
-    public function isSuccessful(): bool
+    public function markAsRolledBack(): void
     {
-        return $this->migration_status === 'success';
+        $this->update([
+            'status' => self::STATUS_ROLLED_BACK,
+            'completed_at' => now(),
+        ]);
+    }
+
+    /**
+     * Update migration progress.
+     */
+    public function updateProgress(int $processed, int $failed): void
+    {
+        $progress = $this->total_records > 0
+            ? (int) (($processed / $this->total_records) * 100)
+            : 0;
+
+        $this->update([
+            'processed_records' => $processed,
+            'failed_records' => $failed,
+            'progress' => $progress,
+        ]);
+    }
+
+    /**
+     * Check if migration is pending.
+     */
+    public function isPending(): bool
+    {
+        return $this->status === self::STATUS_PENDING;
+    }
+
+    /**
+     * Check if migration is running.
+     */
+    public function isRunning(): bool
+    {
+        return $this->status === self::STATUS_RUNNING;
+    }
+
+    /**
+     * Check if migration is complete.
+     */
+    public function isComplete(): bool
+    {
+        return $this->status === self::STATUS_COMPLETED;
     }
 
     /**
@@ -93,6 +179,54 @@ class JoomlaMigration extends Model
      */
     public function isFailed(): bool
     {
-        return $this->migration_status === 'failed';
+        return $this->status === self::STATUS_FAILED;
+    }
+
+    /**
+     * Check if migration is rolled back.
+     */
+    public function isRolledBack(): bool
+    {
+        return $this->status === self::STATUS_ROLLED_BACK;
+    }
+
+    /**
+     * Scope query by status.
+     */
+    public function scopeByStatus($query, string $status)
+    {
+        return $query->where('status', $status);
+    }
+
+    /**
+     * Scope query for pending migrations.
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    /**
+     * Scope query for running migrations.
+     */
+    public function scopeRunning($query)
+    {
+        return $query->where('status', self::STATUS_RUNNING);
+    }
+
+    /**
+     * Scope query for completed migrations.
+     */
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', self::STATUS_COMPLETED);
+    }
+
+    /**
+     * Scope query for failed migrations.
+     */
+    public function scopeFailed($query)
+    {
+        return $query->where('status', self::STATUS_FAILED);
     }
 }

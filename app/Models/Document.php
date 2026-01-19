@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Document extends Model
 {
@@ -18,6 +20,7 @@ class Document extends Model
      */
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'file_path',
         'file_name',
@@ -68,6 +71,22 @@ class Document extends Model
     }
 
     /**
+     * Get all versions of the document.
+     */
+    public function versions(): HasMany
+    {
+        return $this->hasMany(DocumentVersion::class)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get the current version of the document.
+     */
+    public function currentVersion(): HasMany
+    {
+        return $this->hasMany(DocumentVersion::class)->where('is_current', true);
+    }
+
+    /**
      * Increment download count.
      */
     public function incrementDownloads(): void
@@ -89,7 +108,7 @@ class Document extends Model
             $i++;
         }
 
-        return round($size, 2) . ' ' . $units[$i];
+        return round($size, 2).' '.$units[$i];
     }
 
     /**
@@ -97,7 +116,7 @@ class Document extends Model
      */
     public function getFileUrl(): string
     {
-        return asset('storage/' . $this->file_path);
+        return asset('storage/'.$this->file_path);
     }
 
     /**
@@ -130,11 +149,38 @@ class Document extends Model
      */
     public function validateChecksum(string $filePath): bool
     {
-        if (!$this->checksum) {
+        if (! $this->checksum) {
             return true;
         }
 
         $currentChecksum = hash_file('sha256', $filePath);
+
         return $currentChecksum === $this->checksum;
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($document) {
+            if (empty($document->slug)) {
+                $document->slug = Str::slug($document->title);
+                $originalSlug = $document->slug;
+                $counter = 1;
+
+                while (static::withTrashed()->where('slug', $document->slug)->exists()) {
+                    $document->slug = $originalSlug.'-'.$counter++;
+                }
+            }
+        });
+
+        static::updating(function ($document) {
+            if ($document->isDirty('title') && empty($document->slug)) {
+                $document->slug = Str::slug($document->title);
+            }
+        });
     }
 }

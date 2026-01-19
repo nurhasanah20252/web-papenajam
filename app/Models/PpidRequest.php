@@ -130,7 +130,7 @@ class PpidRequest extends Model
      */
     public function getDaysPending(): ?int
     {
-        if (!$this->isPending()) {
+        if (! $this->isPending()) {
             return null;
         }
 

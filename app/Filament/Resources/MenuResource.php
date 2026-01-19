@@ -2,59 +2,57 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\MenuLocation;
 use App\Filament\Resources\MenuResource\Pages;
 use App\Models\Menu;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Resources\Pages\CreateRecord;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\BulkAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 class MenuResource extends Resource
 {
     protected static ?string $model = Menu::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bars-3';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-bars-3';
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationGroup = 'Structure';
+    protected static string | \UnitEnum | null $navigationGroup = 'Structure';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('Menu Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()
                             ->maxLength(100),
-                        TextInput::make('location')
+                        Forms\Components\Select::make('location')
+                            ->options(fn (): array => collect(MenuLocation::cases())->pluck('label', 'value')->toArray())
                             ->required()
-                            ->maxLength(100)
-                            ->helperText('e.g., header, footer, sidebar'),
+                            ->enum(MenuLocation::class),
                         TextInput::make('max_depth')
                             ->label('Maximum Depth')
                             ->numeric()
                             ->minValue(1)
                             ->maxValue(10)
-                            ->nullable()
+                            ->default(3)
                             ->helperText('Maximum nesting level for menu items'),
                     ])->columns(2),
 
-                Section::make('Status')
+                Section::make('Description')
                     ->schema([
-                        Toggle::make('is_active')
-                            ->default(true),
+                        Forms\Components\Textarea::make('description')
+                            ->rows(3)
+                            ->nullable(),
                     ]),
             ]);
     }
@@ -73,47 +71,43 @@ class MenuResource extends Resource
                     ->label('Max Depth')
                     ->sortable()
                     ->placeholder('Unlimited'),
-                IconColumn::make('is_active')
-                    ->boolean()
-                    ->sortable(),
+                TextColumn::make('description')
+                    ->limit(50)
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('items_count')
                     ->counts('items')
-                    ->label('Items'),
+                    ->label('Items')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Filter::make('active')
-                    ->query(fn($query): $query->where('is_active', true))
-                    ->label('Active Menus'),
-                Filter::make('inactive')
-                    ->query(fn($query): $query->where('is_active', false))
-                    ->label('Inactive Menus'),
+                SelectFilter::make('location')
+                    ->options(fn (): array => collect(MenuLocation::cases())->pluck('label', 'value')->toArray())
+                    ->query(fn (Builder $query, array $data) => $query->when(
+                        $data['value'],
+                        fn ($query, $value) => $query->byLocation($value)
+                    )),
+                Tables\Filters\TernaryFilter::make('has_items')
+                    ->label('Has Items')
+                    ->queries(
+                        true: fn (Builder $query) => $query->has('items'),
+                        false: fn (Builder $query) => $query->doesntHave('items'),
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('manage_items')
-                    ->label('Manage Items')
+                    ->label('Visual Editor')
                     ->icon('heroicon-o-pencil-square')
-                    ->url(fn(Menu $record): string => MenuItemResource::getUrl('index', ['tableFilters[menu][value]' => $record->id])),
+                    ->url(fn (Menu $record): string => route('admin.menus.edit', $record)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    BulkAction::make('activate')
-                        ->label('Activate')
-                        ->action(fn(Collection $records): void => $records->each(fn(Menu $menu): bool => $menu->update(['is_active' => true])))
-                        ->deselectRecordsAfterCompletion()
-                        ->successNotificationTitle('Menus activated'),
-                    BulkAction::make('deactivate')
-                        ->label('Deactivate')
-                        ->action(fn(Collection $records): void => $records->each(fn(Menu $menu): bool => $menu->update(['is_active' => false])))
-                        ->deselectRecordsAfterCompletion()
-                        ->successNotificationTitle('Menus deactivated')
-                        ->color('warning'),
                 ]),
             ])
             ->defaultSort('name');

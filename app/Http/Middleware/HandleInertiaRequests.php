@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\MenuLocation;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,13 +37,34 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'menus' => [
+                'header' => $this->getMenuTree(MenuLocation::Header, $user),
+                'footer' => $this->getMenuTree(MenuLocation::Footer, $user),
+                'mobile' => $this->getMenuTree(MenuLocation::Mobile, $user),
+            ],
         ];
+    }
+
+    /**
+     * Get menu tree for a specific location.
+     */
+    protected function getMenuTree(MenuLocation $location, ?\App\Models\User $user = null): array
+    {
+        $menu = Menu::byLocation($location)->first();
+
+        if (! $menu) {
+            return [];
+        }
+
+        return $menu->getTree(true, $user);
     }
 }

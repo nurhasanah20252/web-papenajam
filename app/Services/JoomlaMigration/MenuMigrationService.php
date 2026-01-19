@@ -4,7 +4,6 @@ namespace App\Services\JoomlaMigration;
 
 use App\Models\Menu;
 use App\Models\MenuItem;
-use Illuminate\Support\Str;
 
 class MenuMigrationService extends BaseMigrationService
 {
@@ -22,7 +21,7 @@ class MenuMigrationService extends BaseMigrationService
 
     public function validateData(array $data): bool
     {
-        return !empty($data['title'] ?? $data['menutype'] ?? null);
+        return ! empty($data['title'] ?? $data['menutype'] ?? null);
     }
 
     public function transformData(array $data): array
@@ -80,7 +79,7 @@ class MenuMigrationService extends BaseMigrationService
             $this->processMenuItem($item, $parentId, $menuId, $order++, $level);
 
             // Process children if any
-            if (!empty($item['children'] ?? [])) {
+            if (! empty($item['children'] ?? [])) {
                 $this->processItemsRecursive($item['children'], $item['local_id'] ?? null, $menuId, 0, $level + 1);
             }
         }
@@ -124,18 +123,19 @@ class MenuMigrationService extends BaseMigrationService
         $title = $item['title'] ?? $item['name'] ?? '';
         $type = $this->determineItemType($item);
         $url = $this->buildUrl($item, $type);
+        $pageId = $this->mapPage($item);
 
         return [
             'menu_id' => $menuId,
             'parent_id' => $parentId,
             'title' => $title,
-            'type' => $type,
+            'type' => $pageId ? 'page' : $type,
             'url' => $url,
-            'page_id' => $this->mapPage($item),
+            'page_id' => $pageId,
             'order' => $order,
             'icon' => $this->mapIcon($item),
             'css_class' => $item['params']['menu_item_css_class'] ?? $item['params']['class_sfx'] ?? null,
-            'target_blank' => $item['params']['target'] === '_blank',
+            'target_blank' => ($item['params']['target'] ?? '') === '_blank',
             'is_active' => ($item['published'] ?? $item['state'] ?? 1) == 1,
         ];
     }
@@ -147,16 +147,7 @@ class MenuMigrationService extends BaseMigrationService
     {
         $link = $item['link'] ?? '';
 
-        // Check if it's a component link
-        if (str_contains($link, 'com_content')) {
-            if (str_contains($link, 'view=category')) {
-                return 'custom';
-            }
-
-            return 'page';
-        }
-
-        if (str_contains($link, 'com_weblinks')) {
+        if (empty($link) || $link === '#') {
             return 'custom';
         }
 
@@ -164,8 +155,8 @@ class MenuMigrationService extends BaseMigrationService
             return 'external';
         }
 
-        if ($link === '#' || empty($link)) {
-            return 'custom';
+        if (str_contains($link, 'index.php?option=com_content')) {
+            return 'page';
         }
 
         return 'custom';
@@ -178,15 +169,12 @@ class MenuMigrationService extends BaseMigrationService
     {
         $link = $item['link'] ?? '';
 
-        // Convert Joomla URLs to Laravel URLs
-        $link = preg_replace('/index\.php\?option=com_content&view=article&id=(\d+)/', '/article/$1', $link);
-        $link = preg_replace('/index\.php\?option=com_content&view=category&id=(\d+)/', '/category/$1', $link);
-        $link = preg_replace('/index\.php\?option=com_wrapper&view=wrapper&id=(\d+)/', '/wrapper/$1', $link);
+        if (empty($link)) {
+            return '#';
+        }
 
-        // Remove index.php prefix
-        $link = preg_replace('/^\/index\.php/', '', $link);
-
-        return $link;
+        // Use JoomlaDataCleaner to convert links
+        return app(JoomlaDataCleaner::class)->convertLinks($link);
     }
 
     /**
@@ -210,21 +198,33 @@ class MenuMigrationService extends BaseMigrationService
     }
 
     /**
-     * Map menu item to local page.
+     * Map menu item to local page or news.
      */
     protected function mapPage(array $item): ?int
     {
         // Extract article ID from link
-        if (!preg_match('/id=(\d+)/', $item['link'] ?? '', $matches)) {
+        if (! preg_match('/id=(\d+)/', $item['link'] ?? '', $matches)) {
             return null;
         }
 
         $articleId = (int) $matches[1];
 
-        $migrationItem = JoomlaMigrationItem::where('migration_id', $this->migration->id)
-            ->where('type', JoomlaMigration::TYPE_PAGES)
+        // Try to find in pages first
+        $migrationItem = \App\Models\JoomlaMigrationItem::where('migration_id', $this->migration->id)
+            ->where('type', \App\Models\JoomlaMigration::TYPE_PAGES)
             ->where('joomla_id', $articleId)
-            ->where('status', JoomlaMigrationItem::STATUS_COMPLETED)
+            ->where('status', \App\Models\JoomlaMigrationItem::STATUS_COMPLETED)
+            ->first();
+
+        if ($migrationItem) {
+            return $migrationItem->local_id;
+        }
+
+        // Then try to find in news
+        $migrationItem = \App\Models\JoomlaMigrationItem::where('migration_id', $this->migration->id)
+            ->where('type', \App\Models\JoomlaMigration::TYPE_NEWS)
+            ->where('joomla_id', $articleId)
+            ->where('status', \App\Models\JoomlaMigrationItem::STATUS_COMPLETED)
             ->first();
 
         return $migrationItem?->local_id;

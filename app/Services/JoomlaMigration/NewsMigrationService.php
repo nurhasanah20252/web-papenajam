@@ -19,7 +19,28 @@ class NewsMigrationService extends BaseMigrationService
 
     public function validateData(array $data): bool
     {
-        return !empty($data['title'] ?? $data['articlename'] ?? null);
+        if (empty($data['title'] ?? $data['articlename'] ?? null)) {
+            return false;
+        }
+
+        $categoryId = $data['catid'] ?? $data['category_id'] ?? null;
+        if (! $categoryId) {
+            return false;
+        }
+
+        // Check if category is mapped to 'news' type
+        $migrationItem = \App\Models\JoomlaMigrationItem::where('type', \App\Models\JoomlaMigration::TYPE_CATEGORIES)
+            ->where('joomla_id', $categoryId)
+            ->where('status', \App\Models\JoomlaMigrationItem::STATUS_COMPLETED)
+            ->first();
+
+        if (! $migrationItem) {
+            return false;
+        }
+
+        $category = \App\Models\Category::find($migrationItem->local_id);
+
+        return $category && $category->type === \App\Enums\CategoryType::News;
     }
 
     public function transformData(array $data): array
@@ -29,20 +50,44 @@ class NewsMigrationService extends BaseMigrationService
 
         // Clean content
         $fullContent = ($data['introtext'] ?? '').' '.($data['fulltext'] ?? '');
-        $cleanedContent = $this->cleanContent($fullContent);
+        $cleanedHtml = $this->cleanHtml($fullContent);
+
+        // Convert HTML to JSON blocks
+        $blocks = $this->htmlToBlocks($cleanedHtml);
 
         return [
             'title' => $title,
             'slug' => $this->generateSlug($alias),
             'excerpt' => $this->cleanExcerpt($data['introtext'] ?? ''),
-            'content' => $cleanedContent['content'],
+            'content' => $blocks,
             'featured_image' => $this->processFeaturedImage($data['images'] ?? []),
             'is_featured' => $this->isFeatured($data),
             'views_count' => $data['hits'] ?? 0,
-            'category_id' => $this->mapCategory($data['catid'] ?? null),
+            'category_id' => $this->mapCategory($data['catid'] ?? $data['category_id'] ?? null),
             'author_id' => $this->mapAuthor($data['created_by'] ?? null),
-            'status' => $this->mapStatus($data['state'] ?? 0),
-            'published_at' => $this->mapPublishedDate($data, $data['state'] ?? 0),
+            'status' => $this->mapStatus($data['status'] ?? $data['state'] ?? 0),
+            'published_at' => $this->mapPublishedDate($data, $data['status'] ?? $data['state'] ?? 0),
+        ];
+    }
+
+    /**
+     * Clean HTML content.
+     */
+    protected function cleanHtml(string $content): string
+    {
+        return app(JoomlaDataCleaner::class)->cleanHtml($content);
+    }
+
+    /**
+     * Convert HTML to JSON blocks.
+     */
+    protected function htmlToBlocks(string $html): array
+    {
+        return [
+            [
+                'type' => 'text',
+                'content' => $html,
+            ],
         ];
     }
 
@@ -101,11 +146,11 @@ class NewsMigrationService extends BaseMigrationService
      */
     protected function processFeaturedImage(array $images): ?string
     {
-        if (isset($images['image_intro']) && !empty($images['image_intro'])) {
+        if (isset($images['image_intro']) && ! empty($images['image_intro'])) {
             return $this->cleanImagePath($images['image_intro']);
         }
 
-        if (isset($images['image_fulltext']) && !empty($images['image_fulltext'])) {
+        if (isset($images['image_fulltext']) && ! empty($images['image_fulltext'])) {
             return $this->cleanImagePath($images['image_fulltext']);
         }
 

@@ -2,96 +2,96 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\UrlType;
 use App\Filament\Resources\MenuItemResource\Pages;
 use App\Models\MenuItem;
 use Filament\Forms;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Resources\Pages\CreateRecord;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Collection;
 
 class MenuItemResource extends Resource
 {
     protected static ?string $model = MenuItem::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-list-bullet';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-list-bullet';
 
     protected static ?int $navigationSort = 3;
 
-    protected static ?string $navigationGroup = 'Structure';
+    protected static string | \UnitEnum | null $navigationGroup = 'Structure';
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('Menu Item Information')
                     ->schema([
                         Select::make('menu_id')
                             ->relationship('menu', 'name')
-                            ->required(),
+                            ->required()
+                            ->live(),
                         Select::make('parent_id')
                             ->label('Parent Item')
-                            ->relationship('parent', 'title')
+                            ->options(fn (Forms\Get $get): array => \App\Models\MenuItem::query()
+                                ->where('menu_id', $get('menu_id'))
+                                ->whereNull('parent_id')
+                                ->pluck('title', 'id')
+                                ->toArray())
                             ->nullable()
                             ->searchable()
-                            ->preload(),
+                            ->preload()
+                            ->live(),
                         TextInput::make('title')
                             ->required()
                             ->maxLength(255),
-                        Select::make('type')
-                            ->options([
-                                'custom' => 'Custom URL',
-                                'route' => 'Route',
-                                'page' => 'Page',
-                                'external' => 'External Link',
-                            ])
+                        Select::make('url_type')
+                            ->options(fn (): array => collect(UrlType::cases())->pluck('label', 'value')->toArray())
                             ->required()
-                            ->default('custom')
-                            ->reactive(),
+                            ->default(UrlType::Custom)
+                            ->enum(UrlType::class)
+                            ->live(),
                     ])->columns(2),
 
                 Section::make('Link Details')
                     ->schema([
-                        TextInput::make('url')
-                            ->label('URL')
-                            ->maxLength(500)
+                        TextInput::make('route_name')
+                            ->label('Route Name')
+                            ->maxLength(255)
                             ->nullable()
-                            ->hidden(fn($get): bool => $get('type') !== 'custom' && $get('type') !== 'external'),
+                            ->visible(fn (Forms\Get $get): bool => $get('url_type') === UrlType::Route->value),
                         Select::make('page_id')
                             ->label('Page')
                             ->relationship('page', 'title')
                             ->nullable()
                             ->searchable()
                             ->preload()
-                            ->hidden(fn($get): bool => $get('type') !== 'page'),
+                            ->visible(fn (Forms\Get $get): bool => $get('url_type') === UrlType::Page->value),
+                        TextInput::make('custom_url')
+                            ->label('URL')
+                            ->maxLength(500)
+                            ->nullable()
+                            ->visible(fn (Forms\Get $get): bool => in_array($get('url_type'), [UrlType::Custom->value, UrlType::External->value])),
                         TextInput::make('icon')
                             ->label('Icon Class')
                             ->maxLength(100)
                             ->placeholder('heroicon-o-name')
                             ->helperText('Use Heroicons class names'),
-                        TextInput::make('css_class')
-                            ->label('CSS Class')
-                            ->maxLength(255)
-                            ->nullable(),
                         Toggle::make('target_blank')
                             ->label('Open in new tab')
                             ->default(false),
                     ])->columns(2),
 
-                Section::name('Ordering & Status')
+                Section::make('Ordering & Status')
                     ->schema([
                         TextInput::make('order')
                             ->numeric()
@@ -100,15 +100,6 @@ class MenuItemResource extends Resource
                         Toggle::make('is_active')
                             ->default(true),
                     ])->columns(2),
-
-                Section::name('Conditional Display')
-                    ->schema([
-                        KeyValue::make('conditional_rules')
-                            ->label('Display Conditions')
-                            ->keyLabel('Rule')
-                            ->valueLabel('Value')
-                            ->nullable(),
-                    ]),
             ]);
     }
 
@@ -123,13 +114,13 @@ class MenuItemResource extends Resource
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('type')
+                TextColumn::make('url_type')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'custom' => 'gray',
-                        'route' => 'info',
-                        'page' => 'success',
-                        'external' => 'warning',
+                    ->color(fn (string $state): string => match ($state) {
+                        UrlType::Custom->value => 'gray',
+                        UrlType::Route->value => 'info',
+                        UrlType::Page->value => 'success',
+                        UrlType::External->value => 'warning',
                         default => 'gray',
                     }),
                 TextColumn::make('menu.name')
@@ -138,11 +129,12 @@ class MenuItemResource extends Resource
                 TextColumn::make('parent.title')
                     ->label('Parent')
                     ->sortable()
-                    ->placeholder('None'),
+                    ->placeholder('None')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('icon')
                     ->label('Icon')
-                    ->formatStateUsing(fn($state): string => $state ?? '-')
-                    ->limit(30),
+                    ->formatStateUsing(fn ($state): string => $state ?? '-')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->sortable(),
@@ -152,50 +144,30 @@ class MenuItemResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('order')
+            ->reorderable('order')
             ->filters([
                 SelectFilter::make('menu')
-                    ->relationship('menu', 'name'),
-                SelectFilter::make('type')
+                    ->relationship('menu', 'name')
+                    ->indicator(fn (SelectFilter $filter): array => match (true) {
+                        $filter->isActive() => [$filter->getIndicator()],
+                        default => [],
+                    }),
+                SelectFilter::make('url_type')
+                    ->options(fn (): array => collect(UrlType::cases())->pluck('label', 'value')->toArray()),
+                SelectFilter::make('is_active')
                     ->options([
-                        'custom' => 'Custom URL',
-                        'route' => 'Route',
-                        'page' => 'Page',
-                        'external' => 'External Link',
-                    ]),
-                Filter::make('active')
-                    ->query(fn($query): $query->where('is_active', true))
-                    ->label('Active Items'),
-                Filter::make('inactive')
-                    ->query(fn($query): $query->where('is_active', false))
-                    ->label('Inactive Items'),
+                        '1' => 'Active',
+                        '0' => 'Inactive',
+                    ])
+                    ->label('Status'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('moveUp')
-                    ->label('Move Up')
-                    ->icon('heroicon-o-arrow-up')
-                    ->action(fn(MenuItem $record): int => $record->moveOrderUp())
-                    ->hidden(fn(MenuItem $record): bool => $record->order === 0),
-                Tables\Actions\Action::make('moveDown')
-                    ->label('Move Down')
-                    ->icon('heroicon-o-arrow-down')
-                    ->action(fn(MenuItem $record): int => $record->moveOrderDown()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    BulkAction::make('activate')
-                        ->label('Activate')
-                        ->action(fn(Collection $records): void => $records->each(fn(MenuItem $item): bool => $item->update(['is_active' => true])))
-                        ->deselectRecordsAfterCompletion()
-                        ->successNotificationTitle('Items activated'),
-                    BulkAction::make('deactivate')
-                        ->label('Deactivate')
-                        ->action(fn(Collection $records): void => $records->each(fn(MenuItem $item): bool => $item->update(['is_active' => false])))
-                        ->deselectRecordsAfterCompletion()
-                        ->successNotificationTitle('Items deactivated')
-                        ->color('warning'),
                 ]),
             ]);
     }

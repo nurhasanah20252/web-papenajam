@@ -4,31 +4,20 @@ namespace App\Enums;
 
 enum SyncStatus: string
 {
-    case Pending = 'pending';
-    case Success = 'success';
-    case Error = 'error';
+    case PENDING = 'pending';
+    case RUNNING = 'running';
+    case SYNCED = 'synced';
+    case FAILED = 'failed';
+    case SKIPPED = 'skipped';
 
     public function label(): string
     {
         return match ($this) {
-            self::Pending => 'Pending',
-            self::Success => 'Success',
-            self::Error => 'Error',
+            self::PENDING => 'Pending',
+            self::RUNNING => 'Running',
+            self::SYNCED => 'Synced',
+            self::FAILED => 'Failed',
+            self::SKIPPED => 'Skipped',
         };
-    }
-
-    public function isPending(): bool
-    {
-        return $this === self::Pending;
-    }
-
-    public function isSuccess(): bool
-    {
-        return $this === self::Success;
-    }
-
-    public function isError(): bool
-    {
-        return $this === self::Error;
     }
 }

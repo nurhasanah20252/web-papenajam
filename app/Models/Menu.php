@@ -19,6 +19,7 @@ class Menu extends Model
     protected $fillable = [
         'name',
         'location',
+        'locations',
         'max_depth',
         'description',
     ];
@@ -32,6 +33,7 @@ class Menu extends Model
     {
         return [
             'location' => MenuLocation::class,
+            'locations' => 'array',
             'max_depth' => 'integer',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
@@ -49,21 +51,32 @@ class Menu extends Model
     /**
      * Get the menu items as a hierarchical tree.
      */
-    public function getTree(): array
+    public function getTree(bool $onlyActive = true, ?User $user = null): array
     {
-        return $this->items()
-            ->whereNull('parent_id')
-            ->get()
-            ->map(fn($item) => $item->withChildren())
+        $query = $this->items()->whereNull('parent_id');
+
+        if ($onlyActive) {
+            $query->where('is_active', true);
+        }
+
+        return $query->get()
+            ->filter(fn ($item) => $item->isVisible($user))
+            ->map(fn ($item) => $item->withChildren($onlyActive, $user))
+            ->values()
             ->toArray();
     }
 
     /**
      * Scope query by location.
      */
-    public function scopeByLocation($query, MenuLocation $location)
+    public function scopeByLocation($query, MenuLocation|string $location)
     {
-        return $this->where('location', $location);
+        $value = $location instanceof MenuLocation ? $location->value : $location;
+
+        return $query->where(function ($q) use ($value) {
+            $q->where('location', $value)
+                ->orWhereJsonContains('locations', $value);
+        });
     }
 
     /**

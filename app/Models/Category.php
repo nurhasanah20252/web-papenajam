@@ -115,7 +115,7 @@ class Category extends Model
         $current = $this;
 
         while ($current->parent) {
-            $path = $current->parent->slug . '/' . $path;
+            $path = $current->parent->slug.'/'.$path;
             $current = $current->parent;
         }
 

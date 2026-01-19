@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'sipp' => [
+        'base_url' => env('SIPP_API_BASE_URL'),
+        'api_key' => env('SIPP_API_KEY'),
+        'timeout' => env('SIPP_API_TIMEOUT', 30),
+    ],
+
 ];

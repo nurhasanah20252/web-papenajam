@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Services\JoomlaMigration\JoomlaMigrationManager;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 
 class JoomlaMigrateCommand extends Command
 {
@@ -31,32 +30,13 @@ class JoomlaMigrateCommand extends Command
 
     protected function handleMigration(): int
     {
-        $file = $this->argument('file');
-
-        if (!$file || !File::exists($file)) {
-            $this->error('Please provide a valid file path to the Joomla export JSON.');
-            $this->info('Usage: php artisan joomla:migrate path/to/export.json');
-
-            return Command::FAILURE;
-        }
-
         $name = $this->option('name') ?: 'Joomla Migration '.now()->format('Y-m-d H:i:s');
 
         $this->info("Starting migration: {$name}");
-        $this->info('Reading file: '.$file);
 
         try {
-            $jsonContent = File::get($file);
-            $joomlaData = json_decode($jsonContent, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                $this->error('Invalid JSON: '.json_last_error_msg());
-
-                return Command::FAILURE;
-            }
-
             $manager = app(JoomlaMigrationManager::class);
-            $migration = $manager->runMigration($joomlaData, $name);
+            $migration = $manager->runMigration($name);
 
             $this->newLine();
             $this->info('Migration completed!');
@@ -65,14 +45,14 @@ class JoomlaMigrateCommand extends Command
             $this->info("Processed: {$migration->processed_records}");
             $this->info("Failed: {$migration->failed_records}");
 
-            if (!empty($migration->errors)) {
+            if (! empty($migration->errors)) {
                 $this->warn('Errors occurred during migration:');
                 foreach (array_slice($migration->errors, 0, 5) as $error) {
-                    $this->error("  - {$error['message']}");
+                    $this->error('  - '.(is_array($error) ? ($error['message'] ?? json_encode($error)) : $error));
                 }
 
                 if (count($migration->errors) > 5) {
-                    $this->warn('  ... and '.count($migration->errors) - 5.' more errors');
+                    $this->warn('  ... and '.(count($migration->errors) - 5).' more errors');
                 }
             }
 
@@ -88,7 +68,7 @@ class JoomlaMigrateCommand extends Command
     {
         $id = $this->option('id');
 
-        if (!$id) {
+        if (! $id) {
             $this->error('Please provide a migration ID with --id=');
 
             return Command::FAILURE;
@@ -96,13 +76,13 @@ class JoomlaMigrateCommand extends Command
 
         $migration = \App\Models\JoomlaMigration::find($id);
 
-        if (!$migration) {
+        if (! $migration) {
             $this->error("Migration with ID {$id} not found.");
 
             return Command::FAILURE;
         }
 
-        if (!$migration->isComplete()) {
+        if (! $migration->isComplete()) {
             $this->error('Cannot rollback a migration that is not completed.');
 
             return Command::FAILURE;
@@ -128,7 +108,7 @@ class JoomlaMigrateCommand extends Command
     {
         $id = $this->option('id');
 
-        if (!$id) {
+        if (! $id) {
             $this->error('Please provide a migration ID with --id=');
 
             return Command::FAILURE;
@@ -136,7 +116,7 @@ class JoomlaMigrateCommand extends Command
 
         $migration = \App\Models\JoomlaMigration::find($id);
 
-        if (!$migration) {
+        if (! $migration) {
             $this->error("Migration with ID {$id} not found.");
 
             return Command::FAILURE;
@@ -144,7 +124,7 @@ class JoomlaMigrateCommand extends Command
 
         $this->info("Validating migration: {$migration->name}");
 
-        $validator = app(\App\Services\JoomlaMigration\MigrationValidator::class);
+        $validator = app(\App\Services\JoomlaMigration\MigrationValidationService::class);
         $report = $validator->generateReport($migration);
 
         $this->newLine();
@@ -163,7 +143,7 @@ class JoomlaMigrateCommand extends Command
         $this->newLine();
         $this->info('Integrity Score: '.$report['integrity_score'].'%');
 
-        if (!empty($report['warnings'])) {
+        if (! empty($report['warnings'])) {
             $this->newLine();
             $this->warn('=== Warnings ===');
             foreach ($report['warnings'] as $warning) {
@@ -171,7 +151,7 @@ class JoomlaMigrateCommand extends Command
             }
         }
 
-        if (!empty($report['errors'])) {
+        if (! empty($report['errors'])) {
             $this->newLine();
             $this->error('=== Errors ===');
             foreach ($report['errors'] as $error) {

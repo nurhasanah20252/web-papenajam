@@ -61,7 +61,7 @@ class PageBlockFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'type' => BlockType::Html,
-            'content' => ['html' => '<div>' . fake()->paragraph() . '</div>'],
+            'content' => ['html' => '<div>'.fake()->paragraph().'</div>'],
         ]);
     }
 }

@@ -70,7 +70,7 @@ class SippJudge extends Model
     public function getFormattedName(): string
     {
         if ($this->title) {
-            return $this->title . ' ' . $this->full_name;
+            return $this->title.' '.$this->full_name;
         }
 
         return $this->full_name;

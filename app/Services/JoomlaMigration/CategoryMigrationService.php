@@ -19,7 +19,7 @@ class CategoryMigrationService extends BaseMigrationService
 
     public function validateData(array $data): bool
     {
-        return !empty($data['title'] ?? $data['name'] ?? null);
+        return ! empty($data['title'] ?? $data['name'] ?? null);
     }
 
     public function transformData(array $data): array
@@ -29,49 +29,42 @@ class CategoryMigrationService extends BaseMigrationService
 
         return [
             'name' => $name,
-            'slug' => $this->generateSlugFromExisting($alias),
+            'slug' => $this->generateSlug($alias),
             'description' => $data['description'] ?? $data['introtext'] ?? null,
             'parent_id' => $this->mapParentId($data['parent_id'] ?? null),
+            'type' => $this->mapType($data['extension'] ?? ''),
             'order' => $data['lft'] ?? $data['ordering'] ?? 0,
         ];
     }
 
-    public function saveData(array $data): int
-    {
-        $category = Category::create($data);
-
-        return $category->id;
-    }
-
     /**
-     * Generate unique slug based on existing categories.
+     * Map Joomla extension to category type.
      */
-    protected function generateSlugFromExisting(string $baseSlug): string
+    protected function mapType(string $extension): string
     {
-        $slug = $baseSlug;
-        $i = 1;
-
-        while (Category::where('slug', $slug)->exists()) {
-            $slug = $baseSlug.'-'.$i;
-            $i++;
-        }
-
-        return $slug;
+        return match ($extension) {
+            'com_content' => 'news',
+            'com_contact' => 'page',
+            'com_banners' => 'news',
+            'com_weblinks' => 'news',
+            'com_newsfeeds' => 'news',
+            default => 'news',
+        };
     }
 
     /**
      * Map Joomla parent ID to new parent ID.
      */
-    protected function mapParentId(?int $joomlaParentId): ?int
+    protected function mapParentId($joomlaParentId): ?int
     {
-        if ($joomlaParentId === null) {
+        if ($joomlaParentId === null || (int) $joomlaParentId <= 1) {
             return null;
         }
 
-        $item = JoomlaMigrationItem::where('migration_id', $this->migration->id)
+        $item = \App\Models\JoomlaMigrationItem::where('migration_id', $this->migration->id)
             ->where('type', $this->getType())
-            ->where('joomla_id', $joomlaParentId)
-            ->where('status', JoomlaMigrationItem::STATUS_COMPLETED)
+            ->where('joomla_id', (int) $joomlaParentId)
+            ->where('status', \App\Models\JoomlaMigrationItem::STATUS_COMPLETED)
             ->first();
 
         return $item?->local_id;

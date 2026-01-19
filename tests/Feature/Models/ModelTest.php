@@ -1,7 +1,31 @@
 <?php
 
-use App\Enums\{PageStatus, PageType, MenuLocation, UrlType, NewsStatus, CategoryType, ScheduleStatus, SyncStatus, PPIDStatus, PPIDPriority, UserRole};
-use App\Models\{Page, PageTemplate, PageBlock, Menu, MenuItem, Category, News, Document, CourtSchedule, SippCase, SippJudge, BudgetTransparency, CaseStatistics, PpidRequest, UserActivityLog, JoomlaMigration, SippSyncLog, User};
+use App\Enums\CategoryType;
+use App\Enums\MenuLocation;
+use App\Enums\PageStatus;
+use App\Enums\PageType;
+use App\Enums\PPIDPriority;
+use App\Enums\PPIDStatus;
+use App\Enums\SyncStatus;
+use App\Enums\UrlType;
+use App\Enums\UserRole;
+use App\Models\BudgetTransparency;
+use App\Models\CaseStatistics;
+use App\Models\Category;
+use App\Models\CourtSchedule;
+use App\Models\Document;
+use App\Models\JoomlaMigration;
+use App\Models\Menu;
+use App\Models\MenuItem;
+use App\Models\News;
+use App\Models\Page;
+use App\Models\PageBlock;
+use App\Models\PpidRequest;
+use App\Models\SippCase;
+use App\Models\SippJudge;
+use App\Models\SippSyncLog;
+use App\Models\User;
+use App\Models\UserActivityLog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
@@ -33,6 +32,10 @@ class Page extends Model
         'template_id',
         'published_at',
         'view_count',
+        'builder_content',
+        'version',
+        'last_edited_by',
+        'is_builder_enabled',
     ];
 
     /**
@@ -44,11 +47,14 @@ class Page extends Model
     {
         return [
             'content' => 'array',
+            'builder_content' => 'array',
             'meta' => 'array',
             'status' => PageStatus::class,
             'page_type' => PageType::class,
             'published_at' => 'datetime',
             'view_count' => 'integer',
+            'version' => 'integer',
+            'is_builder_enabled' => 'boolean',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
             'deleted_at' => 'datetime',
@@ -61,6 +67,14 @@ class Page extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    /**
+     * Get the user who last edited the page.
+     */
+    public function lastEditedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'last_edited_by');
     }
 
     /**
@@ -80,12 +94,49 @@ class Page extends Model
     }
 
     /**
+     * Get the versions for this page.
+     */
+    public function versions(): HasMany
+    {
+        return $this->hasMany(PageVersion::class)->orderByDesc('version');
+    }
+
+    /**
+     * Create a new version snapshot of the current page state.
+     */
+    public function createVersion(?int $userId = null): PageVersion
+    {
+        $this->incrementVersion();
+
+        return $this->versions()->create([
+            'version' => $this->version,
+            'content' => $this->content,
+            'builder_content' => $this->builder_content,
+            'created_by' => $userId ?? $this->last_edited_by,
+        ]);
+    }
+
+    /**
+     * Restore the page to a specific version.
+     */
+    public function restoreVersion(int $versionId): bool
+    {
+        $version = $this->versions()->findOrFail($versionId);
+
+        return $this->update([
+            'content' => $version->content,
+            'builder_content' => $version->builder_content,
+            'version' => $this->version + 1,
+        ]);
+    }
+
+    /**
      * Scope query for published pages.
      */
     public function scopePublished($query)
     {
         return $query->where('status', PageStatus::Published)
-                     ->where('published_at', '<=', now());
+            ->where('published_at', '<=', now());
     }
 
     /**
@@ -135,7 +186,7 @@ class Page extends Model
      */
     public function getUrl(): string
     {
-        return '/' . $this->slug;
+        return '/'.$this->slug;
     }
 
     /**
@@ -152,5 +203,29 @@ class Page extends Model
     public function getMetaKeywords(): array
     {
         return $this->meta['keywords'] ?? [];
+    }
+
+    /**
+     * Increment version number.
+     */
+    public function incrementVersion(): void
+    {
+        $this->increment('version');
+    }
+
+    /**
+     * Check if page builder is enabled for this page.
+     */
+    public function isBuilderEnabled(): bool
+    {
+        return $this->is_builder_enabled ?? false;
+    }
+
+    /**
+     * Get builder content or empty array.
+     */
+    public function getBuilderContent(): array
+    {
+        return $this->builder_content ?? [];
     }
 }

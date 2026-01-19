@@ -3,12 +3,12 @@ import {
     Menu,
     Search,
     X,
-    ChevronDown,
     Phone,
     Mail,
     Clock,
 } from 'lucide-react';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -18,51 +18,19 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet';
-import { useActiveUrl } from '@/hooks/use-active-url';
-import { cn } from '@/lib/utils';
 import { type SharedData } from '@/types';
 
 import AppearanceToggleDropdown from './appearance-dropdown';
 import CourtLogo from './court-logo';
-
-interface NavItem {
-    title: string;
-    href: string;
-    children?: { title: string; href: string }[];
-}
-
-const navItems: NavItem[] = [
-    { title: 'Beranda', href: '/' },
-    {
-        title: 'Profil',
-        href: '/about',
-        children: [
-            { title: 'Sejarah', href: '/about#sejarah' },
-            { title: 'Visi & Misi', href: '/about#visi-misi' },
-            { title: 'Struktur Organisasi', href: '/about#struktur' },
-            { title: 'Kepaniteraan', href: '/about#kepaniteraan' },
-            { title: 'Kesekretariatan', href: '/about#kesekretariatan' },
-        ],
-    },
-    { title: 'Layanan', href: '/services' },
-    { title: 'Berita', href: '/news' },
-    { title: 'Pengumuman', href: '/announcements' },
-    { title: 'Berkas Perkara', href: '/case-status' },
-    { title: 'Kontak', href: '/contact' },
-];
+import NavigationMenu from './menu/NavigationMenu';
+import MobileMenu from './menu/MobileMenu';
 
 export default function Header() {
     const page = usePage<SharedData>();
-    const { urlIsActive } = useActiveUrl();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
 
-    const toggleSubmenu = (key: string) => {
-        setOpenSubmenus((prev) => ({
-            ...prev,
-            [key]: !prev[key],
-        }));
-    };
+    const headerMenu = page.props.menus?.header || [];
+    const mobileMenu = page.props.menus?.mobile || headerMenu;
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -96,78 +64,55 @@ export default function Header() {
                 </div>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden lg:flex lg:items-center lg:gap-1">
-                    {navItems.map((item) => (
-                        <div key={item.href} className="relative group">
-                            {item.children ? (
-                                <button
-                                    className={cn(
-                                        'flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground',
-                                        urlIsActive(item.href)
-                                            ? 'text-primary'
-                                            : 'text-muted-foreground',
-                                    )}
-                                >
-                                    {item.title}
-                                    <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
-                                </button>
-                            ) : (
-                                <Link
-                                    href={item.href}
-                                    className={cn(
-                                        'rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground',
-                                        urlIsActive(item.href)
-                                            ? 'text-primary'
-                                            : 'text-muted-foreground',
-                                    )}
-                                >
-                                    {item.title}
-                                </Link>
-                            )}
-
-                            {/* Dropdown for desktop */}
-                            {item.children && (
-                                <div className="absolute left-0 top-full mt-1 hidden min-w-[200px] rounded-md border bg-background py-2 shadow-lg opacity-0 transition-all group-hover:visible group-hover:opacity-100 lg:invisible lg:absolute lg:translate-y-2 lg:group-hover:translate-y-0">
-                                    {item.children.map((child) => (
-                                        <Link
-                                            key={child.href}
-                                            href={child.href}
-                                            className="block px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                                        >
-                                            {child.title}
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </nav>
+                <NavigationMenu items={headerMenu} className="hidden lg:flex" />
 
                 {/* Right side actions */}
                 <div className="flex items-center gap-2">
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="hidden h-9 w-9 rounded-md sm:flex"
-                    >
-                        <Search className="h-5 w-5" />
-                        <span className="sr-only">Search</span>
-                    </Button>
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="hidden h-9 w-9 rounded-md sm:flex hover:bg-accent"
+                        >
+                            <Search className="h-5 w-5" />
+                            <span className="sr-only">Search</span>
+                        </Button>
+                    </motion.div>
                     <AppearanceToggleDropdown className="hidden sm:flex" />
                     <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                         <SheetTrigger asChild>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="lg:hidden h-9 w-9 rounded-md"
-                            >
-                                {mobileMenuOpen ? (
-                                    <X className="h-5 w-5" />
-                                ) : (
-                                    <Menu className="h-5 w-5" />
-                                )}
-                                <span className="sr-only">Toggle menu</span>
-                            </Button>
+                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="lg:hidden h-9 w-9 rounded-md"
+                                >
+                                    <AnimatePresence mode="wait">
+                                        {mobileMenuOpen ? (
+                                            <motion.div
+                                                key="close"
+                                                initial={{ rotate: -90, opacity: 0 }}
+                                                animate={{ rotate: 0, opacity: 1 }}
+                                                exit={{ rotate: 90, opacity: 0 }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                <X className="h-5 w-5" />
+                                            </motion.div>
+                                        ) : (
+                                            <motion.div
+                                                key="menu"
+                                                initial={{ rotate: 90, opacity: 0 }}
+                                                animate={{ rotate: 0, opacity: 1 }}
+                                                exit={{ rotate: -90, opacity: 0 }}
+                                                transition={{ duration: 0.2 }}
+                                            >
+                                                <Menu className="h-5 w-5" />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                    <span className="sr-only">Toggle menu</span>
+                                </Button>
+                            </motion.div>
                         </SheetTrigger>
                         <SheetContent side="right" className="flex flex-col">
                             <SheetHeader className="flex flex-row items-center justify-between pb-4">
@@ -180,75 +125,11 @@ export default function Header() {
                             </SheetHeader>
 
                             {/* Mobile Navigation */}
-                            <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
-                                {navItems.map((item) => (
-                                    <div key={item.href}>
-                                        {item.children ? (
-                                            <div>
-                                                <button
-                                                    onClick={() =>
-                                                        toggleSubmenu(item.href)
-                                                    }
-                                                    className={cn(
-                                                        'flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                                                        urlIsActive(item.href)
-                                                            ? 'text-primary'
-                                                            : 'text-muted-foreground',
-                                                    )}
-                                                >
-                                                    {item.title}
-                                                    <ChevronDown
-                                                        className={cn(
-                                                            'h-4 w-4 transition-transform',
-                                                            openSubmenus[item.href] &&
-                                                                'rotate-180',
-                                                        )}
-                                                    />
-                                                </button>
-                                                {openSubmenus[item.href] && (
-                                                    <div className="ml-4 mt-1 flex flex-col border-l pl-4">
-                                                        {item.children.map(
-                                                            (child) => (
-                                                                <Link
-                                                                    key={
-                                                                        child.href
-                                                                    }
-                                                                    href={
-                                                                        child.href
-                                                                    }
-                                                                    className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                                                                    onClick={() =>
-                                                                        setMobileMenuOpen(
-                                                                            false,
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    {child.title}
-                                                                </Link>
-                                                            ),
-                                                        )}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ) : (
-                                            <Link
-                                                href={item.href}
-                                                className={cn(
-                                                    'rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                                                    urlIsActive(item.href)
-                                                        ? 'text-primary'
-                                                        : 'text-muted-foreground',
-                                                )}
-                                                onClick={() =>
-                                                    setMobileMenuOpen(false)
-                                                }
-                                            >
-                                                {item.title}
-                                            </Link>
-                                        )}
-                                    </div>
-                                ))}
-                            </nav>
+                            <MobileMenu
+                                items={mobileMenu}
+                                onItemClick={() => setMobileMenuOpen(false)}
+                                className="mt-4"
+                            />
 
                             {/* Mobile footer with contact info */}
                             <div className="border-t pt-4">

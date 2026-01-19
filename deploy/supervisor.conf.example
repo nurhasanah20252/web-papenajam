@@ -1,0 +1,131 @@
+# Supervisor Configuration for PA Penajam Website
+# Laravel 12 Queue Workers and Background Processes
+
+################################################################################
+# Laravel Queue Worker
+################################################################################
+
+[program:pa-penajam-queue-worker]
+process_name=%(program_name)s-%(process_num)02d
+command=php /var/www/pa-penajam/current/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=2
+redirect_stderr=true
+stdout_logfile=/var/www/pa-penajam/shared/storage/logs/queue-worker.log
+stopwaitsecs=3600
+
+# Environment variables
+environment=APP_ENV="production"
+
+################################################################################
+# Laravel Queue Worker (High Priority)
+################################################################################
+
+[program:pa-penajam-queue-high]
+process_name=%(program_name)s-%(process_num)02d
+command=php /var/www/pa-penajam/current/artisan queue:work redis --queue=high,default --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/var/www/pa-penajam/shared/storage/logs/queue-high.log
+stopwaitsecs=3600
+
+# Environment variables
+environment=APP_ENV="production"
+
+################################################################################
+# Laravel Scheduler
+################################################################################
+
+[program:pa-penajam-scheduler]
+process_name=%(program_name)s
+command=php /var/www/pa-penajam/current/artisan schedule:work
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/var/www/pa-penajam/shared/storage/logs/scheduler.log
+stopwaitsecs=3600
+
+# Environment variables
+environment=APP_ENV="production"
+
+################################################################################
+# Inertia SSR Server (if using SSR)
+################################################################################
+
+[program:pa-penajam-inertia-ssr]
+process_name=%(program_name)s
+command=php /var/www/pa-penajam/current/artisan inertia:start-ssr
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/var/www/pa-penajam/shared/storage/logs/inertia-ssr.log
+stopwaitsecs=3600
+
+# Environment variables
+environment=APP_ENV="production"
+
+################################################################################
+# Laravel Horizon (if using Horizon instead of default queue worker)
+################################################################################
+
+# [program:pa-penajam-horizon]
+# process_name=%(program_name)s
+# command=php /var/www/pa-penajam/current/artisan horizon
+# autostart=true
+# autorestart=true
+# user=www-data
+# redirect_stderr=true
+# stdout_logfile=/var/www/pa-penajam/shared/storage/logs/horizon.log
+# stopwaitsecs=3600
+#
+# # Environment variables
+# environment=APP_ENV="production"
+
+################################################################################
+# Laravel Reverb (if using WebSockets)
+################################################################################
+
+# [program:pa-penajam-reverb]
+# process_name=%(program_name)s
+# command=php /var/www/pa-penajam/current/artisan reverb:start
+# autostart=true
+# autorestart=true
+# user=www-data
+# redirect_stderr=true
+# stdout_logfile=/var/www/pa-penajam/shared/storage/logs/reverb.log
+# stopwaitsecs=3600
+#
+# # Environment variables
+# environment=APP_ENV="production"
+
+################################################################################
+# Group Configuration
+################################################################################
+
+[group:pa-penajam-queue]
+programs=pa-penajam-queue-worker,pa-penajam-queue-high
+
+################################################################################
+# Event Listener Configuration
+################################################################################
+
+[eventlistener:memmon]
+command=memmon -a 400MB -m user@pa-penajam.go.id
+events=TICK_60
